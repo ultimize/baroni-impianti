@@ -36,7 +36,7 @@ export function buildArticleMetadata(post: ArticleMetaInput): Metadata {
       type: "article",
       siteName: SITE_NAME,
       locale: "it_IT",
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
       publishedTime: post.published_at,
       modifiedTime: post.updated_at,
       authors: post.author?.name ? [post.author.name] : undefined,
@@ -45,7 +45,7 @@ export function buildArticleMetadata(post: ArticleMetaInput): Metadata {
       card: "summary_large_image",
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
     },
   }
 }
@@ -115,7 +115,9 @@ export function buildPageMetadata(page: {
       type: "website",
       siteName: SITE_NAME,
       locale: "it_IT",
-      images: page.og_image_url ? [{ url: page.og_image_url }] : undefined,
+      images: page.og_image_url
+        ? [{ url: page.og_image_url, width: 1200, height: 630 }]
+        : undefined,
     },
   }
 }
