@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify"
+import sanitizeHtml from "sanitize-html"
 
 const ALLOWED_TAGS = [
   "p",
@@ -38,30 +38,42 @@ const ALLOWED_TAGS = [
   "sub",
 ]
 
-const ALLOWED_ATTR = [
-  "href",
-  "target",
-  "rel",
-  "src",
-  "alt",
-  "title",
+const COMMON_ATTR = [
   "class",
   "id",
-  "width",
-  "height",
-  "loading",
-  "frameborder",
-  "allow",
-  "allowfullscreen",
-  "srcset",
-  "sizes",
+  "title",
+  "lang",
+  "dir",
 ]
 
 export function sanitizeArticleHtml(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
-    ALLOWED_URI_REGEXP: /^(https?:|mailto:|tel:|#|\/)/i,
-    ADD_ATTR: ["target"],
+  return sanitizeHtml(html, {
+    allowedTags: ALLOWED_TAGS,
+    allowedAttributes: {
+      a: ["href", "target", "rel", ...COMMON_ATTR],
+      img: ["src", "alt", "width", "height", "loading", "srcset", "sizes", ...COMMON_ATTR],
+      iframe: [
+        "src",
+        "width",
+        "height",
+        "frameborder",
+        "allow",
+        "allowfullscreen",
+        ...COMMON_ATTR,
+      ],
+      "*": COMMON_ATTR,
+    },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedSchemesAppliedToAttributes: ["href", "src"],
+    allowProtocolRelative: false,
+    transformTags: {
+      a: (tagName, attribs) => ({
+        tagName,
+        attribs: {
+          ...attribs,
+          rel: attribs.target === "_blank" ? "noopener noreferrer" : attribs.rel ?? "",
+        },
+      }),
+    },
   })
 }
