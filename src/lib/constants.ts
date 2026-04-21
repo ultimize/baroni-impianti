@@ -1,5 +1,6 @@
-export const SITE_URL =
+export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://elettricistasestrilevante.it"
+).replace(/\/+$/, "")
 
 export const SITE_NAME = "Baroni Impianti"
 
