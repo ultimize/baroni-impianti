@@ -2,11 +2,45 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Container } from "@/components/public/Container"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
-import { ArticleContent } from "@/components/public/ArticleContent"
-import { createClient } from "@/lib/supabase/server"
-import { sanitizeArticleHtml } from "@/lib/content/sanitize"
+import { PageHero } from "@/components/public/PageHero"
+import { SectionWrapper } from "@/components/public/SectionWrapper"
+import { ClosingCta } from "@/components/public/ClosingCta"
 
-export const revalidate = 3600
+// TODO: quando arriveranno i contenuti specifici per ogni servizio dal cliente,
+// sostituire questo placeholder con una pagina dedicata (eventualmente
+// reintroducendo il fetch da Supabase `services`).
+const SERVICES: Record<string, { title: string; description: string }> = {
+  "impianti-civili": {
+    title: "Impianti elettrici civili",
+    description:
+      "Impianti a norma CEI 64-8 per abitazioni private: nuove costruzioni, ristrutturazioni, adeguamenti e certificazioni.",
+  },
+  "impianti-industriali": {
+    title: "Impianti elettrici industriali",
+    description:
+      "Progettazione e realizzazione di impianti elettrici per capannoni, laboratori e attività commerciali.",
+  },
+  fotovoltaico: {
+    title: "Fotovoltaico e accumulo",
+    description:
+      "Impianti fotovoltaici chiavi in mano con sistema di accumulo, monitoraggio e gestione degli incentivi.",
+  },
+  domotica: {
+    title: "Domotica e smart home",
+    description:
+      "Automazione evoluta con standard KNX: luci, tapparelle, clima, scenari personalizzati. BARONI è KNX Partner.",
+  },
+  sicurezza: {
+    title: "Videosorveglianza e antifurto",
+    description:
+      "Impianti di allarme intrusione, videosorveglianza IP, videocitofoni smart e controllo accessi.",
+  },
+  "pronto-intervento": {
+    title: "Pronto intervento e manutenzione",
+    description:
+      "Guasti, blackout, manutenzioni programmate. Interventi rapidi nel Tigullio con tecnici qualificati.",
+  },
+}
 
 type Params = { slug: string }
 
@@ -16,22 +50,11 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const supabase = await createClient()
-  const { data } = await supabase
-    .from("services")
-    .select("title, seo_title, seo_description, og_image_url")
-    .eq("slug", slug)
-    .eq("is_published", true)
-    .maybeSingle()
-
-  if (!data) return { title: "Servizio non trovato" }
-
+  const service = SERVICES[slug]
+  if (!service) return { title: "Servizio non trovato" }
   return {
-    title: data.seo_title ?? data.title,
-    description: data.seo_description ?? undefined,
-    openGraph: data.og_image_url
-      ? { images: [{ url: data.og_image_url }] }
-      : undefined,
+    title: `${service.title} — Baroni Impianti`,
+    description: service.description,
   }
 }
 
@@ -41,41 +64,50 @@ export default async function ServicePage({
   params: Promise<Params>
 }) {
   const { slug } = await params
-  const supabase = await createClient()
-  const { data: service } = await supabase
-    .from("services")
-    .select("title, short_description, content")
-    .eq("slug", slug)
-    .eq("is_published", true)
-    .maybeSingle()
-
+  const service = SERVICES[slug]
   if (!service) notFound()
 
-  const sanitized = service.content ? sanitizeArticleHtml(service.content) : ""
-
   return (
-    <Container className="py-12 lg:py-16">
-      <BreadcrumbNav
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Servizi", url: "/servizi" },
-          { name: service.title, url: `/servizi/${slug}` },
-        ]}
-        scriptId={`breadcrumb-service-${slug}-jsonld`}
+    <>
+      <Container className="pt-6">
+        <BreadcrumbNav
+          items={[
+            { name: "Home", url: "/" },
+            { name: "Servizi", url: "/servizi" },
+            { name: service.title, url: `/servizi/${slug}` },
+          ]}
+          scriptId={`breadcrumb-service-${slug}-jsonld`}
+        />
+      </Container>
+
+      <PageHero
+        eyebrow="Servizio"
+        title={service.title}
+        lead={service.description}
+        tone="brand"
+        primaryCta={{ label: "Richiedi informazioni", href: `/contatti?service=${slug}` }}
+        secondaryCta={{ label: "Tutti i servizi", href: "/servizi" }}
       />
-      <article className="mx-auto mt-6 max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          {service.title}
-        </h1>
-        {service.short_description ? (
-          <p className="mt-4 text-lg text-muted-foreground">
-            {service.short_description}
+
+      <SectionWrapper variant="white">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-dashed border-border bg-muted/30 p-10 text-center">
+          <h2 className="text-xl font-semibold tracking-tight">
+            Contenuti dettagliati in arrivo
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Stiamo preparando una pagina dedicata a questo servizio con esempi,
+            materiali, tempi e garanzie. Nel frattempo, contattaci: rispondiamo
+            a ogni domanda specifica entro 24 ore.
           </p>
-        ) : null}
-        {sanitized ? (
-          <ArticleContent html={sanitized} className="mt-8" />
-        ) : null}
-      </article>
-    </Container>
+        </div>
+      </SectionWrapper>
+
+      <ClosingCta
+        title="Parliamone"
+        lead="Un sopralluogo gratuito è il modo più rapido per capire di cosa hai bisogno."
+        primaryCta={{ label: "Richiedi sopralluogo", href: `/contatti?service=${slug}` }}
+        secondaryCta={{ label: "Chi siamo", href: "/chi-siamo" }}
+      />
+    </>
   )
 }
