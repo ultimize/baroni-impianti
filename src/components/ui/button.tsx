@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -40,18 +41,53 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonProps = ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+  }
+
 function Button({
   className,
   variant = "default",
   size = "default",
+  asChild,
+  children,
+  render,
+  disabled,
+  type,
+  nativeButton,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonProps) {
+  // Strip asChild so it never reaches the DOM regardless of branch.
+  void asChild
+  const classes = cn(buttonVariants({ variant, size, className }))
+
+  if (asChild && React.isValidElement(children)) {
+    // Child anchors (Link) don't accept `disabled` or `type` as DOM attrs —
+    // mark the primitive as non-native so base-ui skips button semantics.
+    return (
+      <ButtonPrimitive
+        data-slot="button"
+        className={classes}
+        nativeButton={nativeButton ?? false}
+        render={children as React.ReactElement}
+        {...props}
+      />
+    )
+  }
+
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={classes}
+      render={render}
+      nativeButton={nativeButton}
+      disabled={disabled}
+      type={type}
       {...props}
-    />
+    >
+      {children}
+    </ButtonPrimitive>
   )
 }
 
