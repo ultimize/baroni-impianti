@@ -111,26 +111,12 @@ export default async function CatchAllPage({
 
   if (isArticlePath(path)) {
     const [year, month, day, slug] = path
-    let post: Awaited<ReturnType<typeof getPostByDateAndSlug>> = null
-    let related: Awaited<ReturnType<typeof getRelatedPosts>> = []
-    let sanitized = ""
-    let postUrl = ""
-    try {
-      post = await getPostByDateAndSlug(supabase, year, month, day, slug)
-      if (!post) notFound()
-      related = await getRelatedPosts(supabase, post.id, 3)
-      sanitized = post.content ? sanitizeArticleHtml(post.content) : ""
-      postUrl = `${SITE_URL}${buildPostUrl(post.published_at, post.slug)}`
-    } catch (err) {
-      console.error("[catch-all article render]", {
-        path: `/${path.join("/")}`,
-        name: (err as Error)?.name,
-        message: (err as Error)?.message,
-        stack: (err as Error)?.stack?.split("\n").slice(0, 8).join(" | "),
-      })
-      throw err
-    }
+    const post = await getPostByDateAndSlug(supabase, year, month, day, slug)
     if (!post) notFound()
+
+    const related = await getRelatedPosts(supabase, post.id, 3)
+    const sanitized = post.content ? sanitizeArticleHtml(post.content) : ""
+    const postUrl = `${SITE_URL}${buildPostUrl(post.published_at, post.slug)}`
 
     const primaryCategory = post.categories[0]
     const breadcrumbs = [
