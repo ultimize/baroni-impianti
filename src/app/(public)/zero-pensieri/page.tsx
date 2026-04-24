@@ -4,17 +4,21 @@ import {
   Calendar,
   Zap,
   FileCheck,
-  Check,
-  Users,
+  CheckCircle2,
+  Home,
   Building2,
-  KeyRound,
+  Building,
+  Shield,
+  Battery,
+  Video,
+  Flame,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { Container } from "@/components/public/Container"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { FeatureCard } from "@/components/public/FeatureCard"
-import { StepList } from "@/components/public/StepList"
 import { ClosingCta } from "@/components/public/ClosingCta"
 import {
   Accordion,
@@ -25,73 +29,108 @@ import {
 
 export const metadata: Metadata = {
   title:
-    "Zero Pensieri — La formula di manutenzione elettrica all-inclusive | Baroni Impianti",
+    "Zero Pensieri — Manutenzione elettrica programmata | Baroni Impianti",
   description:
-    "Zero Pensieri è la formula esclusiva di Baroni Impianti: manutenzione programmata, pronto intervento e controlli periodici inclusi. Paghi una quota annuale e ti dimentichi dell'impianto.",
+    "Zero Pensieri è la formula esclusiva di Baroni Impianti: contratto di manutenzione programmata con assistenza 7/7, garanzia a vita sui dispositivi e interventi urgenti illimitati.",
 }
 
 const PROBLEMS = [
   "L'impianto ha dieci anni, chissà se è ancora a norma.",
   "Quando si guasta qualcosa, devo trovare un elettricista al volo.",
   "Non so se i salvavita e le messe a terra sono ancora efficienti.",
-  "La bolletta cresce ma non capisco se l'impianto consuma più del dovuto.",
+  "Qualcosa va storto e non ho documentazione di chi è intervenuto.",
 ]
 
-const STEPS = [
+type Contract = {
+  name: string
+  icon: LucideIcon
+  description: string
+}
+
+const CONTRACTS: Contract[] = [
   {
-    number: 1,
-    title: "Sopralluogo gratuito",
-    description: "Valutiamo l'impianto, i tuoi spazi e le tue esigenze reali.",
+    name: "Allarme intrusione",
+    icon: Shield,
+    description:
+      "Un allarme intrusione (o sistema antintrusione) è un impianto di sicurezza elettronico progettato per rilevare e segnalare tentativi di accesso non autorizzato a un edificio, un'area o un bene protetto. Rivolgersi a un professionista elettrico per la realizzazione di un impianto non è sufficiente per garantire nel tempo i massimi standard di sicurezza in caso di assenza di manutenzione programmata.",
   },
   {
-    number: 2,
-    title: "Preventivo personalizzato",
-    description: "Quota annuale chiara, senza sorprese e senza spese nascoste.",
+    name: "UPS",
+    icon: Battery,
+    description:
+      "Un impianto elettrico UPS (Uninterruptible Power Supply, cioè Gruppo di Continuità) è un sistema progettato per fornire energia elettrica di emergenza e protezione di qualità alle apparecchiature in caso di interruzioni, cali o disturbi della rete elettrica. Il suo compito è mantenere l'alimentazione continua e stabile.",
   },
   {
-    number: 3,
-    title: "Attivazione del contratto",
-    description: "Pochi documenti, firma digitale: si parte subito.",
+    name: "TVCC (videosorveglianza)",
+    icon: Video,
+    description:
+      "Un impianto TVCC è composto da una rete di telecamere collegate a un sistema di registrazione e controllo, che permette di visualizzare le immagini in tempo reale o di archiviarle per consultazioni successive. È definito 'a circuito chiuso' perché le immagini non vengono trasmesse pubblicamente, ma restano visibili solo a utenti autorizzati.",
   },
   {
-    number: 4,
-    title: "Tranquillità",
-    description: "Da qui in poi pensiamo noi a tutto, tu pensi alla tua vita.",
+    name: "STOP FIRE (rilevazione incendi)",
+    icon: Flame,
+    description:
+      "I rilevatori elettrici di incendi sono dispositivi elettronici progettati per individuare tempestivamente i segnali di un principio d'incendio — fumo, calore o fiamma — e inviare un allarme a una centrale di rilevazione. Appartengono alla categoria degli impianti di rivelazione e allarme incendio (IRAI), disciplinati dalla norma UNI EN 54 e dalle norme CEI 79-3 / UNI 9795.",
   },
 ]
 
-const INCLUDED = [
-  "Verifica annuale dello stato dell'impianto secondo CEI 64-8",
-  "Test periodico messa a terra (DPR 462/01) per attività commerciali",
-  "Pulizia e controllo quadro elettrico",
-  "Verifica funzionamento salvavita differenziale",
-  "Controllo cavi, prese e prolunghe in zone a rischio",
-  "Pronto intervento entro 24h per guasti (48h per non urgenze)",
-  "Sconto 15% sui materiali di eventuali interventi straordinari",
-  "Sconto 10% su nuovi impianti (es. colonnine ricarica EV)",
-  "Archivio documentale sempre accessibile",
+type Feature = { title: string; description: string }
+
+const FEATURES: Feature[] = [
+  {
+    title: "Assistenza da remoto 7/7",
+    description: "Risposta entro 24 ore dalla segnalazione.",
+  },
+  {
+    title: "Risoluzione anomalie",
+    description: "Entro 4 giorni lavorativi dalla diagnosi.",
+  },
+  {
+    title: "Interventi urgenti illimitati",
+    description: "Nessun limite numerico in caso di emergenza.",
+  },
+  {
+    title: "Garanzia a vita sui dispositivi",
+    description: "Su tutti i dispositivi installati nell'impianto.",
+  },
+  {
+    title: "Verifica annuale dell'impianto",
+    description: "Con rilascio del verbale di manutenzione.",
+  },
+  {
+    title: "Connessione GSM garantita",
+    description: "Abbonamento al servizio di comunicazione fornito da noi.",
+  },
+  {
+    title: "Sostituzione batterie",
+    description: "Cambio periodico delle batterie nei dispositivi.",
+  },
+  {
+    title: "Aggiornamenti software garantiti",
+    description: "Mantenimento dei firmware sempre aggiornati.",
+  },
 ]
 
 const FAQS = [
   {
     q: "Quanto costa Zero Pensieri?",
-    a: "Il costo dipende dal tipo di impianto e dai metri quadri. Il sopralluogo per stimare la quota è gratuito e senza impegno.",
+    a: "Il costo dipende dal tipo di impianto e dalle dimensioni dell'edificio. Il sopralluogo per stimare la quota è gratuito e senza impegno.",
   },
   {
     q: "Cosa succede se ho un guasto?",
-    a: "Ti basta chiamarci: veniamo entro 24h per guasti urgenti, 48h per non urgenze. L'intervento è già incluso nella quota.",
+    a: "Ti basta chiamarci o segnalare il problema da remoto: rispondiamo entro 24 ore. L'intervento urgente è già incluso nella quota annuale, senza limite di numero.",
   },
   {
     q: "Posso disdire in qualsiasi momento?",
-    a: "Il contratto è annuale con preavviso di 30 giorni prima del rinnovo. Nessun vincolo pluriennale.",
-  },
-  {
-    q: "Se rompo io qualcosa, è coperto?",
-    a: "La manutenzione ordinaria e straordinaria per usura è coperta. Danni per uso improprio no, ma li ripariamo comunque a tariffa agevolata.",
+    a: "Il contratto è annuale, con preavviso di 30 giorni prima del rinnovo. Nessun vincolo pluriennale.",
   },
   {
     q: "Funziona anche per impianti non installati da voi?",
-    a: "Sì. Facciamo prima un audit dell'impianto esistente: se c'è qualcosa da mettere a norma lo proponiamo prima dell'attivazione.",
+    a: "Sì. Facciamo prima un audit dell'impianto esistente: se c'è qualcosa da mettere a norma lo proponiamo prima dell'attivazione del contratto.",
+  },
+  {
+    q: "Cosa significa 'garanzia a vita sui dispositivi'?",
+    a: "Per tutta la durata del contratto, i dispositivi inclusi nell'impianto sono coperti: in caso di guasto li ripariamo o sostituiamo senza costi aggiuntivi.",
   },
 ]
 
@@ -110,21 +149,17 @@ export default function ZeroPensieriPage() {
       <PageHero
         eyebrow="Servizio esclusivo"
         title="Zero Pensieri. L'impianto che si prende cura da solo."
-        lead="Manutenzione programmata, controlli periodici, pronto intervento. Paghi una quota annuale e ti dimentichi di pensare all'impianto elettrico."
+        lead="Manutenzione programmata, controlli periodici, pronto intervento. Paghi una quota annuale e ti dimentichi di pensare all'impianto."
         tone="brand"
         primaryCta={{
           label: "Richiedi preventivo",
           href: "/contatti?service=zero-pensieri",
         }}
         secondaryCta={{
-          label: "Scopri come funziona",
+          label: "Come funziona",
           href: "#come-funziona",
         }}
-      >
-        <span className="inline-flex items-center rounded-full border border-border/60 bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-          Disponibile per civili e aziende
-        </span>
-      </PageHero>
+      />
 
       <SectionWrapper variant="muted">
         <div className="mx-auto max-w-3xl text-center">
@@ -158,44 +193,97 @@ export default function ZeroPensieriPage() {
             Con Zero Pensieri, tutto questo non ti riguarda più
           </h2>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Tre pilastri inclusi nella quota: controlli, interventi,
-            documentazione.
+            Sottoscrivendo il contratto Zero Pensieri ricevi assistenza da
+            remoto 7 giorni su 7 entro 24 ore dalla segnalazione e tanti altri
+            benefici per la sicurezza dell&apos;impianto e dei suoi utilizzatori.
           </p>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           <FeatureCard
             icon={Calendar}
             title="Controlli programmati"
-            description="Verifiche periodiche secondo CEI 64-8 e DPR 462/01, pianificate in calendario."
+            description="Verifiche periodiche secondo CEI 64-8 e DPR 462/01."
           />
           <FeatureCard
             icon={Zap}
-            title="Pronto intervento"
-            description="Interventi prioritari inclusi: i clienti Zero Pensieri vengono prima di tutti."
+            title="Pronto intervento incluso"
+            description="Interventi prioritari illimitati in caso di guasto."
           />
           <FeatureCard
             icon={FileCheck}
-            title="Documentazione aggiornata"
-            description="Certificazioni, DICO e registro interventi conservati e sempre accessibili."
+            title="Documentazione sempre aggiornata"
+            description="Verbali di manutenzione, schemi e certificati conservati per te."
           />
         </div>
       </SectionWrapper>
 
-      <SectionWrapper variant="muted">
+      <SectionWrapper variant="muted" id="contratti">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Quattro step, zero complicazioni
+            Zero Pensieri si adatta al tuo impianto
           </h2>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Dalla prima telefonata alla tranquillità, nel modo più semplice.
+            Quattro contratti dedicati per coprire le aree più critiche della
+            sicurezza elettrica.
           </p>
         </div>
-        <div className="mt-12">
-          <StepList steps={STEPS} />
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {CONTRACTS.map((c) => {
+            const Icon = c.icon
+            return (
+              <article
+                key={c.name}
+                className="flex h-full flex-col rounded-2xl border border-border/60 bg-card p-6 shadow-sm"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="h-6 w-6" aria-hidden />
+                </span>
+                <h3 className="mt-5 text-lg font-semibold tracking-tight">
+                  {c.name}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {c.description}
+                </p>
+              </article>
+            )
+          })}
         </div>
       </SectionWrapper>
 
-      <SectionWrapper variant="white">
+      <SectionWrapper variant="white" id="cosa-include">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            8 garanzie, ogni anno
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+            Tutto quello che ottieni sottoscrivendo Zero Pensieri,
+            indipendentemente dal tipo di impianto.
+          </p>
+        </div>
+        <ul className="mx-auto mt-12 grid max-w-5xl gap-5 sm:grid-cols-2">
+          {FEATURES.map((f) => (
+            <li
+              key={f.title}
+              className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-5"
+            >
+              <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600">
+                <CheckCircle2 className="h-5 w-5" aria-hidden strokeWidth={2} />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  {f.title}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {f.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </SectionWrapper>
+
+      <SectionWrapper variant="muted">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Chi sceglie Zero Pensieri
@@ -203,9 +291,9 @@ export default function ZeroPensieriPage() {
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           <FeatureCard
-            icon={Users}
+            icon={Home}
             title="Famiglie"
-            description="Case vissute ogni giorno dove la sicurezza elettrica non è opzionale."
+            description="Case dove la sicurezza elettrica non è opzionale."
           />
           <FeatureCard
             icon={Building2}
@@ -213,38 +301,10 @@ export default function ZeroPensieriPage() {
             description="Uffici, studi, negozi che non possono permettersi fermi impianto."
           />
           <FeatureCard
-            icon={KeyRound}
+            icon={Building}
             title="Amministratori di condominio"
-            description="Gestione centralizzata delle parti comuni con un interlocutore unico."
+            description="Gestione delle parti comuni con un interlocutore unico."
           />
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper variant="primary-soft">
-        <div className="mx-auto max-w-3xl">
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Cosa c&apos;è in Zero Pensieri
-            </h2>
-            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Tutto quello che ricevi con la quota annuale.
-            </p>
-          </div>
-          <ul className="mt-10 grid gap-3 sm:grid-cols-2">
-            {INCLUDED.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-4"
-              >
-                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600">
-                  <Check className="h-4 w-4" aria-hidden strokeWidth={2.5} />
-                </span>
-                <span className="text-sm leading-relaxed text-foreground">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
         </div>
       </SectionWrapper>
 

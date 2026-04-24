@@ -1,15 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import {
-  ArrowRight,
-  Home,
-  Factory,
-  Sun,
-  Smartphone,
-  ShieldCheck,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
@@ -17,64 +8,17 @@ import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { StepList } from "@/components/public/StepList"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { ServiceCard } from "@/components/public/ServiceCard"
+import { getPublishedServices } from "@/lib/queries/site-content"
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Servizi — Baroni Impianti | Impianti elettrici, fotovoltaico, domotica",
+  title:
+    "Servizi — Baroni Impianti | Impianti elettrici, sicurezza, domotica, fotovoltaico",
   description:
-    "Dagli impianti elettrici civili al fotovoltaico con accumulo, dalla domotica alla videosorveglianza. Scopri tutti i servizi di Baroni Impianti nel Tigullio.",
+    "Impianti cablati, sistemi di sicurezza, domotica KNX, fotovoltaico con accumulo, contratto Zero Pensieri. Scopri tutti i servizi nel Tigullio.",
 }
-
-type Service = {
-  slug: string
-  icon: LucideIcon
-  title: string
-  description: string
-}
-
-const SERVICES: Service[] = [
-  {
-    slug: "impianti-civili",
-    icon: Home,
-    title: "Impianti elettrici civili",
-    description:
-      "Impianti a norma CEI 64-8 per abitazioni private. Nuove costruzioni, ristrutturazioni, adeguamenti e certificazioni.",
-  },
-  {
-    slug: "impianti-industriali",
-    icon: Factory,
-    title: "Impianti elettrici industriali",
-    description:
-      "Progettazione e realizzazione per capannoni, laboratori e attività commerciali. Cabine, quadri, linee di potenza.",
-  },
-  {
-    slug: "fotovoltaico",
-    icon: Sun,
-    title: "Fotovoltaico e accumulo",
-    description:
-      "Impianti fotovoltaici chiavi in mano con sistema di accumulo, monitoraggio e gestione pratica incentivi.",
-  },
-  {
-    slug: "domotica",
-    icon: Smartphone,
-    title: "Domotica e smart home",
-    description:
-      "Automazione evoluta con standard KNX: luci, tapparelle, clima, scenari. BARONI è KNX Partner certificato.",
-  },
-  {
-    slug: "sicurezza",
-    icon: ShieldCheck,
-    title: "Videosorveglianza e antifurto",
-    description:
-      "Impianti di allarme intrusione, videosorveglianza IP, videocitofoni smart, controllo accessi.",
-  },
-  {
-    slug: "pronto-intervento",
-    icon: Wrench,
-    title: "Pronto intervento e manutenzione",
-    description:
-      "Guasti, blackout, manutenzioni programmate. Interventi rapidi nel Tigullio con tecnici qualificati.",
-  },
-]
 
 const STEPS = [
   {
@@ -99,7 +43,9 @@ const STEPS = [
   },
 ]
 
-export default function ServiziPage() {
+export default async function ServiziPage() {
+  const services = await getPublishedServices()
+
   return (
     <>
       <Container className="pt-6">
@@ -113,40 +59,37 @@ export default function ServiziPage() {
 
       <PageHero
         eyebrow="I nostri servizi"
-        title="Un unico interlocutore per tutto l'impianto"
-        lead="Dal piccolo adeguamento al progetto completo: impianti elettrici, fotovoltaico, domotica e sicurezza. Sempre a norma, sempre documentati."
+        title="Cosa possiamo fare per te"
+        lead="Dal cablaggio civile al fotovoltaico, dalla sicurezza alla domotica. Cinque aree di competenza per coprire ogni esigenza elettrica."
         tone="brand"
       />
 
       <SectionWrapper variant="white">
-        <div className="grid gap-6 md:grid-cols-2">
-          {SERVICES.map((service) => {
-            const Icon = service.icon
-            return (
-              <article
-                key={service.slug}
-                className="group flex flex-col rounded-2xl border border-border/60 bg-card p-8 transition-shadow hover:shadow-md"
-              >
-                <span className="grid h-16 w-16 place-items-center rounded-2xl bg-primary/10 text-primary">
-                  <Icon className="h-8 w-8" aria-hidden strokeWidth={1.75} />
-                </span>
-                <h2 className="mt-6 text-xl font-semibold tracking-tight">
-                  {service.title}
-                </h2>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-                <Link
-                  href={`/contatti?service=${service.slug}`}
-                  className="mt-6 inline-flex items-center text-sm font-medium text-primary transition-colors hover:underline"
-                >
-                  Scopri di più
-                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </article>
-            )
-          })}
-        </div>
+        {services.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2">
+            {services.map((service) => {
+              const isZeroPensieri = service.slug === "zero-pensieri"
+              return (
+                <ServiceCard
+                  key={service.slug}
+                  slug={service.slug}
+                  name={service.title}
+                  shortDescription={service.short_description ?? ""}
+                  iconName={service.icon}
+                  href={
+                    isZeroPensieri ? "/zero-pensieri" : `/servizi/${service.slug}`
+                  }
+                  highlight={isZeroPensieri}
+                />
+              )
+            })}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground">
+            Stiamo aggiornando l&apos;elenco dei servizi. Torna a trovarci tra
+            poco.
+          </p>
+        )}
       </SectionWrapper>
 
       <SectionWrapper variant="muted">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { Video, Star, ArrowRight, ExternalLink } from "lucide-react"
+import { Star, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
@@ -8,32 +7,24 @@ import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { TestimonialCard } from "@/components/public/TestimonialCard"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { getPublishedTestimonials } from "@/lib/queries/site-content"
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "Testimonianze — I nostri clienti raccontano | Baroni Impianti",
   description:
-    "Storie reali di impianti elettrici realizzati nel Tigullio. Scopri perché i clienti scelgono Baroni Impianti.",
+    "Storie reali di clienti Baroni Impianti nel Tigullio. Scopri le testimonianze video di chi ha scelto la nostra qualità.",
 }
 
-const PLACEHOLDERS = [
-  {
-    placeholderLabel: "Presto qui — testimonianza di un cliente privato.",
-    authorName: "Cliente privato",
-    authorRole: "Sestri Levante",
-  },
-  {
-    placeholderLabel: "Presto qui — testimonianza di un'azienda del Tigullio.",
-    authorName: "Azienda locale",
-    authorRole: "Chiavari",
-  },
-  {
-    placeholderLabel: "Presto qui — testimonianza di un condominio.",
-    authorName: "Amministratore condominio",
-    authorRole: "Lavagna",
-  },
-]
+// TODO: quando avremo il Place ID di Baroni, integrare Google Places API per
+// pull dinamico delle review piu' recenti.
+const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Baroni+Impianti+Castiglione+Chiavarese"
 
-export default function TestimonianzePage() {
+export default async function TestimonianzePage() {
+  const testimonials = await getPublishedTestimonials()
+
   return (
     <>
       <Container className="pt-6">
@@ -46,107 +37,82 @@ export default function TestimonianzePage() {
       </Container>
 
       <PageHero
-        eyebrow="Le parole dei nostri clienti"
-        title="Ogni impianto ha una storia"
-        lead="Da oltre vent'anni lavoriamo nel Tigullio costruendo relazioni che durano nel tempo. Queste sono le voci di chi ci ha sceglie."
+        eyebrow="Le parole dei clienti"
+        title="Storie reali, voci reali"
+        lead="Da oltre vent'anni costruiamo relazioni che durano nel tempo. Queste sono le voci di chi ci ha scelto."
         tone="brand"
       />
 
-      <SectionWrapper variant="muted">
+      <SectionWrapper variant="white">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Video testimonianze
+            Le testimonianze video
           </h2>
           <p className="mt-4 text-base text-muted-foreground sm:text-lg">
             Le storie in prima persona dei clienti Baroni Impianti.
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-dashed border-border bg-card p-10 text-center sm:p-14">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary">
-            <Video className="h-7 w-7" aria-hidden strokeWidth={1.75} />
-          </span>
-          <h3 className="mt-6 text-xl font-semibold tracking-tight">
-            Stiamo raccogliendo le prime testimonianze video
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Nei prossimi mesi pubblicheremo qui video di clienti che raccontano
-            la loro esperienza con Baroni Impianti. Se sei un nostro cliente e
-            vuoi raccontarci la tua storia, contattaci.
-          </p>
-          <div className="mt-6">
-            <Button asChild>
-              <Link href="/contatti?subject=testimonianza">
-                Racconta la tua esperienza
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+        {testimonials.length > 0 ? (
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            {testimonials.map((t) => (
+              <TestimonialCard
+                key={t.id}
+                youtubeId={t.youtube_video_id ?? undefined}
+                authorName={t.client_name}
+                authorRole={
+                  t.location || t.project_title
+                    ? [t.project_title, t.location]
+                        .filter(Boolean)
+                        .join(" · ")
+                    : undefined
+                }
+                quote={t.description ?? undefined}
+              />
+            ))}
           </div>
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper variant="white">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Cosa dicono di noi
-          </h2>
-          <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Una panoramica di chi ha scelto Baroni Impianti negli anni.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {PLACEHOLDERS.map((p, i) => (
-            <TestimonialCard
-              key={i}
-              placeholder
-              placeholderLabel={p.placeholderLabel}
-              authorName={p.authorName}
-              authorRole={p.authorRole}
-            />
-          ))}
-        </div>
+        ) : (
+          <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-dashed border-border bg-card p-10 text-center">
+            <p className="text-sm text-muted-foreground">
+              Stiamo raccogliendo le prime testimonianze video. Se sei un
+              nostro cliente e vuoi raccontarci la tua storia, contattaci.
+            </p>
+          </div>
+        )}
       </SectionWrapper>
 
       <SectionWrapper variant="muted">
         <div className="mx-auto max-w-3xl">
           <div className="text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Recensioni Google
+              Le recensioni Google
             </h2>
             <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Le opinioni verificate dei nostri clienti direttamente dalla
-              scheda Google My Business.
+              Vuoi vedere cosa dicono i nostri clienti su Google? Visita la
+              nostra scheda Google My Business.
             </p>
           </div>
 
           <div className="mt-10 rounded-2xl border border-border/60 bg-card p-8 sm:p-10">
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <div
-                  className="flex items-center gap-1"
-                  aria-label="Valutazione Google"
-                >
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-5 w-5 fill-amber-400 text-amber-400"
-                    />
-                  ))}
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Le recensioni dei nostri clienti su Google sono in arrivo qui.
-                  Nel frattempo puoi vederle direttamente sulla nostra scheda
-                  Google My Business.
-                </p>
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div className="flex items-center gap-1" aria-label="Valutazione Google">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-6 w-6 fill-amber-400 text-amber-400"
+                  />
+                ))}
               </div>
+              <p className="text-sm text-muted-foreground">
+                Recensioni in arrivo qui prossimamente.
+              </p>
               <Button asChild variant="outline">
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Baroni+Impianti+Sestri+Levante"
+                  href={GOOGLE_REVIEWS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Apri su Google Maps
+                  Vai alla nostra scheda Google
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -157,7 +123,7 @@ export default function TestimonianzePage() {
 
       <ClosingCta
         title="Vuoi diventare la prossima storia?"
-        lead="Contattaci per un sopralluogo gratuito e scopri come possiamo aiutarti."
+        lead="Un sopralluogo gratuito è il modo migliore per iniziare a lavorare insieme."
         primaryCta={{ label: "Richiedi sopralluogo", href: "/contatti" }}
         secondaryCta={{
           label: "Scopri Zero Pensieri",

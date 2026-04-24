@@ -1,48 +1,28 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
+import { Check } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import {
+  getPublishedServices,
+  getServiceBySlug,
+} from "@/lib/queries/site-content"
 
-// TODO: quando arriveranno i contenuti specifici per ogni servizio dal cliente,
-// sostituire questo placeholder con una pagina dedicata (eventualmente
-// reintroducendo il fetch da Supabase `services`).
-const SERVICES: Record<string, { title: string; description: string }> = {
-  "impianti-civili": {
-    title: "Impianti elettrici civili",
-    description:
-      "Impianti a norma CEI 64-8 per abitazioni private: nuove costruzioni, ristrutturazioni, adeguamenti e certificazioni.",
-  },
-  "impianti-industriali": {
-    title: "Impianti elettrici industriali",
-    description:
-      "Progettazione e realizzazione di impianti elettrici per capannoni, laboratori e attività commerciali.",
-  },
-  fotovoltaico: {
-    title: "Fotovoltaico e accumulo",
-    description:
-      "Impianti fotovoltaici chiavi in mano con sistema di accumulo, monitoraggio e gestione degli incentivi.",
-  },
-  domotica: {
-    title: "Domotica e smart home",
-    description:
-      "Automazione evoluta con standard KNX: luci, tapparelle, clima, scenari personalizzati. BARONI è KNX Partner.",
-  },
-  sicurezza: {
-    title: "Videosorveglianza e antifurto",
-    description:
-      "Impianti di allarme intrusione, videosorveglianza IP, videocitofoni smart e controllo accessi.",
-  },
-  "pronto-intervento": {
-    title: "Pronto intervento e manutenzione",
-    description:
-      "Guasti, blackout, manutenzioni programmate. Interventi rapidi nel Tigullio con tecnici qualificati.",
-  },
-}
+export const revalidate = 3600
 
 type Params = { slug: string }
+
+export async function generateStaticParams() {
+  const services = await getPublishedServices()
+  return services
+    .filter((s) => s.slug !== "zero-pensieri")
+    .map((s) => ({ slug: s.slug }))
+}
 
 export async function generateMetadata({
   params,
@@ -50,13 +30,24 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const service = SERVICES[slug]
-  if (!service) return { title: "Servizio non trovato" }
+  const service = await getServiceBySlug(slug)
+  if (!service) return { title: "Servizio non trovato — Baroni Impianti" }
   return {
     title: `${service.title} — Baroni Impianti`,
-    description: service.description,
+    description:
+      service.seo_description ??
+      service.short_description ??
+      undefined,
   }
 }
+
+const INCLUDED = [
+  "Sopralluogo tecnico gratuito",
+  "Preventivo dettagliato",
+  "Realizzazione a regola d'arte",
+  "Certificazioni e documentazione",
+  "Assistenza post-installazione",
+]
 
 export default async function ServicePage({
   params,
@@ -64,8 +55,15 @@ export default async function ServicePage({
   params: Promise<Params>
 }) {
   const { slug } = await params
-  const service = SERVICES[slug]
+
+  if (slug === "zero-pensieri") {
+    redirect("/zero-pensieri")
+  }
+
+  const service = await getServiceBySlug(slug)
   if (!service) notFound()
+
+  const contactHref = `/contatti?service=${slug}`
 
   return (
     <>
@@ -83,29 +81,70 @@ export default async function ServicePage({
       <PageHero
         eyebrow="Servizio"
         title={service.title}
-        lead={service.description}
+        lead={service.short_description ?? undefined}
         tone="brand"
-        primaryCta={{ label: "Richiedi informazioni", href: `/contatti?service=${slug}` }}
+        primaryCta={{
+          label: "Richiedi sopralluogo gratuito",
+          href: contactHref,
+        }}
         secondaryCta={{ label: "Tutti i servizi", href: "/servizi" }}
       />
 
       <SectionWrapper variant="white">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-dashed border-border bg-muted/30 p-10 text-center">
-          <h2 className="text-xl font-semibold tracking-tight">
-            Contenuti dettagliati in arrivo
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Cosa include
           </h2>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Stiamo preparando una pagina dedicata a questo servizio con esempi,
-            materiali, tempi e garanzie. Nel frattempo, contattaci: rispondiamo
-            a ogni domanda specifica entro 24 ore.
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Stiamo preparando una panoramica completa di questo servizio. Nel
+            frattempo contattaci direttamente per una consulenza personalizzata:
+            ogni progetto è diverso e merita un&apos;analisi su misura.
           </p>
+
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+            {INCLUDED.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-4"
+              >
+                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600">
+                  <Check className="h-4 w-4" aria-hidden strokeWidth={2.5} />
+                </span>
+                <span className="text-sm leading-relaxed text-foreground">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </SectionWrapper>
+
+      <SectionWrapper variant="muted">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-3xl border border-primary/15 bg-card p-8 text-center sm:p-12">
+          <p className="text-xs font-medium uppercase tracking-wider text-primary">
+            Manutenzione programmata
+          </p>
+          <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Vuoi affiancare a questo servizio anche la manutenzione?
+          </h3>
+          <p className="max-w-2xl text-base text-muted-foreground">
+            Con Zero Pensieri il tuo impianto è seguito nel tempo: controlli
+            periodici, pronto intervento illimitato e garanzia a vita sui
+            dispositivi.
+          </p>
+          <Button asChild size="lg">
+            <Link href="/zero-pensieri">Scopri Zero Pensieri</Link>
+          </Button>
         </div>
       </SectionWrapper>
 
       <ClosingCta
-        title="Parliamone"
+        title={`Vuoi parlare di ${service.title.toLowerCase()}?`}
         lead="Un sopralluogo gratuito è il modo più rapido per capire di cosa hai bisogno."
-        primaryCta={{ label: "Richiedi sopralluogo", href: `/contatti?service=${slug}` }}
+        primaryCta={{
+          label: "Richiedi sopralluogo gratuito",
+          href: contactHref,
+        }}
         secondaryCta={{ label: "Chi siamo", href: "/chi-siamo" }}
       />
     </>
