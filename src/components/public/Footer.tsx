@@ -1,13 +1,14 @@
 import Link from "next/link"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import Image from "next/image"
+import { MapPin, Phone, Mail, Clock, ShieldCheck, Award } from "lucide-react"
 import { Container } from "@/components/public/Container"
-import { Logo } from "@/components/public/Logo"
 import {
   getSiteSettings,
   getPublishedServices,
   settingAddress,
   settingString,
 } from "@/lib/queries/site-content"
+import { cn } from "@/lib/utils"
 
 function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -56,7 +57,7 @@ export async function Footer() {
     "company_legal_name",
     "BARONI IMPIANTI di Baroni Luca",
   )
-  const vat = settingString(settings, "company_vat")
+  const vat = settingString(settings, "company_vat", "02438410991")
   const email = settingString(settings, "company_email")
   const phoneDisplay = settingString(settings, "company_phone_display")
   const phoneTel = settingString(settings, "company_phone_tel")
@@ -73,17 +74,45 @@ export async function Footer() {
   ].filter((s) => s.url.length > 0)
 
   return (
-    <footer className="mt-24 border-t border-border/60 bg-muted/30">
-      <Container className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-4">
-            <Logo />
-            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Impianti elettrici fatti come si deve. A Sestri Levante e nel
-              Tigullio.
+    <footer className="bg-slate-50 border-t border-slate-200/60 mt-auto">
+      <Container className="py-16 lg:py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+          {/* Brand Block */}
+          <div className="sm:col-span-2 lg:col-span-4 space-y-6">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <Image 
+                src="/logo.png" 
+                alt="Baroni Impianti" 
+                width={48} 
+                height={48} 
+                className="h-12 w-auto" 
+              />
+              <span className="text-xl font-semibold tracking-tight text-slate-900">
+                Baroni Impianti
+              </span>
+            </Link>
+            
+            <p className="text-sm leading-relaxed text-slate-600 max-w-sm">
+              Impianti elettrici fatti come si deve. A Sestri Levante e nel Tigullio dal 2017.
             </p>
+            
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+                Garanzia a vita
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
+                <Award className="h-3.5 w-3.5 text-brand" />
+                KNX Partner
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
+                <Phone className="h-3.5 w-3.5 text-amber-500" />
+                Pronto intervento 24h
+              </span>
+            </div>
+
             {socials.length > 0 ? (
-              <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-3 pt-2">
                 {socials.map(({ url, label, icon: Icon }) => (
                   <a
                     key={label}
@@ -91,7 +120,7 @@ export async function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 transition-colors hover:border-brand hover:text-brand hover:bg-brand/5 shadow-sm"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -100,16 +129,17 @@ export async function Footer() {
             ) : null}
           </div>
 
-          <nav aria-label="Navigazione">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+          {/* Navigazione */}
+          <nav aria-label="Navigazione" className="lg:col-span-2">
+            <h3 className="text-sm font-semibold text-slate-900 mb-4">
               Navigazione
             </h3>
-            <ul className="mt-4 space-y-2">
+            <ul className="space-y-3">
               {FOOTER_NAV.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="text-sm text-slate-600 transition-colors hover:text-brand"
                   >
                     {link.label}
                   </Link>
@@ -118,11 +148,12 @@ export async function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Servizi">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+          {/* Servizi */}
+          <nav aria-label="Servizi" className="lg:col-span-3">
+            <h3 className="text-sm font-semibold text-slate-900 mb-4">
               Servizi
             </h3>
-            <ul className="mt-4 space-y-2">
+            <ul className="space-y-3">
               {services.map((service) => {
                 const href =
                   service.slug === "zero-pensieri"
@@ -132,7 +163,7 @@ export async function Footer() {
                   <li key={service.slug}>
                     <Link
                       href={href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="text-sm text-slate-600 transition-colors hover:text-brand"
                     >
                       {service.title}
                     </Link>
@@ -142,14 +173,15 @@ export async function Footer() {
             </ul>
           </nav>
 
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+          {/* Contatti */}
+          <div className="lg:col-span-3">
+            <h3 className="text-sm font-semibold text-slate-900 mb-4">
               Contatti
             </h3>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+            <ul className="space-y-3 text-sm text-slate-600 leading-relaxed">
               {address ? (
-                <li className="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+                <li className="flex items-start gap-3">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   <span>
                     {address.street}
                     <br />
@@ -159,12 +191,12 @@ export async function Footer() {
                 </li>
               ) : null}
               {phoneDisplay ? (
-                <li className="flex items-start gap-2">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+                <li className="flex items-start gap-3">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   {phoneTel ? (
                     <a
                       href={`tel:${phoneTel}`}
-                      className="hover:text-primary"
+                      className="hover:text-brand transition-colors"
                     >
                       {phoneDisplay}
                     </a>
@@ -174,19 +206,19 @@ export async function Footer() {
                 </li>
               ) : null}
               {email ? (
-                <li className="flex items-start gap-2">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+                <li className="flex items-start gap-3">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   <a
                     href={`mailto:${email}`}
-                    className="break-all hover:text-primary"
+                    className="break-all hover:text-brand transition-colors"
                   >
                     {email}
                   </a>
                 </li>
               ) : null}
               {hours ? (
-                <li className="flex items-start gap-2">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+                <li className="flex items-start gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   <span>{hours}</span>
                 </li>
               ) : null}
@@ -194,28 +226,29 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+        {/* Bottom Bar */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200/60 pt-8 text-xs text-slate-500 sm:flex-row">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-1.5">
             <span>
               © {year} {legalName}
             </span>
             {vat ? (
               <>
-                <span aria-hidden className="text-muted-foreground/40">
+                <span aria-hidden className="text-slate-300">
                   ·
                 </span>
                 <span>P.IVA {vat}</span>
               </>
             ) : null}
           </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link href="#" className="hover:text-primary">
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Link href="#" className="transition-colors hover:text-brand">
               Privacy
             </Link>
-            <Link href="#" className="hover:text-primary">
+            <Link href="#" className="transition-colors hover:text-brand">
               Cookie
             </Link>
-            <Link href="#" className="hover:text-primary">
+            <Link href="#" className="transition-colors hover:text-brand">
               Termini
             </Link>
           </div>

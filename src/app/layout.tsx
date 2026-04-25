@@ -1,13 +1,9 @@
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
 import { Toaster } from "@/components/ui/sonner"
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants"
 import "./globals.css"
-
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,7 +30,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#2563eb",
+  themeColor: "#1E3A8A",
   width: "device-width",
   initialScale: 1,
 }
@@ -43,7 +39,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${inter.variable} h-full antialiased`}>
+    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
         <Toaster richColors position="top-right" />
