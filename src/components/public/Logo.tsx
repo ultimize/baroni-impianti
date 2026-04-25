@@ -21,7 +21,7 @@ export function Logo({ className, variant = "dark", showText = true }: LogoProps
       )}
     >
       <Image
-        src="/Logo.png"
+        src="/logo.png"
         alt={SITE_NAME}
         width={48}
         height={48}

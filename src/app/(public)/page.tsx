@@ -136,9 +136,9 @@ export default async function HomePage() {
                 />
 
                 {/* Floating Badges */}
-                <div className="absolute top-6 right-6 z-20 bg-white shadow-sm border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700 flex items-center gap-1.5">
-                  <Zap className="h-3.5 w-3.5 text-brand" />
-                  KNX Partner certificato
+                <div className="absolute -top-3 -right-3 lg:top-4 lg:right-4 z-20 inline-flex items-center gap-1.5 bg-white shadow-sm border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700">
+                  <Zap className="h-3.5 w-3.5 text-brand-600" />
+                  <span>KNX Partner certificato</span>
                 </div>
                 
                 <div className="absolute bottom-6 left-6 z-20 bg-white shadow-sm border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700 flex items-center gap-1.5">
