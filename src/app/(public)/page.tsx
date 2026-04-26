@@ -549,29 +549,37 @@ export default async function HomePage() {
       )}
 
       {/* CTA Finale */}
-      <section className="bg-gradient-to-br from-slate-900 to-brand-900 py-24 lg:py-32 border-t border-slate-800">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center text-white">
-          <span className="text-sm font-medium tracking-widest uppercase text-white/70">
-            Pronto a iniziare?
-          </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
+      <section className="relative bg-gradient-to-br from-slate-900 via-brand-950 to-slate-900 py-24 lg:py-32 overflow-hidden border-t border-slate-800">
+        {/* Background Glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/10 blur-[100px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-50" />
+
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-widest mb-8 shadow-2xl">
+            <MapPin className="w-4 h-4 text-amber-400 fill-amber-400/20" /> Pronto a iniziare?
+          </div>
+          
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15]">
             Un sopralluogo gratuito,<br />
-            zero impegni, zero sorprese.
+            <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500">
+              zero impegni, zero sorprese.
+            </span>
           </h2>
-          <p className="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+          
+          <p className="mt-8 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto font-light">
             Veniamo a casa tua o nella tua attività, valutiamo l'impianto, ti diciamo cosa serve. Costi e tempi chiari prima di iniziare.
           </p>
           
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contatti"
-              className="inline-flex items-center justify-center bg-white text-brand hover:bg-slate-100 font-semibold px-8 h-12 rounded-xl transition-transform hover:scale-[1.02] w-full sm:w-auto"
+              className="inline-flex items-center justify-center bg-white text-slate-900 font-semibold px-8 h-14 rounded-xl transition-all hover:scale-[1.02] hover:bg-slate-50 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] w-full sm:w-auto text-lg"
             >
               Richiedi sopralluogo
             </Link>
             <a
               href="tel:+390185167704"
-              className="inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 font-medium px-8 h-12 rounded-xl transition-colors w-full sm:w-auto"
+              className="inline-flex items-center justify-center bg-white/5 border border-white/20 backdrop-blur-sm text-white hover:bg-white/10 font-medium px-8 h-14 rounded-xl transition-all w-full sm:w-auto text-lg"
             >
               Chiamaci ora
             </a>
