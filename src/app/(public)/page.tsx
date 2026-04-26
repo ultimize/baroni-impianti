@@ -56,29 +56,34 @@ const SERVICES = [
 
 const CERTIFICATES = [
   {
-    image: "/img/certificati/cert-1.jpg",
+    image: "/img/certificati/cert-1.jpg?v=2",
     title: "Networking Base",
     provider: "Altatensione / Netify",
   },
   {
-    image: "/img/certificati/cert-2.jpg",
+    image: "/img/certificati/cert-2.jpg?v=2",
     title: "Autorimesse e ricarica veicoli elettrici",
     provider: "Il Professionista Elettrico",
   },
   {
-    image: "/img/certificati/cert-3.jpg",
+    image: "/img/certificati/cert-3.jpg?v=2",
     title: "Elettrosistemista™",
     provider: "Corso di Elettrosistemista",
   },
   {
-    image: "/img/certificati/cert-4.jpg",
+    image: "/img/certificati/cert-4.jpg?v=2",
     title: "System Integrator: DALI2",
     provider: "Ohmega Progettazioni",
   },
   {
-    image: "/img/certificati/cert-5.jpg",
+    image: "/img/certificati/cert-5.jpg?v=2",
     title: "Metodo Reti IP",
     provider: "Altatensione",
+  },
+  {
+    image: "/img/certificati/cert-6.jpg?v=2",
+    title: "Certificazione Aggiuntiva",
+    provider: "Baroni Impianti",
   },
 ]
 
