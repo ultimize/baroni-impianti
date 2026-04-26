@@ -123,25 +123,26 @@ export default async function HomePage() {
 
             {/* Right Column - lg:col-span-5 */}
             <div className="lg:col-span-5 relative mt-8 lg:mt-0 animate-slide-up">
-              <div className="relative aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100/60 ring-1 ring-brand/10 p-8 lg:p-12 flex items-center justify-center">
-                <div className="absolute inset-0 bg-[radial-gradient(circle,_theme(colors.brand.200)_1px,_transparent_1px)] bg-[length:24px_24px] opacity-30 pointer-events-none" />
-                
+              <div className="relative aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-brand/10">
                 <Image 
-                  src="/logo.png" 
-                  alt="Baroni Impianti Logo" 
-                  width={400} 
-                  height={400} 
-                  className="relative z-10 w-full h-auto max-w-sm mx-auto drop-shadow-sm"
-                  priority
+                  src="/img/hero-impianto.jpg" 
+                  alt="Impianto elettrico realizzato da Baroni Impianti" 
+                  fill 
+                  className="object-cover" 
+                  priority 
+                  sizes="(max-width:1024px) 100vw, 40vw" 
                 />
+                
+                {/* Subtle overlay per leggibilità degli sticker */}
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/15 via-transparent to-black/10 pointer-events-none" />
 
                 {/* Floating Badges */}
-                <div className="absolute -top-3 -right-3 lg:top-4 lg:right-4 z-20 inline-flex items-center gap-1.5 bg-white shadow-sm border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700">
+                <div className="absolute -top-3 -right-3 lg:top-4 lg:right-4 z-20 inline-flex items-center gap-1.5 bg-white shadow-md border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700">
                   <Zap className="h-3.5 w-3.5 text-brand-600" />
                   <span>KNX Partner certificato</span>
                 </div>
                 
-                <div className="absolute bottom-6 left-6 z-20 bg-white shadow-sm border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700 flex items-center gap-1.5">
+                <div className="absolute bottom-6 left-6 z-20 bg-white shadow-md border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700 flex items-center gap-1.5">
                   <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
                   5/5 su Google
                 </div>
