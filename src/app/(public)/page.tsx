@@ -317,16 +317,22 @@ export default async function HomePage() {
       {/* Servizi Section */}
       <section className="bg-white py-20 lg:py-28 border-t border-slate-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 mb-16 items-end">
+          <div className="grid lg:grid-cols-2 gap-8 mb-20 items-end relative">
+            {/* Background Glow */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 blur-3xl rounded-full pointer-events-none -z-10" />
+            
             <div>
-              <span className="text-sm font-medium tracking-widest uppercase text-brand">
-                Cosa facciamo
-              </span>
-              <h2 className="mt-2 text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900">
-                Cinque competenze, un solo elettricista
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200/60 shadow-sm text-slate-700 text-xs font-semibold uppercase tracking-widest mb-6">
+                <Zap className="w-4 h-4 text-amber-500 fill-amber-500" /> Cosa facciamo
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.15]">
+                Cinque competenze, <br className="hidden md:block" />
+                <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-600">
+                  un solo elettricista.
+                </span>
               </h2>
             </div>
-            <p className="text-lg text-slate-600 leading-relaxed max-w-lg">
+            <p className="text-lg text-slate-600 leading-relaxed max-w-lg lg:pb-2">
               Soluzioni integrate per la casa e l'azienda. Copriamo ogni aspetto dell'impiantistica 
               con un unico standard di qualità artigianale e rispetto delle normative.
             </p>
