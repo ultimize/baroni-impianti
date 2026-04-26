@@ -306,47 +306,69 @@ export default async function HomePage() {
       {/* Perché Baroni / Differenziatori */}
       <section className="bg-slate-50 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="max-w-4xl mb-16">
             <span className="text-sm font-medium tracking-widest uppercase text-brand">
               Perché ci scelgono
             </span>
-            <h2 className="mt-2 text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900">
-              Non solo impianti elettrici. <br />Standard di lavoro.
+            <h2 className="mt-4 text-3xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
+              Cerchi un elettricista a Sestri Levante qualificato e specializzato? <br className="hidden md:block" />
+              <span className="text-brand">L’hai appena trovato!</span>
             </h2>
-            <p className="mt-4 text-lg text-slate-600">
-              Tre cose ci differenziano da chi "fa l'elettricista".
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border border-slate-200/60 rounded-2xl p-6 lg:p-8 transition-all hover:border-brand/40 hover:bg-slate-50/50">
-              <div className="inline-flex items-center justify-center bg-brand/10 text-brand rounded-xl p-3 mb-5">
-                <BookOpen className="h-6 w-6" />
+          <div className="max-w-4xl flex flex-col border-t border-slate-200/80">
+            {/* Item 1 */}
+            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
+              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
+                01
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Formazione continua</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Aggiornamenti normativi, corsi KNX, certificazioni del personale tecnico. Ogni anno, senza eccezioni.
-              </p>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
+                    <FileCheck className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900">Ditta Certificata</h3>
+                </div>
+                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                  Baroni Impianti dispone delle più importanti Certificazioni Elettriche riconosciute a livello nazionale. La nostra formazione è il tuo miglior sigillo di garanzia.
+                </p>
+              </div>
             </div>
 
-            <div className="bg-white border border-slate-200/60 rounded-2xl p-6 lg:p-8 transition-all hover:border-brand/40 hover:bg-slate-50/50">
-              <div className="inline-flex items-center justify-center bg-brand/10 text-brand rounded-xl p-3 mb-5">
-                <FileCheck className="h-6 w-6" />
+            {/* Item 2 */}
+            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
+              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
+                02
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Documentazione completa</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                DICO, schemi elettrici, certificati materiali. Tutto consegnato a fine lavori, archiviato per te.
-              </p>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
+                    <Sun className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900">Impianti Fotovoltaici</h3>
+                </div>
+                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                  Non ci limitiamo all'installazione standard. Offriamo garanzie di rendimento e affidabilità tra le più alte e solide sul mercato per il tuo nuovo impianto solare.
+                </p>
+              </div>
             </div>
 
-            <div className="bg-white border border-slate-200/60 rounded-2xl p-6 lg:p-8 transition-all hover:border-amber-500/40 hover:bg-amber-50/30">
-              <div className="inline-flex items-center justify-center bg-amber-500/10 text-amber-600 rounded-xl p-3 mb-5">
-                <Heart className="h-6 w-6" />
+            {/* Item 3 */}
+            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
+              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
+                03
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Rapporti che durano</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Il 70% dei nostri clienti torna da noi entro 3 anni. Non clienti una tantum: partner di lungo periodo.
-              </p>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900">Impianti di Sicurezza</h3>
+                </div>
+                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                  Installiamo tranquillità. Ti garantiamo la sostituzione in garanzia di tutti i componenti. Per sempre. Nessuna brutta sorpresa sui sistemi di sicurezza.
+                </p>
+              </div>
             </div>
           </div>
 
