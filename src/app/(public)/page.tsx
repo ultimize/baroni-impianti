@@ -316,62 +316,44 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-brand/30">
-              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
-                <FileCheck className="w-48 h-48 text-slate-900" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+            {/* Item 1 */}
+            <div className="group flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-brand/10 text-brand flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-brand group-hover:text-white shadow-sm group-hover:shadow-brand/20">
+                <FileCheck className="h-10 w-10" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-brand/10 group-hover:text-brand group-hover:border-brand/20">
-                  <FileCheck className="h-6 w-6" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                  Ditta Certificata
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Baroni Impianti dispone delle più importanti Certificazioni Elettriche.
-                </p>
-              </div>
+              <h3 className="text-xl lg:text-2xl font-semibold text-slate-900 mb-4">
+                Ditta Certificata
+              </h3>
+              <p className="text-slate-600 text-base leading-relaxed">
+                Baroni Impianti dispone delle più importanti Certificazioni Elettriche.
+              </p>
             </div>
 
-            {/* Card 2 */}
-            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-amber-500/30">
-              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
-                <Sun className="w-48 h-48 text-slate-900" />
+            {/* Item 2 */}
+            <div className="group flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-amber-500 group-hover:text-white shadow-sm group-hover:shadow-amber-500/20">
+                <Sun className="h-10 w-10" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-amber-500/10 group-hover:text-amber-600 group-hover:border-amber-500/20">
-                  <Sun className="h-6 w-6" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                  Impianti Fotovoltaici
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Offriamo garanzie tra le più alte sul mercato.
-                </p>
-              </div>
+              <h3 className="text-xl lg:text-2xl font-semibold text-slate-900 mb-4">
+                Impianti Fotovoltaici
+              </h3>
+              <p className="text-slate-600 text-base leading-relaxed">
+                Offriamo garanzie tra le più alte sul mercato.
+              </p>
             </div>
 
-            {/* Card 3 */}
-            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-500/30">
-              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
-                <ShieldCheck className="w-48 h-48 text-slate-900" />
+            {/* Item 3 */}
+            <div className="group flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-emerald-500 group-hover:text-white shadow-sm group-hover:shadow-emerald-500/20">
+                <ShieldCheck className="h-10 w-10" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-600 group-hover:border-emerald-500/20">
-                  <ShieldCheck className="h-6 w-6" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                  Impianti di Sicurezza
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Sostituzione in garanzia di tutti i componenti per sempre!
-                </p>
-              </div>
+              <h3 className="text-xl lg:text-2xl font-semibold text-slate-900 mb-4">
+                Impianti di Sicurezza
+              </h3>
+              <p className="text-slate-600 text-base leading-relaxed">
+                Sostituzione in garanzia di tutti i componenti per sempre!
+              </p>
             </div>
           </div>
 
