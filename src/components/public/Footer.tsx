@@ -74,39 +74,39 @@ export async function Footer() {
   ].filter((s) => s.url.length > 0)
 
   return (
-    <footer className="bg-slate-50 border-t border-slate-200/60 mt-auto">
+    <footer className="bg-[#0a0f1c] border-t border-slate-800/60 mt-auto text-slate-400">
       <Container className="py-16 lg:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand Block */}
-          <div className="sm:col-span-2 lg:col-span-4 space-y-6">
+          <div className="sm:col-span-2 lg:col-span-4 space-y-8">
             <Link href="/" className="inline-flex items-center gap-3">
               <Image 
                 src="/logo.png" 
                 alt="Baroni Impianti" 
                 width={48} 
                 height={48} 
-                className="h-12 w-auto" 
+                className="h-12 w-auto brightness-200 contrast-125" 
               />
-              <span className="text-xl font-semibold tracking-tight text-slate-900">
+              <span className="text-xl font-semibold tracking-tight text-white">
                 Baroni Impianti
               </span>
             </Link>
             
-            <p className="text-sm leading-relaxed text-slate-600 max-w-sm">
+            <p className="text-sm leading-relaxed max-w-sm">
               Impianti elettrici fatti come si deve. A Sestri Levante e nel Tigullio dal 2017.
             </p>
             
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                 Garanzia a vita
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
-                <Award className="h-3.5 w-3.5 text-brand" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm">
+                <Award className="h-3.5 w-3.5 text-brand-400" />
                 KNX Partner
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
-                <Phone className="h-3.5 w-3.5 text-amber-500" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-300 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm">
+                <Phone className="h-3.5 w-3.5 text-amber-400" />
                 Pronto intervento 24h
               </span>
             </div>
@@ -120,7 +120,7 @@ export async function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 transition-colors hover:border-brand hover:text-brand hover:bg-brand/5 shadow-sm"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-800 bg-white/5 text-slate-400 transition-all hover:border-brand-500/50 hover:text-brand-400 hover:bg-brand-500/10"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -130,16 +130,16 @@ export async function Footer() {
           </div>
 
           {/* Navigazione */}
-          <nav aria-label="Navigazione" className="lg:col-span-2">
-            <h3 className="text-sm font-semibold text-slate-900 mb-4">
+          <nav aria-label="Navigazione" className="lg:col-span-2 lg:col-start-6">
+            <h3 className="text-sm font-semibold text-white mb-6">
               Navigazione
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {FOOTER_NAV.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 transition-colors hover:text-brand"
+                    className="text-sm transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -149,11 +149,11 @@ export async function Footer() {
           </nav>
 
           {/* Servizi */}
-          <nav aria-label="Servizi" className="lg:col-span-3">
-            <h3 className="text-sm font-semibold text-slate-900 mb-4">
+          <nav aria-label="Servizi" className="lg:col-span-2">
+            <h3 className="text-sm font-semibold text-white mb-6">
               Servizi
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {services.map((service) => {
                 const href =
                   service.slug === "zero-pensieri"
@@ -163,7 +163,7 @@ export async function Footer() {
                   <li key={service.slug}>
                     <Link
                       href={href}
-                      className="text-sm text-slate-600 transition-colors hover:text-brand"
+                      className="text-sm transition-colors hover:text-white"
                     >
                       {service.title}
                     </Link>
@@ -175,13 +175,13 @@ export async function Footer() {
 
           {/* Contatti */}
           <div className="lg:col-span-3">
-            <h3 className="text-sm font-semibold text-slate-900 mb-4">
+            <h3 className="text-sm font-semibold text-white mb-6">
               Contatti
             </h3>
-            <ul className="space-y-3 text-sm text-slate-600 leading-relaxed">
+            <ul className="space-y-4 text-sm leading-relaxed">
               {address ? (
                 <li className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
                   <span>
                     {address.street}
                     <br />
@@ -192,25 +192,25 @@ export async function Footer() {
               ) : null}
               {phoneDisplay ? (
                 <li className="flex items-start gap-3">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
                   {phoneTel ? (
                     <a
                       href={`tel:${phoneTel}`}
-                      className="hover:text-brand transition-colors"
+                      className="hover:text-white transition-colors"
                     >
                       {phoneDisplay}
                     </a>
                   ) : (
-                    <span>{phoneDisplay}</span>
+                     <span>{phoneDisplay}</span>
                   )}
                 </li>
               ) : null}
               {email ? (
                 <li className="flex items-start gap-3">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
                   <a
                     href={`mailto:${email}`}
-                    className="break-all hover:text-brand transition-colors"
+                    className="break-all hover:text-white transition-colors"
                   >
                     {email}
                   </a>
@@ -218,7 +218,7 @@ export async function Footer() {
               ) : null}
               {hours ? (
                 <li className="flex items-start gap-3">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
                   <span>{hours}</span>
                 </li>
               ) : null}
@@ -227,14 +227,14 @@ export async function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200/60 pt-8 text-xs text-slate-500 sm:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 text-xs sm:flex-row">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-1.5">
             <span>
               © {year} {legalName}
             </span>
             {vat ? (
               <>
-                <span aria-hidden className="text-slate-300">
+                <span aria-hidden className="text-slate-600">
                   ·
                 </span>
                 <span>P.IVA {vat}</span>
@@ -242,13 +242,13 @@ export async function Footer() {
             ) : null}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6">
-            <Link href="#" className="transition-colors hover:text-brand">
+            <Link href="#" className="transition-colors hover:text-white">
               Privacy
             </Link>
-            <Link href="#" className="transition-colors hover:text-brand">
+            <Link href="#" className="transition-colors hover:text-white">
               Cookie
             </Link>
-            <Link href="#" className="transition-colors hover:text-brand">
+            <Link href="#" className="transition-colors hover:text-white">
               Termini
             </Link>
           </div>
