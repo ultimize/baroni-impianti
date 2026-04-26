@@ -254,6 +254,19 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
+
+          <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left animate-slide-up">
+            <p className="text-slate-600 font-medium text-lg">
+              Hai un progetto in mente o un impianto da controllare?
+            </p>
+            <Link
+              href="/contatti"
+              className="inline-flex items-center justify-center bg-brand hover:bg-brand-600 text-white font-medium px-6 h-12 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm"
+            >
+              Richiedi sopralluogo gratuito
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
