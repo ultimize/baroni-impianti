@@ -29,7 +29,7 @@ export function ServiceCard({
   highlight,
 }: ServiceCardProps) {
   const Icon = resolveIcon(iconName)
-  const target = href ?? `/servizi/${slug}`
+  const target = href ?? `/${slug}`
 
   return (
     <article

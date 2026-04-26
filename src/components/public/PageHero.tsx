@@ -46,7 +46,7 @@ export function PageHero({
           backgroundSize: "22px 22px",
         }}
       />
-      <Container className="relative py-16 sm:py-20 lg:py-24">
+      <Container className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
         <div
           className={cn(
             "mx-auto flex max-w-3xl flex-col",

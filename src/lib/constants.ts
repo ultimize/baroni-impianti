@@ -12,12 +12,12 @@ export const CONTACT_EMAIL =
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/chi-siamo", label: "Chi siamo" },
-  { href: "/servizi", label: "Servizi" },
+  { href: "/specialista-elettrico-sestri-levante", label: "Chi siamo" },
+  { href: "/elettricista-a-chiavari-e-sestri-levante", label: "Servizi" },
   { href: "/zero-pensieri", label: "Zero Pensieri" },
   { href: "/testimonianze", label: "Testimonianze" },
   { href: "/certificazioni", label: "Certificazioni" },
-  { href: "/blog", label: "Blog" },
+  { href: "/blog-per-elettricisti", label: "Blog" },
   { href: "/contatti", label: "Contatti" },
 ] as const
 

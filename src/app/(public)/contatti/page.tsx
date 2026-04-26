@@ -10,7 +10,6 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
-import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ContactForm } from "@/components/public/ContactForm"
@@ -56,15 +55,6 @@ export default async function ContattiPage() {
 
   return (
     <>
-      <Container className="pt-6">
-        <BreadcrumbNav
-          items={[
-            { name: "Home", url: "/" },
-            { name: "Contatti", url: "/contatti" },
-          ]}
-        />
-      </Container>
-
       <PageHero
         eyebrow="Parla con noi"
         title="Contattaci"

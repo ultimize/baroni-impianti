@@ -31,12 +31,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/chi-siamo`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/servizi`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/specialista-elettrico-sestri-levante`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/elettricista-a-chiavari-e-sestri-levante`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/zero-pensieri`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/testimonianze`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/certificazioni`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${SITE_URL}/blog-per-elettricisti`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/contatti`, lastModified: now, changeFrequency: "yearly", priority: 0.8 },
   ]
 
@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
   const serviceEntries: MetadataRoute.Sitemap = (services.data ?? []).map((s) => ({
-    url: `${SITE_URL}/servizi/${s.slug}`,
+    url: `${SITE_URL}/${s.slug}`,
     lastModified: new Date(s.updated_at),
     changeFrequency: "monthly",
     priority: 0.8,
@@ -66,14 +66,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const categoryEntries: MetadataRoute.Sitemap = (categories.data ?? []).map((c) => ({
-    url: `${SITE_URL}/blog/categoria/${c.slug}`,
+    url: `${SITE_URL}/blog-per-elettricisti/categoria/${c.slug}`,
     lastModified: new Date(c.updated_at),
     changeFrequency: "weekly",
     priority: 0.6,
   }))
 
   const tagEntries: MetadataRoute.Sitemap = (tags.data ?? []).map((t) => ({
-    url: `${SITE_URL}/blog/tag/${t.slug}`,
+    url: `${SITE_URL}/blog-per-elettricisti/tag/${t.slug}`,
     lastModified: new Date(t.updated_at),
     changeFrequency: "weekly",
     priority: 0.4,

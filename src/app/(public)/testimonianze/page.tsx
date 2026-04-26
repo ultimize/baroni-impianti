@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { Star, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
-import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { TestimonialCard } from "@/components/public/TestimonialCard"
@@ -27,15 +26,6 @@ export default async function TestimonianzePage() {
 
   return (
     <>
-      <Container className="pt-6">
-        <BreadcrumbNav
-          items={[
-            { name: "Home", url: "/" },
-            { name: "Testimonianze", url: "/testimonianze" },
-          ]}
-        />
-      </Container>
-
       <PageHero
         eyebrow="Le parole dei clienti"
         title="Storie reali, voci reali"

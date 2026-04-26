@@ -10,7 +10,6 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { Container } from "@/components/public/Container"
-import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { PageHero } from "@/components/public/PageHero"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { FeatureCard } from "@/components/public/FeatureCard"
@@ -49,15 +48,6 @@ export default async function CertificazioniPage() {
 
   return (
     <>
-      <Container className="pt-6">
-        <BreadcrumbNav
-          items={[
-            { name: "Home", url: "/" },
-            { name: "Certificazioni", url: "/certificazioni" },
-          ]}
-        />
-      </Container>
-
       <PageHero
         eyebrow="Qualità documentata"
         title="Certificazioni e abilitazioni"

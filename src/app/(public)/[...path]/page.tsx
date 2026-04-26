@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import Script from "next/script"
 import { notFound } from "next/navigation"
 import { Container } from "@/components/public/Container"
-import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { ArticleHero } from "@/components/public/ArticleHero"
 import { ArticleContent } from "@/components/public/ArticleContent"
 import { TagsList } from "@/components/public/TagsList"
@@ -162,9 +161,7 @@ export default async function CatchAllPage({
           }}
         />
 
-        <Container className="pt-8 pb-16 lg:pb-24">
-          <BreadcrumbNav items={breadcrumbs} />
-
+        <Container className="pt-28 lg:pt-32 pb-16 lg:pb-24">
           <article>
             <ArticleHero post={post} />
 
@@ -204,11 +201,7 @@ export default async function CatchAllPage({
     ]
 
     return (
-      <Container className="py-12 lg:py-16">
-        <BreadcrumbNav
-          items={breadcrumbs}
-          scriptId={`breadcrumb-page-${page.slug}-jsonld`}
-        />
+      <Container className="pt-28 lg:pt-32 pb-12 lg:pb-16">
         <article className="mx-auto mt-6 max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             {page.title}

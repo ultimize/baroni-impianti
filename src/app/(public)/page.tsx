@@ -32,25 +32,25 @@ const SERVICES = [
     icon: Zap,
     title: "Impianti elettrici civili e industriali",
     description: "Progettiamo e realizziamo impianti a norma CEI, dalla prima accensione alle certificazioni finali.",
-    href: "/servizi/impianti-cablati",
+    href: "/progettazione-impianti-rete-cablata-a-sestri-levante",
   },
   {
     icon: Home,
     title: "Domotica KNX",
     description: "Automazioni intelligenti per controllare luci, clima e accessi, aumentando comfort e risparmio.",
-    href: "/servizi/impianti-digitali-integrati",
+    href: "/contatti",
   },
   {
     icon: Sun,
     title: "Fotovoltaico e accumulo",
     description: "Impianti solari chiavi in mano con sistemi di accumulo per l'indipendenza energetica.",
-    href: "/servizi/impianti-fotovoltaici",
+    href: "/contatti",
   },
   {
     icon: Video,
     title: "Sistemi di Sicurezza",
     description: "Antifurto, videosorveglianza e antincendio per proteggere i tuoi spazi 24/7.",
-    href: "/servizi/impianti-sicurezza",
+    href: "/progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante",
   },
 ]
 
@@ -535,7 +535,7 @@ export default async function HomePage() {
                 </h2>
               </div>
               <Link
-                href="/blog"
+                href="/blog-per-elettricisti"
                 className="inline-flex items-center text-sm font-medium text-brand hover:text-brand-600 transition-colors"
               >
                 Vedi tutti gli articoli

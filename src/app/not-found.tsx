@@ -32,7 +32,7 @@ export default function NotFound() {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/blog">Vai al blog</Link>
+              <Link href="/blog-per-elettricisti">Vai al blog</Link>
             </Button>
             <Button asChild variant="ghost">
               <Link href="/contatti">Contattaci</Link>

@@ -1,6 +1,16 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: '/chi-siamo', destination: '/specialista-elettrico-sestri-levante', permanent: true },
+      { source: '/servizi', destination: '/elettricista-a-chiavari-e-sestri-levante', permanent: true },
+      { source: '/servizi/impianti-cablati', destination: '/progettazione-impianti-rete-cablata-a-sestri-levante', permanent: true },
+      { source: '/servizi/impianti-sicurezza', destination: '/progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante', permanent: true },
+      { source: '/servizi/protezione-spd', destination: '/protezione-dalle-scariche-atmosferiche-installazione-spd', permanent: true },
+      { source: '/blog', destination: '/blog-per-elettricisti', permanent: true },
+    ]
+  },
   images: {
     remotePatterns: [
       {

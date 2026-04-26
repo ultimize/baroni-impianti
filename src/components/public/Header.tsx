@@ -15,10 +15,21 @@ import {
 import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
-  { href: "/chi-siamo", label: "Chi siamo" },
-  { href: "/servizi", label: "Servizi" },
-  { href: "/zero-pensieri", label: "Zero Pensieri" },
-  { href: "/blog", label: "Blog" },
+  { href: "/", label: "Home" },
+  { href: "/specialista-elettrico-sestri-levante", label: "Chi siamo" },
+  { 
+    href: "/elettricista-a-chiavari-e-sestri-levante", 
+    label: "Servizi",
+    subItems: [
+      { href: "/progettazione-impianti-rete-cablata-a-sestri-levante", label: "Impianti Cablati e wireless" },
+      { href: "/2024/01/30/realizzazione-di-impianti-digitali-integrati/", label: "Impianti Digitali Integrati" },
+      { href: "/progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante", label: "Impianti di Sicurezza" },
+      { href: "/protezione-dalle-scariche-atmosferiche-installazione-spd", label: "Installazione SPD" },
+      { href: "/zero-pensieri", label: 'Assistenza "ZERO PENSIERI"' },
+    ]
+  },
+  { href: "/galleria", label: "Galleria" },
+  { href: "/blog-per-elettricisti", label: "Blog" },
   { href: "/contatti", label: "Contatti" },
 ]
 
@@ -39,13 +50,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const isDarkHero = pathname === "/" && !scrolled
+  const isHomePage = pathname === "/"
+  const isDarkHero = isHomePage && !scrolled
+  const headerSolid = scrolled || !isHomePage
 
   return (
     <header
       className={cn(
         "fixed top-0 z-40 w-full transition-all duration-300",
-        scrolled
+        headerSolid
           ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/60 supports-[backdrop-filter]:bg-white/85"
           : "bg-transparent border-transparent"
       )}
@@ -79,17 +92,65 @@ export function Header() {
                 link.href === "/"
                   ? pathname === "/"
                   : pathname.startsWith(link.href)
+                  
+              const baseLinkClass = cn(
+                "text-sm transition-colors duration-200",
+                active 
+                  ? (isDarkHero ? "text-white font-bold" : "text-brand font-semibold")
+                  : (isDarkHero ? "text-white/80 font-medium hover:text-white" : "text-slate-600 font-medium hover:text-brand")
+              )
+
+              if (link.subItems) {
+                return (
+                  <li key={link.href} className="group relative">
+                    <Link href={link.href} className={cn(baseLinkClass, "flex items-center gap-1 py-4")}>
+                      {link.label}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </Link>
+                    
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-64 pt-0 opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                      <div className="rounded-xl border border-slate-200/60 bg-white p-2 shadow-lg relative">
+                        <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-slate-200/60 rotate-45" />
+                        <ul className="relative z-10 flex flex-col gap-1">
+                          {link.subItems.map((sub) => {
+                            const subActive = pathname === sub.href
+                            return (
+                              <li key={sub.href}>
+                                <Link
+                                  href={sub.href}
+                                  className={cn(
+                                    "block w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                                    subActive ? "bg-brand/10 text-brand" : "text-slate-600 hover:bg-slate-50 hover:text-brand"
+                                  )}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                )
+              }
+
               return (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      "text-sm transition-colors duration-200",
-                      active 
-                        ? (isDarkHero ? "text-white font-bold" : "text-brand font-semibold")
-                        : (isDarkHero ? "text-white/80 font-medium hover:text-white" : "text-slate-600 font-medium hover:text-brand")
-                    )}
-                  >
+                  <Link href={link.href} className={baseLinkClass}>
                     {link.label}
                   </Link>
                 </li>
@@ -145,6 +206,45 @@ export function Header() {
                     link.href === "/"
                       ? pathname === "/"
                       : pathname.startsWith(link.href)
+                      
+                  if (link.subItems) {
+                    return (
+                      <li key={link.href} className="flex flex-col gap-1">
+                        <Link 
+                          href={link.href}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "block px-4 py-2 text-sm font-bold uppercase tracking-wider transition-colors mt-2",
+                            active ? "text-brand" : "text-slate-400 hover:text-brand"
+                          )}
+                        >
+                          {link.label}
+                        </Link>
+                        <ul className="flex flex-col gap-1 pl-4 border-l-2 border-slate-100 ml-4 mb-2">
+                          {link.subItems.map((sub) => {
+                            const subActive = pathname === sub.href
+                            return (
+                              <li key={sub.href}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={() => setOpen(false)}
+                                  className={cn(
+                                    "block rounded-xl px-4 py-2.5 text-base font-medium transition-colors",
+                                    subActive
+                                      ? "bg-brand/10 text-brand"
+                                      : "text-slate-600 hover:bg-slate-50 hover:text-brand"
+                                  )}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </li>
+                    )
+                  }
+
                   return (
                     <li key={link.href}>
                       <Link
