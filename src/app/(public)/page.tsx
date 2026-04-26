@@ -306,67 +306,70 @@ export default async function HomePage() {
       {/* Perché Baroni / Differenziatori */}
       <section className="bg-slate-50 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-sm font-medium tracking-widest uppercase text-brand">
               Perché ci scelgono
             </span>
-            <h2 className="mt-4 text-3xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
+            <h2 className="mt-4 text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900 leading-tight">
               Cerchi un elettricista a Sestri Levante qualificato e specializzato? <br className="hidden md:block" />
               <span className="text-brand">L’hai appena trovato!</span>
             </h2>
           </div>
 
-          <div className="max-w-4xl flex flex-col border-t border-slate-200/80">
-            {/* Item 1 */}
-            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
-              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
-                01
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-brand/30">
+              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
+                <FileCheck className="w-48 h-48 text-slate-900" />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
-                    <FileCheck className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">Ditta Certificata</h3>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="relative z-10">
+                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-brand/10 group-hover:text-brand group-hover:border-brand/20">
+                  <FileCheck className="h-6 w-6" strokeWidth={2} />
                 </div>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                  Baroni Impianti dispone delle più importanti Certificazioni Elettriche riconosciute a livello nazionale. La nostra formazione è il tuo miglior sigillo di garanzia.
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">
+                  Ditta Certificata
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Baroni Impianti dispone delle più importanti Certificazioni Elettriche.
                 </p>
               </div>
             </div>
 
-            {/* Item 2 */}
-            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
-              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
-                02
+            {/* Card 2 */}
+            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-amber-500/30">
+              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
+                <Sun className="w-48 h-48 text-slate-900" />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
-                    <Sun className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">Impianti Fotovoltaici</h3>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="relative z-10">
+                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-amber-500/10 group-hover:text-amber-600 group-hover:border-amber-500/20">
+                  <Sun className="h-6 w-6" strokeWidth={2} />
                 </div>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                  Non ci limitiamo all'installazione standard. Offriamo garanzie di rendimento e affidabilità tra le più alte e solide sul mercato per il tuo nuovo impianto solare.
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">
+                  Impianti Fotovoltaici
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Offriamo garanzie tra le più alte sul mercato.
                 </p>
               </div>
             </div>
 
-            {/* Item 3 */}
-            <div className="group flex flex-col md:flex-row gap-4 md:gap-8 py-8 md:py-12 border-b border-slate-200/80 transition-colors hover:bg-white px-6 md:px-10 rounded-xl -mx-6 md:-mx-10 cursor-default">
-              <div className="text-4xl md:text-5xl font-bold font-serif text-slate-200 group-hover:text-brand/30 transition-colors">
-                03
+            {/* Card 3 */}
+            <div className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-500/30">
+              <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
+                <ShieldCheck className="w-48 h-48 text-slate-900" />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="bg-brand/10 text-brand p-2 rounded-lg">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">Impianti di Sicurezza</h3>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="relative z-10">
+                <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-600 group-hover:border-emerald-500/20">
+                  <ShieldCheck className="h-6 w-6" strokeWidth={2} />
                 </div>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                  Installiamo tranquillità. Ti garantiamo la sostituzione in garanzia di tutti i componenti. Per sempre. Nessuna brutta sorpresa sui sistemi di sicurezza.
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">
+                  Impianti di Sicurezza
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Sostituzione in garanzia di tutti i componenti per sempre!
                 </p>
               </div>
             </div>
