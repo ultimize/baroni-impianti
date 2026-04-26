@@ -453,22 +453,64 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 flex flex-col justify-center">
-                <Bell className="h-6 w-6 text-white mb-3" />
-                <h4 className="text-sm font-semibold text-white">Allarme intrusione</h4>
+            {/* Animated Right Side */}
+            <div className="relative flex items-center justify-center h-[350px] lg:h-[450px] w-full">
+              <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes float-slow {
+                  0%, 100% { transform: translateY(0); }
+                  50% { transform: translateY(-15px); }
+                }
+                .float-1 { animation: float-slow 5s ease-in-out infinite; }
+                .float-2 { animation: float-slow 6s ease-in-out infinite 1s; }
+                .float-3 { animation: float-slow 7s ease-in-out infinite 2s; }
+                .float-4 { animation: float-slow 5.5s ease-in-out infinite 3s; }
+                
+                @keyframes pulse-ring {
+                  0% { transform: scale(0.8); opacity: 0.5; }
+                  100% { transform: scale(1.8); opacity: 0; }
+                }
+                .ring-1 { animation: pulse-ring 4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+                .ring-2 { animation: pulse-ring 4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite 2s; }
+              `}} />
+
+              {/* Radar Rings */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="absolute w-40 h-40 rounded-full border border-amber-400/40 ring-1" />
+                <div className="absolute w-40 h-40 rounded-full border border-brand-300/30 ring-2" />
               </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 flex flex-col justify-center">
-                <Video className="h-6 w-6 text-white mb-3" />
-                <h4 className="text-sm font-semibold text-white">Videosorveglianza</h4>
+
+              {/* Central Hub */}
+              <div className="relative z-10 w-28 h-28 bg-white/10 backdrop-blur-md border border-white/30 rounded-3xl flex items-center justify-center shadow-[0_0_40px_rgba(251,191,36,0.15)]">
+                <Shield className="w-14 h-14 text-amber-400 fill-amber-400/20" />
               </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 flex flex-col justify-center">
-                <Battery className="h-6 w-6 text-white mb-3" />
-                <h4 className="text-sm font-semibold text-white">Sistemi UPS</h4>
+
+              {/* Floating Orbit Cards */}
+              <div className="absolute top-[10%] left-[5%] float-1 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                <div className="bg-brand/40 p-2 rounded-lg">
+                  <Bell className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white text-sm font-semibold">Antifurto</span>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 flex flex-col justify-center">
-                <Flame className="h-6 w-6 text-white mb-3" />
-                <h4 className="text-sm font-semibold text-white">Impianti STOP FIRE</h4>
+
+              <div className="absolute bottom-[15%] right-[5%] float-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                <div className="bg-brand/40 p-2 rounded-lg">
+                  <Video className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white text-sm font-semibold">TVCC</span>
+              </div>
+
+              <div className="absolute top-[20%] right-[0%] lg:-right-[5%] float-3 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                <div className="bg-brand/40 p-2 rounded-lg">
+                  <Battery className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white text-sm font-semibold">UPS</span>
+              </div>
+
+              <div className="absolute bottom-[10%] left-[0%] lg:-left-[5%] float-4 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                <div className="bg-brand/40 p-2 rounded-lg">
+                  <Flame className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white text-sm font-semibold">Antincendio</span>
               </div>
             </div>
           </div>
