@@ -270,48 +270,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Certificazioni Carousel */}
-          <div className="mt-20 pt-16 border-t border-slate-200/60">
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center justify-center bg-brand/10 text-brand rounded-xl p-2 mb-4">
-                <Award className="h-5 w-5" />
-              </div>
-              <h3 className="text-2xl font-semibold text-slate-900">La nostra formazione, certificata</h3>
-              <p className="mt-2 text-slate-600">Siamo costantemente aggiornati sulle ultime tecnologie e normative.</p>
-            </div>
-            
-            <div className="relative">
-              {/* Fade masks for horizontal scrolling */}
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
-              
-              <div className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {CERTIFICATES.map((cert, idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex-none w-[280px] sm:w-[320px] snap-center group"
-                  >
-                    <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/60 transition-all duration-300 group-hover:shadow-xl group-hover:border-brand/30 group-hover:-translate-y-1">
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-100 mb-4">
-                        <Image
-                          src={cert.image}
-                          alt={`Certificato ${cert.title}`}
-                          fill
-                          unoptimized
-                          className="object-contain p-2"
-                        />
-                      </div>
-                      <div className="px-3 pb-3">
-                        <h4 className="font-semibold text-slate-900 text-sm line-clamp-1 mb-1">{cert.title}</h4>
-                        <p className="text-xs text-slate-500 font-medium">{cert.provider}</p>
-                      </div>
-                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Servizi Section */}
@@ -412,6 +371,60 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Certificazioni Section */}
+      <section className="bg-slate-50 py-20 lg:py-28 border-t border-slate-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto mb-20 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand/5 blur-3xl rounded-full pointer-events-none -z-10" />
+            
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200/60 shadow-sm text-slate-700 text-xs font-semibold uppercase tracking-widest mb-6">
+              <Award className="w-4 h-4 text-amber-500 fill-amber-500" /> Le nostre certificazioni
+            </div>
+            
+            <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.15]">
+              La nostra formazione, <br className="hidden md:block" />
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-600">
+                certificata sul campo.
+              </span>
+            </h2>
+            <p className="mt-6 text-lg text-slate-600 leading-relaxed">
+              Siamo costantemente aggiornati sulle ultime tecnologie e normative per offrirti sempre il massimo standard di sicurezza.
+            </p>
+          </div>
+          
+          <div className="relative">
+              {/* Fade masks for horizontal scrolling */}
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+              
+              <div className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {CERTIFICATES.map((cert, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex-none w-[280px] sm:w-[320px] snap-center group"
+                  >
+                    <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/60 transition-all duration-300 group-hover:shadow-xl group-hover:border-brand/30 group-hover:-translate-y-1">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-100 mb-4">
+                        <Image
+                          src={cert.image}
+                          alt={`Certificato ${cert.title}`}
+                          fill
+                          unoptimized
+                          className="object-contain p-2"
+                        />
+                      </div>
+                      <div className="px-3 pb-3">
+                        <h4 className="font-semibold text-slate-900 text-sm line-clamp-1 mb-1">{cert.title}</h4>
+                        <p className="text-xs text-slate-500 font-medium">{cert.provider}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
       </section>
 
       {/* Zero Pensieri Spotlight */}
