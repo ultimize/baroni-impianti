@@ -39,6 +39,8 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const isDarkHero = pathname === "/" && !scrolled
+
   return (
     <header
       className={cn(
@@ -60,10 +62,13 @@ export function Header() {
               alt="Baroni Impianti" 
               width={48} 
               height={48} 
-              className="h-10 lg:h-11 w-auto" 
+              className={cn("h-10 lg:h-11 w-auto transition-all", isDarkHero && "brightness-0 invert")} 
               priority 
             />
-            <span className="hidden sm:inline-block text-base font-semibold tracking-tight text-slate-900">
+            <span className={cn(
+              "hidden sm:inline-block text-base font-semibold tracking-tight transition-colors",
+              isDarkHero ? "text-white" : "text-slate-900"
+            )}>
               Baroni Impianti
             </span>
           </Link>
@@ -81,8 +86,8 @@ export function Header() {
                     className={cn(
                       "text-sm transition-colors duration-200",
                       active 
-                        ? "text-brand font-semibold" 
-                        : "text-slate-600 font-medium hover:text-brand"
+                        ? (isDarkHero ? "text-white font-bold" : "text-brand font-semibold")
+                        : (isDarkHero ? "text-white/80 font-medium hover:text-white" : "text-slate-600 font-medium hover:text-brand")
                     )}
                   >
                     {link.label}
@@ -95,7 +100,12 @@ export function Header() {
           <div className="hidden lg:block">
             <Link
               href="/contatti"
-              className="inline-flex items-center justify-center bg-brand hover:bg-brand-700 text-white font-medium px-5 h-10 rounded-xl transition-colors hover:scale-[1.02] active:scale-[0.98]"
+              className={cn(
+                "inline-flex items-center justify-center font-medium px-5 h-10 rounded-xl transition-colors hover:scale-[1.02] active:scale-[0.98]",
+                isDarkHero 
+                  ? "bg-white/10 text-white hover:bg-white/20 border border-white/20 backdrop-blur-sm" 
+                  : "bg-brand hover:bg-brand-700 text-white"
+              )}
             >
               Richiedi sopralluogo
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -105,7 +115,10 @@ export function Header() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               aria-label="Apri menu"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-brand lg:hidden transition-colors"
+              className={cn(
+                "inline-flex h-10 w-10 items-center justify-center rounded-xl lg:hidden transition-colors",
+                isDarkHero ? "text-white hover:bg-white/10" : "text-slate-600 hover:bg-slate-100 hover:text-brand"
+              )}
             >
               <Menu className="h-6 w-6" />
             </SheetTrigger>

@@ -18,6 +18,7 @@ import {
   Bell,
   Battery,
   Flame,
+  Play,
 } from "lucide-react"
 import { PostsGrid } from "@/components/public/PostsGrid"
 import { createClient } from "@/lib/supabase/server"
@@ -69,22 +70,35 @@ export default async function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-white via-white to-brand-50/40 pt-20 lg:pt-32 pb-20 lg:pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center pt-20 pb-20 lg:pt-32 lg:pb-24">
+        {/* Full Background Image */}
+        <Image 
+          src="/img/hero-impianto.jpg" 
+          alt="Impianto elettrico realizzato da Baroni Impianti" 
+          fill 
+          className="object-cover z-0" 
+          priority 
+          sizes="100vw" 
+        />
+        
+        {/* Gradient Overlay for Legibility */}
+        <div className="absolute inset-0 z-10 bg-slate-950/80 sm:bg-slate-950/40 sm:bg-gradient-to-r sm:from-slate-950/95 sm:via-slate-900/80 sm:to-transparent" />
+
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column - lg:col-span-7 */}
-            <div className="lg:col-span-7 flex flex-col items-start animate-fade-in">
-              <span className="inline-flex items-center gap-2 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 rounded-full px-3 py-1.5 mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            {/* Left Column - Content */}
+            <div className="lg:col-span-8 flex flex-col items-start animate-fade-in">
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5 mb-6 backdrop-blur-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Disponibili per nuovi progetti
               </span>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.1]">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.1]">
                 Impianti elettrici <br className="hidden lg:block" />
-                <span className="text-brand">fatti come si deve.</span>
+                <span className="text-brand-400">fatti come si deve.</span>
               </h1>
               
-              <p className="mt-6 text-lg lg:text-xl text-slate-600 max-w-xl leading-relaxed">
+              <p className="mt-6 text-lg lg:text-xl text-slate-300 max-w-2xl leading-relaxed">
                 Da Sestri Levante al Tigullio: civili, industriali, fotovoltaico, domotica. 
                 Lavoriamo a norma, garantiamo nel tempo, e con Zero Pensieri ci occupiamo di tutto noi.
               </p>
@@ -92,60 +106,70 @@ export default async function HomePage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <Link
                   href="/contatti"
-                  className="inline-flex items-center justify-center bg-brand hover:bg-brand-700 text-white font-medium px-6 h-12 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex items-center justify-center bg-brand hover:bg-brand-600 text-white font-medium px-8 h-14 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand/20"
                 >
                   Richiedi sopralluogo gratuito
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
                   href="/zero-pensieri"
-                  className="inline-flex items-center justify-center border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 hover:border-brand/40 font-medium px-6 h-12 rounded-xl transition-all"
+                  className="inline-flex items-center justify-center border border-slate-600 text-white bg-white/5 hover:bg-white/10 hover:border-slate-400 font-medium px-8 h-14 rounded-xl transition-all backdrop-blur-sm"
                 >
                   Scopri Zero Pensieri
                 </Link>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500">
-                <div className="flex items-center gap-1.5">
-                  <Award className="h-4 w-4 text-brand" />
+              <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-sm text-slate-300">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-md bg-white/5 backdrop-blur-sm">
+                    <Award className="h-4 w-4 text-brand-400" />
+                  </div>
                   <span>20+ anni di esperienza</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-md bg-white/5 backdrop-blur-sm">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                  </div>
                   <span>Lavori a norma CEI 64-8</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="h-4 w-4 text-amber-500" />
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-md bg-white/5 backdrop-blur-sm">
+                    <MapPin className="h-4 w-4 text-amber-400" />
+                  </div>
                   <span>Sestri Levante e Tigullio</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column - lg:col-span-5 */}
-            <div className="lg:col-span-5 relative mt-8 lg:mt-0 animate-slide-up">
-              <div className="relative aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-brand/10">
-                <Image 
-                  src="/img/hero-impianto.jpg" 
-                  alt="Impianto elettrico realizzato da Baroni Impianti" 
-                  fill 
-                  className="object-cover" 
-                  priority 
-                  sizes="(max-width:1024px) 100vw, 40vw" 
-                />
-                
-                {/* Subtle overlay per leggibilità degli sticker */}
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/15 via-transparent to-black/10 pointer-events-none" />
-
-                {/* Floating Badges */}
-                <div className="absolute -top-3 -right-3 lg:top-4 lg:right-4 z-20 inline-flex items-center gap-1.5 bg-white shadow-md border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700">
-                  <Zap className="h-3.5 w-3.5 text-brand-600" />
-                  <span>KNX Partner certificato</span>
+            {/* Right Column - Google Reviews Widget */}
+            <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center animate-slide-up mt-8 lg:mt-0">
+              <div className="bg-slate-900/60 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl p-6 w-full max-w-sm hover:-translate-y-1 transition-transform duration-300">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} className="h-5 w-5 text-amber-400 fill-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-white font-bold text-lg">5.0</span>
                 </div>
                 
-                <div className="absolute bottom-6 left-6 z-20 bg-white shadow-md border border-slate-200 rounded-full px-3 py-2 text-xs font-medium text-slate-700 flex items-center gap-1.5">
-                  <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                  5/5 su Google
-                </div>
+                <h3 className="text-white font-semibold text-lg mb-2">Eccezionale su Google</h3>
+                <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+                  Decine di clienti nel Tigullio ci hanno già scelto e recensito.
+                </p>
+                
+                <Link
+                  href="/testimonianze"
+                  className="flex items-center justify-between w-full bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl px-4 py-3 transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-brand/20 p-2 rounded-full text-brand-400 group-hover:scale-110 transition-transform">
+                      <Play className="h-4 w-4 fill-current" />
+                    </div>
+                    <span className="text-white text-sm font-medium">Guarda le video recensioni</span>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-white transition-colors" />
+                </Link>
               </div>
             </div>
           </div>
