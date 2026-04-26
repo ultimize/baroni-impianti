@@ -1,9 +1,17 @@
 import type { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
+import { Archivo } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants"
 import "./globals.css"
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-archivo",
+  weight: ["400", "500", "600", "700", "800"],
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,7 +47,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}>
+    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} ${archivo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
         <Toaster richColors position="top-right" />

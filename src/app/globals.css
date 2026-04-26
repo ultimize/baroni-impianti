@@ -8,9 +8,15 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
   --font-heading: var(--font-geist-sans);
+  --font-display: var(--font-archivo), var(--font-geist-sans), system-ui, sans-serif;
+
+  --color-accent-amber: oklch(0.66 0.16 41);
+  --color-accent-amber-foreground: white;
+  --color-accent-amber-50: oklch(0.96 0.03 50);
+  --color-accent-amber-600: oklch(0.62 0.18 38);
 
   --color-brand-50: #EFF4FF;
   --color-brand-100: #DBE6FE;
@@ -144,4 +150,25 @@
 
 @utility container-baroni {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+@layer utilities {
+  .pattern-grid {
+    background-image:
+      linear-gradient(to right, rgb(15 23 42 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(15 23 42 / 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  
+  .pattern-grid-brand {
+    background-image:
+      linear-gradient(to right, rgb(30 58 138 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(30 58 138 / 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgb(30 58 138 / 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 }
