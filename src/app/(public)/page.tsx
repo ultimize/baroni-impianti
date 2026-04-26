@@ -56,32 +56,32 @@ const SERVICES = [
 
 const CERTIFICATES = [
   {
-    image: "/img/certificati/cert-1.jpg?v=2",
+    image: "/img/certificati/cert-1.jpg",
     title: "Networking Base",
     provider: "Altatensione / Netify",
   },
   {
-    image: "/img/certificati/cert-2.jpg?v=2",
+    image: "/img/certificati/cert-2.jpg",
     title: "Autorimesse e ricarica veicoli elettrici",
     provider: "Il Professionista Elettrico",
   },
   {
-    image: "/img/certificati/cert-3.jpg?v=2",
+    image: "/img/certificati/cert-3.jpg",
     title: "Elettrosistemista™",
     provider: "Corso di Elettrosistemista",
   },
   {
-    image: "/img/certificati/cert-4.jpg?v=2",
+    image: "/img/certificati/cert-4.jpg",
     title: "System Integrator: DALI2",
     provider: "Ohmega Progettazioni",
   },
   {
-    image: "/img/certificati/cert-5.jpg?v=2",
+    image: "/img/certificati/cert-5.jpg",
     title: "Metodo Reti IP",
     provider: "Altatensione",
   },
   {
-    image: "/img/certificati/cert-6.jpg?v=2",
+    image: "/img/certificati/cert-6.jpg",
     title: "Certificazione Aggiuntiva",
     provider: "Baroni Impianti",
   },
@@ -377,6 +377,7 @@ export default async function HomePage() {
                           src={cert.image}
                           alt={`Certificato ${cert.title}`}
                           fill
+                          unoptimized
                           className="object-contain p-2"
                         />
                       </div>
