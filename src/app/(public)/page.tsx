@@ -194,52 +194,64 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Zero Pensieri Premium Card */}
-            <div className="group relative flex flex-col justify-between bg-gradient-to-br from-brand to-brand-800 text-white rounded-2xl p-6 lg:p-8 ring-1 ring-brand-700 shadow-sm overflow-hidden lg:col-span-1">
-              <div className="relative z-10">
-                <span className="inline-block text-xs font-medium tracking-widest uppercase text-brand-100 mb-4">
-                  Servizio esclusivo
-                </span>
-                <Shield className="h-9 w-9 text-white mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Zero Pensieri</h3>
-                <p className="text-brand-100 text-sm leading-relaxed mb-6">
-                  Il nostro contratto di manutenzione programmata. Una quota annuale per un impianto 
-                  sempre in perfetta efficienza, con verifiche incluse.
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Zero Pensieri Premium Card - Spannning 2 columns */}
+            <div className="group relative overflow-hidden flex flex-col justify-between bg-slate-900 rounded-3xl p-8 lg:p-10 md:col-span-2 shadow-sm border border-slate-800 transition-transform duration-300 hover:-translate-y-1">
+              <div className="absolute top-0 right-0 p-8 opacity-5">
+                <Shield className="w-64 h-64 text-white transform translate-x-8 -translate-y-8" />
               </div>
-              <Link
-                href="/zero-pensieri"
-                className="relative z-10 inline-flex items-center font-medium text-white group-hover:text-brand-50 transition-colors"
-              >
-                Scopri di più <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-
-            {/* Other Services Cards */}
-            {SERVICES.map((s) => (
-              <div
-                key={s.title}
-                className="group flex flex-col justify-between bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:border-brand/40 hover:bg-slate-50/50 hover:shadow-sm"
-              >
+              <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                  <div className="inline-flex items-center justify-center bg-brand/10 text-brand rounded-xl p-3 mb-5">
-                    <s.icon className="h-6 w-6" strokeWidth={2} />
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand/20 border border-brand/30 text-brand-400 text-xs font-semibold uppercase tracking-widest mb-6">
+                    <Shield className="w-3.5 h-3.5" /> Servizio Esclusivo
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                    {s.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {s.description}
+                  <h3 className="text-3xl font-semibold mb-4 text-white">Zero Pensieri</h3>
+                  <p className="text-slate-400 text-lg leading-relaxed max-w-md">
+                    Il nostro contratto di manutenzione programmata. Una quota annuale per un impianto 
+                    sempre in perfetta efficienza, con verifiche e pronto intervento inclusi.
                   </p>
                 </div>
                 <Link
-                  href={s.href}
-                  className="mt-6 inline-flex items-center text-sm font-medium text-brand group-hover:text-brand-600 transition-colors"
+                  href="/zero-pensieri"
+                  className="mt-10 w-fit inline-flex items-center justify-center bg-white text-slate-900 font-medium px-6 h-12 rounded-xl transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  Scopri di più <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Scopri come funziona
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
+            </div>
+
+            {/* Other Services Cards - Each spanning 1 column */}
+            {SERVICES.map((s) => (
+              <Link
+                key={s.title}
+                href={s.href}
+                className="group relative overflow-hidden flex flex-col justify-between bg-white rounded-3xl p-8 shadow-[0_2px_10px_rgb(0,0,0,0.04)] border border-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-brand/30"
+              >
+                {/* Background Macro Icon */}
+                <div className="absolute bottom-0 right-0 opacity-[0.03] transform translate-x-1/4 translate-y-1/4 transition-transform duration-500 group-hover:scale-110">
+                  <s.icon className="w-48 h-48 text-slate-900" />
+                </div>
+                
+                {/* Subtle Hover Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                <div className="relative z-10">
+                  <div className="inline-flex items-center justify-center bg-slate-50 border border-slate-100 text-slate-700 rounded-xl p-3 mb-6 transition-colors duration-300 group-hover:bg-brand/10 group-hover:text-brand group-hover:border-brand/20">
+                    <s.icon className="h-6 w-6" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-3 pr-4">
+                    {s.title}
+                  </h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    {s.description}
+                  </p>
+                </div>
+                <div className="relative z-10 mt-8 flex items-center text-sm font-semibold text-brand">
+                  <span>Scopri di più</span>
+                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
