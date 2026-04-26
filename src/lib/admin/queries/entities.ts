@@ -73,6 +73,52 @@ export async function getCertificationById(id: string) {
   return data
 }
 
+export type GalleryListOptions = Pagination & { category?: string }
+
+export async function listGalleryItems(opts: GalleryListOptions = {}) {
+  const supabase = await createClient()
+  const page = opts.page ?? 1
+  const pageSize = opts.pageSize ?? 60
+  const { from, to } = pageRange(page, pageSize)
+
+  let query = supabase
+    .from("gallery_items")
+    .select(
+      "id, title, image_url, alt_text, category, order_index, is_featured, is_published, width, height, updated_at",
+      { count: "exact" },
+    )
+  if (opts.search) {
+    query = query.ilike("title", `%${opts.search}%`)
+  }
+  if (opts.category && opts.category !== "all") {
+    query = query.eq("category", opts.category)
+  }
+  query = query.order("order_index", { ascending: true }).order("updated_at", { ascending: false }).range(from, to)
+
+  const { data, count, error } = await query
+  if (error) throw error
+  return { rows: data ?? [], total: count ?? 0, page, pageSize }
+}
+
+export async function getGalleryItemById(id: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase.from("gallery_items").select("*").eq("id", id).maybeSingle()
+  if (error) throw error
+  return data
+}
+
+export async function getMaxGalleryOrderIndex(): Promise<number> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from("gallery_items")
+    .select("order_index")
+    .order("order_index", { ascending: false })
+    .limit(1)
+    .maybeSingle()
+  if (error) return 0
+  return data?.order_index ?? 0
+}
+
 export async function listServices(opts: Pagination = {}) {
   const supabase = await createClient()
   const page = opts.page ?? 1

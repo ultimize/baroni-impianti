@@ -3,6 +3,7 @@ export const STORAGE_BUCKETS = [
   { id: "testimonial-thumbnails", label: "Testimonianze" },
   { id: "certifications", label: "Certificazioni" },
   { id: "service-images", label: "Servizi" },
+  { id: "gallery", label: "Galleria" },
   { id: "site-assets", label: "Asset sito" },
 ] as const
 

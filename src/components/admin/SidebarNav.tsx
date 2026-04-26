@@ -43,6 +43,7 @@ const SECTIONS: NavSection[] = [
       { href: "/admin/posts", label: "Articoli", icon: FileText },
       { href: "/admin/pages", label: "Pagine", icon: File },
       { href: "/admin/services", label: "Servizi", icon: Wrench },
+      { href: "/admin/gallery", label: "Galleria", icon: ImageIcon },
     ],
   },
   {

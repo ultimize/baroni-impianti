@@ -161,6 +161,31 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["certifications"]["Row"]>
         Relationships: []
       }
+      gallery_items: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          image_url: string
+          alt_text: string | null
+          category: string
+          source_wp_id: number | null
+          source_wp_url: string | null
+          width: number | null
+          height: number | null
+          order_index: number
+          is_featured: boolean
+          is_published: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database["public"]["Tables"]["gallery_items"]["Row"]> & {
+          title: string
+          image_url: string
+        }
+        Update: Partial<Database["public"]["Tables"]["gallery_items"]["Row"]>
+        Relationships: []
+      }
       services: {
         Row: {
           id: string
