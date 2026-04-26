@@ -274,14 +274,14 @@ export default async function ServiziPage() {
         <div className="mx-auto max-w-5xl mt-16 px-4 relative z-10">
           <div className="relative w-full aspect-square sm:aspect-video lg:aspect-[2.5/1] bg-slate-900 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
             <iframe
-              src="https://www.google.com/maps?cid=1694843707398316530&hl=it&gl=IT&source=embed"
+              src="https://maps.google.com/maps?q=Baroni+Impianti+Srl+Castiglione+Chiavarese&t=&z=13&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 grayscale contrast-125 opacity-80 mix-blend-luminosity hover:grayscale-0 hover:mix-blend-normal hover:opacity-100 transition-all duration-1000"
+              className="absolute inset-0"
             />
             {/* Overlay gradient to blend borders */}
             <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] shadow-[inset_0_0_50px_rgba(2,6,23,0.8)] border border-white/5" />
