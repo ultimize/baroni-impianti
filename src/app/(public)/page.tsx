@@ -431,12 +431,15 @@ export default async function HomePage() {
       <section className="bg-brand py-20 lg:py-28 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <span className="text-sm font-medium tracking-widest uppercase text-white/70">
-                Servizio di punta
-              </span>
-              <h2 className="mt-3 text-3xl lg:text-4xl font-semibold tracking-tight leading-tight">
-                Vorresti un elettricista, ma non doverlo cercare ogni volta?
+            <div className="text-white relative z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
+                <Shield className="w-4 h-4 text-amber-400 fill-amber-400" /> Servizio di punta
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15]">
+                Vorresti un elettricista, <br className="hidden lg:block" />
+                <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">
+                  ma non doverlo cercare ogni volta?
+                </span>
               </h2>
               <p className="mt-5 text-lg text-brand-100 leading-relaxed max-w-lg">
                 Zero Pensieri è il nostro contratto di manutenzione programmata. Una quota annuale, e noi ci occupiamo di tutto: verifiche periodiche, pronto intervento illimitato, garanzia a vita sui dispositivi.
@@ -477,12 +480,16 @@ export default async function HomePage() {
         <section className="bg-white py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-              <div>
-                <span className="text-sm font-medium tracking-widest uppercase text-brand">
-                  Dal blog
-                </span>
-                <h2 className="mt-2 text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900">
-                  Approfondimenti dal nostro studio
+              <div className="relative">
+                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-brand/5 blur-3xl rounded-full pointer-events-none -z-10" />
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200/60 shadow-sm text-slate-700 text-xs font-semibold uppercase tracking-widest mb-6">
+                  <BookOpen className="w-4 h-4 text-amber-500 fill-amber-500" /> Dal blog
+                </div>
+                <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.15]">
+                  Approfondimenti dal <br className="hidden sm:block" />
+                  <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-600">
+                    nostro studio.
+                  </span>
                 </h2>
               </div>
               <Link
