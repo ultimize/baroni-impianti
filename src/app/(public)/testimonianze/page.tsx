@@ -165,12 +165,12 @@ export default async function TestimonianzePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
-              <Button asChild size="lg" className="h-16 px-10 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-lg shadow-[0_0_40px_rgba(245,158,11,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(245,158,11,0.4)] w-full sm:w-auto">
+              <Button asChild size="lg" className="h-16 px-10 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-slate-950 font-bold text-lg shadow-[0_0_40px_rgba(245,158,11,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(245,158,11,0.4)] w-full sm:w-auto">
                 <a href="/contatti">
                   Richiedi Sopralluogo Gratuito
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-slate-700 bg-white/5 text-white hover:bg-white/10 font-medium text-lg backdrop-blur-sm w-full sm:w-auto">
+              <Button asChild size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-slate-700 bg-white/5 text-white hover:bg-white/10 hover:text-white font-medium text-lg backdrop-blur-sm w-full sm:w-auto">
                 <a href="/zero-pensieri">
                   Scopri "Zero Pensieri"
                 </a>
