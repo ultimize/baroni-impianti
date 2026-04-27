@@ -442,19 +442,47 @@ export default function ZeroPensieriPage() {
         </div>
       </SectionWrapper>
 
-      <ClosingCta
-        title="Smettila di pensare all'impianto."
-        lead="Attiva Zero Pensieri. Goditi la vera tranquillità, al resto ci pensiamo noi."
-        primaryCta={{
-          label: "Richiedi preventivo gratuito",
-          href: "/contatti?service=zero-pensieri",
-        }}
-        secondaryCta={{
-          label: "Parla con un tecnico",
-          href: "/contatti?service=zero-pensieri",
-        }}
-        variant="primary"
-      />
+      {/* Custom Final CTA per Zero Pensieri */}
+      <section className="py-20 lg:py-32 bg-slate-950 relative overflow-hidden border-t border-slate-800">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-brand-500/10 blur-[150px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+        </div>
+        
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 relative z-10">
+          <div className="rounded-[3rem] bg-gradient-to-br from-slate-900 to-slate-900/80 backdrop-blur-xl p-10 sm:p-20 text-center shadow-2xl border border-slate-800 relative overflow-hidden">
+            {/* Effetti luminosi interni */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-gradient-to-b from-emerald-500/10 to-transparent blur-[80px]" />
+            <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-t from-brand-500/10 to-transparent blur-[80px]" />
+            
+            <Shield className="w-16 h-16 text-emerald-400 mx-auto mb-8 relative z-10 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
+            
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 relative z-10 leading-[1.1]">
+              Smettila di pensare <br className="hidden lg:block" />
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-brand-300">
+                all'impianto.
+              </span>
+            </h2>
+            
+            <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light mb-12 relative z-10">
+              Attiva Zero Pensieri. Goditi la vera tranquillità, al resto ci pensiamo noi. Un canone fisso, sicurezza totale.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 relative z-10">
+              <Button asChild size="lg" className="h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 hover:text-slate-950 font-bold text-lg shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(16,185,129,0.4)] w-full sm:w-auto">
+                <a href="/contatti?service=zero-pensieri">
+                  Richiedi preventivo gratuito
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-slate-700 bg-white/5 text-white hover:bg-white/10 hover:text-white font-medium text-lg backdrop-blur-sm w-full sm:w-auto">
+                <a href="/contatti?service=zero-pensieri">
+                  Parla con un tecnico
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
