@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
-import { CONTACT_EMAIL } from "@/lib/constants"
 
 const SUBJECTS: Array<{ value: string; label: string }> = [
   { value: "sopralluogo", label: "Sopralluogo gratuito" },
@@ -35,9 +34,10 @@ export function ContactForm() {
   const [subject, setSubject] = useState("sopralluogo")
   const [privacyOk, setPrivacyOk] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const serviceParam = searchParams.get("service")
 
   useEffect(() => {
-    const service = searchParams.get("service")
     const subjectParam = searchParams.get("subject")
     if (subjectParam) {
       const match = SUBJECTS.find((s) => s.value === subjectParam)
@@ -46,26 +46,85 @@ export function ContactForm() {
         return
       }
     }
-    if (service && SERVICE_TO_SUBJECT[service]) {
-      setSubject(SERVICE_TO_SUBJECT[service])
+    if (serviceParam && SERVICE_TO_SUBJECT[serviceParam]) {
+      setSubject(SERVICE_TO_SUBJECT[serviceParam])
     }
-  }, [searchParams])
+  }, [searchParams, serviceParam])
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!privacyOk) {
       toast.warning("Accetta l'informativa sulla privacy per continuare.")
       return
     }
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const payload = {
+      full_name: String(formData.get("full_name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      subject,
+      message: String(formData.get("message") ?? "").trim(),
+      privacy_ok: true,
+      service_interest: serviceParam ?? "",
+      source_page:
+        typeof window !== "undefined" ? window.location.pathname + window.location.search : "",
+      hp: String(formData.get("hp") ?? ""),
+    }
+
     setSubmitting(true)
-    // TODO: quando sarà attiva l'integrazione Resend, sostituire con fetch a
-    // /api/contact e rimuovere il toast informativo.
-    setTimeout(() => {
-      toast.info(
-        `Funzione in attivazione. Per ora scrivici direttamente a ${CONTACT_EMAIL}.`,
-      )
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) {
+        if (res.status === 429) {
+          toast.error("Troppe richieste. Riprova tra qualche minuto.")
+        } else if (res.status === 400) {
+          toast.error("Controlla i campi del modulo e riprova.")
+        } else {
+          toast.error("Invio non riuscito. Riprova o scrivici direttamente.")
+        }
+        return
+      }
+      form.reset()
+      setPrivacyOk(false)
+      setSubject("sopralluogo")
+      setSubmitted(true)
+      toast.success("Richiesta inviata. Controlla la tua casella email.")
+    } catch {
+      toast.error("Connessione assente. Riprova tra poco.")
+    } finally {
       setSubmitting(false)
-    }, 400)
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div
+        role="status"
+        className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-6 text-sm leading-relaxed text-foreground"
+      >
+        <p className="font-medium text-emerald-700 dark:text-emerald-400">
+          Grazie per la tua richiesta.
+        </p>
+        <p className="mt-2 text-muted-foreground">
+          Ti risponderemo entro 24 ore lavorative all&apos;indirizzo email indicato.
+        </p>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="mt-4"
+          onClick={() => setSubmitted(false)}
+        >
+          Invia un&apos;altra richiesta
+        </Button>
+      </div>
+    )
   }
 
   return (
@@ -135,6 +194,11 @@ export function ContactForm() {
           rows={6}
           placeholder="Raccontaci brevemente il progetto o il problema."
         />
+      </div>
+
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="hp">Lascia vuoto</label>
+        <input id="hp" name="hp" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="flex items-start gap-3 rounded-lg border border-border/60 bg-muted/30 p-3">
