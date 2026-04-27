@@ -271,11 +271,11 @@ export async function Footer() {
         </div>
 
         {/* FESR Banner */}
-        <div className="mt-12 flex flex-col items-center justify-center border-t border-slate-800 pt-10 pb-4">
-          <p className="text-sm uppercase tracking-[0.15em] text-slate-400 mb-6 font-semibold text-center leading-relaxed">
+        <div className="mt-12 flex flex-col items-center justify-center border-t border-slate-800 pt-10 pb-4 max-w-full overflow-hidden">
+          <p className="text-sm uppercase tracking-[0.15em] text-slate-400 mb-6 font-semibold text-center leading-relaxed break-words w-full max-w-full px-2">
             Spese coofinanziate con le risorse PRLiguria FESR 2021-2027
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 bg-white rounded-2xl p-4 sm:p-8 shadow-xl shadow-brand-500/5">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 bg-white rounded-2xl p-4 sm:p-8 shadow-xl shadow-brand-500/5 max-w-full">
             <Image src="/img/bandi/eu.png" alt="Logo Unione Europea" width={200} height={100} className="h-8 sm:h-12 lg:h-16 w-auto object-contain mix-blend-multiply" />
             <Image src="/img/bandi/repubblica.png" alt="Logo Repubblica Italiana" width={200} height={100} className="h-8 sm:h-12 lg:h-16 w-auto object-contain mix-blend-multiply" />
             <Image src="/img/bandi/liguria.png" alt="Logo Regione Liguria" width={200} height={100} className="h-8 sm:h-12 lg:h-16 w-auto object-contain mix-blend-multiply" />
