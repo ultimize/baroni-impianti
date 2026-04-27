@@ -348,6 +348,28 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["google_reviews_sync_state"]["Row"]>
         Relationships: []
       }
+      consent_logs: {
+        Row: {
+          id: string
+          consent_id: string
+          necessary: boolean
+          analytics: boolean
+          marketing: boolean
+          policy_version: string
+          user_agent: string | null
+          ip_hash: string | null
+          page_url: string | null
+          action: "accept_all" | "reject_all" | "custom" | "revoke" | "update"
+          created_at: string
+        }
+        Insert: Partial<Database["public"]["Tables"]["consent_logs"]["Row"]> & {
+          consent_id: string
+          policy_version: string
+          action: "accept_all" | "reject_all" | "custom" | "revoke" | "update"
+        }
+        Update: Partial<Database["public"]["Tables"]["consent_logs"]["Row"]>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: {

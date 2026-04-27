@@ -16,6 +16,7 @@ import {
   Folder,
   Users,
   ImageIcon,
+  Shield,
   type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -67,6 +68,7 @@ const SECTIONS: NavSection[] = [
     links: [
       { href: "/admin/media", label: "Media library", icon: ImageIcon, adminOnly: true },
       { href: "/admin/redirects", label: "Redirect SEO", icon: ArrowRightLeft, adminOnly: true },
+      { href: "/admin/privacy", label: "Privacy & Cookie", icon: Shield, adminOnly: true },
       { href: "/admin/settings", label: "Impostazioni", icon: Settings, adminOnly: true },
     ],
   },

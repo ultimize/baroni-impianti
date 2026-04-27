@@ -8,7 +8,7 @@ import {
   settingAddress,
   settingString,
 } from "@/lib/queries/site-content"
-import { cn } from "@/lib/utils"
+import { ManageCookiesButton } from "@/components/public/ManageCookiesButton"
 
 function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -244,15 +244,19 @@ export async function Footer() {
             ) : null}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6">
-            <Link href="#" className="transition-colors hover:text-white">
-              Privacy
+            <Link
+              href="/privacy-policy"
+              className="transition-colors hover:text-white"
+            >
+              Privacy Policy
             </Link>
-            <Link href="#" className="transition-colors hover:text-white">
-              Cookie
+            <Link
+              href="/cookie-policy"
+              className="transition-colors hover:text-white"
+            >
+              Cookie Policy
             </Link>
-            <Link href="#" className="transition-colors hover:text-white">
-              Termini
-            </Link>
+            <ManageCookiesButton />
           </div>
         </div>
       </Container>
