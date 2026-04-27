@@ -22,6 +22,7 @@ export function LoginForm() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") ?? "/admin"
   const errorParam = searchParams.get("error")
+  const errorReason = searchParams.get("reason")
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -29,11 +30,15 @@ export function LoginForm() {
 
   useEffect(() => {
     if (errorParam === "auth_failed") {
-      toast.error("Autenticazione fallita. Riprova.")
+      toast.error(
+        errorReason
+          ? `Autenticazione fallita: ${errorReason}`
+          : "Autenticazione fallita. Riprova.",
+      )
     } else if (errorParam === "forbidden") {
       toast.error("Il tuo account non ha i permessi per accedere all'area admin.")
     }
-  }, [errorParam])
+  }, [errorParam, errorReason])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()

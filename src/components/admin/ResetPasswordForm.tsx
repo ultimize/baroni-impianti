@@ -38,7 +38,13 @@ export function ResetPasswordForm() {
 
   useEffect(() => {
     const supabase = createClient()
+    console.log("[reset-password] mount, checking session")
     supabase.auth.getUser().then(({ data, error }) => {
+      console.log("[reset-password] getUser result", {
+        hasUser: !!data.user,
+        userId: data.user?.id,
+        error: error?.message,
+      })
       setSessionState(!error && data.user ? "valid" : "invalid")
     })
   }, [])
