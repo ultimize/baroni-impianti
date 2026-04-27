@@ -21,8 +21,7 @@ export async function requestPasswordReset(
   }
 
   const supabase = await createClient()
-  const finalDest = "/admin/login/reset-password"
-  const redirectTo = `${SITE_URL}/auth/callback?redirectTo=${encodeURIComponent(finalDest)}`
+  const redirectTo = `${SITE_URL}/admin/login/reset-password`
 
   const { error } = await supabase.auth.resetPasswordForEmail(parsed.data, {
     redirectTo,
