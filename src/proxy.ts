@@ -34,9 +34,13 @@ export async function proxy(request: NextRequest) {
 
   const isAdminRoute = pathname.startsWith("/admin")
   const isLoginRoute = pathname === "/admin/login"
+  const isPublicAuthRoute =
+    isLoginRoute ||
+    pathname === "/admin/login/forgot" ||
+    pathname === "/admin/login/reset-password"
 
   // Not logged in trying to access protected admin → go to login
-  if (isAdminRoute && !isLoginRoute && !user) {
+  if (isAdminRoute && !isPublicAuthRoute && !user) {
     const url = request.nextUrl.clone()
     url.pathname = "/admin/login"
     url.searchParams.set("redirectTo", pathname)

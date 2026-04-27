@@ -1,9 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
-import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 import {
   Card,
@@ -17,51 +15,51 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createClient } from "@/lib/supabase/client"
 
-export function LoginForm() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams.get("redirectTo") ?? "/admin"
-  const errorParam = searchParams.get("error")
-
+export function ForgotPasswordForm() {
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
   const [submitting, setSubmitting] = useState(false)
-
-  useEffect(() => {
-    if (errorParam === "auth_failed") {
-      toast.error("Autenticazione fallita. Riprova.")
-    } else if (errorParam === "forbidden") {
-      toast.error("Il tuo account non ha i permessi per accedere all'area admin.")
-    }
-  }, [errorParam])
+  const [submitted, setSubmitted] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSubmitting(true)
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-      if (error) {
-        toast.error(error.message)
-        return
-      }
-      toast.success("Accesso effettuato")
-      router.push(redirectTo)
-      router.refresh()
+      const origin = window.location.origin
+      const redirectTo = `${origin}/auth/callback?redirectTo=/admin/login/reset-password`
+      await supabase.auth.resetPasswordForEmail(email, { redirectTo })
+      setSubmitted(true)
     } finally {
       setSubmitting(false)
     }
   }
 
+  if (submitted) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Controlla la tua email</CardTitle>
+          <CardDescription>
+            Se l&apos;email esiste nel sistema, riceverai un link per
+            reimpostare la password. Controlla anche lo spam.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild variant="outline" className="w-full">
+            <Link href="/admin/login">Torna al login</Link>
+          </Button>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Accedi all&apos;area amministrativa</CardTitle>
+        <CardTitle>Password dimenticata</CardTitle>
         <CardDescription>
-          Inserisci le credenziali fornite dall&apos;amministratore del sito.
+          Inserisci l&apos;email del tuo account. Ti invieremo un link per
+          reimpostare la password.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,33 +76,21 @@ export function LoginForm() {
               disabled={submitting}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={submitting}
-            />
-          </div>
           <Button type="submit" className="w-full" disabled={submitting}>
             {submitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Accesso…
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Invio in corso…
               </>
             ) : (
-              "Accedi"
+              "Invia link di recupero"
             )}
           </Button>
           <div className="text-center text-sm">
             <Link
-              href="/admin/login/forgot"
+              href="/admin/login"
               className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
-              Hai dimenticato la password?
+              Torna al login
             </Link>
           </div>
         </form>
