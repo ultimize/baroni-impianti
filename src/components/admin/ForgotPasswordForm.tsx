@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useActionState } from "react"
 import Link from "next/link"
 import { Loader2 } from "lucide-react"
 import {
@@ -13,35 +13,20 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { createClient } from "@/lib/supabase/client"
+import {
+  requestPasswordReset,
+  type ForgotState,
+} from "@/app/(admin-auth)/admin/login/forgot/actions"
+
+const initialState: ForgotState | null = null
 
 export function ForgotPasswordForm() {
-  const [email, setEmail] = useState("")
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [state, formAction, pending] = useActionState(
+    requestPasswordReset,
+    initialState,
+  )
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitting(true)
-    try {
-      const supabase = createClient()
-      const origin = window.location.origin
-      const finalDest = "/admin/login/reset-password"
-      const redirectTo = `${origin}/auth/callback?redirectTo=${encodeURIComponent(finalDest)}`
-      console.log("[forgot] sending reset email", { email, redirectTo })
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo,
-      })
-      if (error) {
-        console.error("[forgot] resetPasswordForEmail error", error)
-      }
-      setSubmitted(true)
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
-  if (submitted) {
+  if (state?.ok) {
     return (
       <Card>
         <CardHeader>
@@ -70,21 +55,23 @@ export function ForgotPasswordForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               autoComplete="email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={submitting}
+              disabled={pending}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? (
+          {state?.error ? (
+            <p className="text-xs text-destructive">{state.error}</p>
+          ) : null}
+          <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Invio in corso…
               </>
