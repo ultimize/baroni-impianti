@@ -42,8 +42,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased overflow-x-hidden`}>
+      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
         {children}
         <Toaster richColors position="top-right" />
       </body>
