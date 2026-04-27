@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { Check, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
@@ -63,18 +64,25 @@ export function CookieBanner() {
   const [analytics, setAnalytics] = React.useState(false)
   const [marketing, setMarketing] = React.useState(false)
   const [submitting, setSubmitting] = React.useState(false)
+  const [consentId, setConsentId] = React.useState<string>("")
 
   React.useEffect(() => {
-    if (!readConsentCookie()) {
+    const existing = readConsentCookie()
+    if (!existing) {
+      setConsentId(generateUuid())
       setVisible(true)
+    } else {
+      setConsentId(existing.id)
     }
     const onOpen = () => {
-      const existing = readConsentCookie()
-      if (existing) {
-        setAnalytics(existing.a)
-        setMarketing(existing.m)
+      const current = readConsentCookie()
+      if (current) {
+        setConsentId(current.id)
+        setAnalytics(current.a)
+        setMarketing(current.m)
         setStep("custom")
       } else {
+        setConsentId((id) => id || generateUuid())
         setStep("compact")
       }
       setClosing(false)
@@ -96,10 +104,10 @@ export function CookieBanner() {
   const persist = React.useCallback(
     async (action: ConsentAction, allowAnalytics: boolean, allowMarketing: boolean) => {
       const existing = readConsentCookie()
-      const consentId = existing?.id ?? generateUuid()
+      const id = existing?.id ?? consentId ?? generateUuid()
       const payload: StoredConsent = {
         v: POLICY_VERSION,
-        id: consentId,
+        id,
         n: true,
         a: allowAnalytics,
         m: allowMarketing,
@@ -115,7 +123,7 @@ export function CookieBanner() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            consent_id: consentId,
+            consent_id: id,
             necessary: true,
             analytics: allowAnalytics,
             marketing: allowMarketing,
@@ -133,7 +141,7 @@ export function CookieBanner() {
         close()
       }
     },
-    [close],
+    [close, consentId],
   )
 
   if (!visible) return null
@@ -160,19 +168,22 @@ export function CookieBanner() {
         <div className="max-h-[60vh] overflow-y-auto p-5 sm:p-6">
           {step === "compact" ? (
             <div className="space-y-4">
-              <div>
-                <h2
-                  id="cookie-banner-title"
-                  className="font-heading text-lg font-semibold tracking-tight"
-                >
-                  Rispettiamo la tua privacy
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Usiamo cookie tecnici necessari al funzionamento del sito.
-                  Con il tuo consenso usiamo anche cookie di analisi
-                  (Google Analytics) per capire come migliorare il servizio.
-                  Puoi accettare, rifiutare o personalizzare.
-                </p>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2
+                    id="cookie-banner-title"
+                    className="font-heading text-lg font-semibold tracking-tight"
+                  >
+                    Rispettiamo la tua privacy
+                  </h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Usiamo cookie tecnici necessari al funzionamento del sito.
+                    Con il tuo consenso usiamo anche cookie di analisi
+                    (Google Analytics) per capire come migliorare il servizio.
+                    Puoi accettare, rifiutare o personalizzare.
+                  </p>
+                </div>
+                {consentId ? <ConsentIdBadge value={consentId} /> : null}
               </div>
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <Button
@@ -216,17 +227,20 @@ export function CookieBanner() {
             </div>
           ) : (
             <div className="space-y-5">
-              <div>
-                <h2
-                  id="cookie-banner-title"
-                  className="font-heading text-lg font-semibold tracking-tight"
-                >
-                  Personalizza le preferenze
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Scegli quali categorie di cookie attivare. Puoi modificare
-                  questa scelta in qualunque momento dal footer.
-                </p>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2
+                    id="cookie-banner-title"
+                    className="font-heading text-lg font-semibold tracking-tight"
+                  >
+                    Personalizza le preferenze
+                  </h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Scegli quali categorie di cookie attivare. Puoi modificare
+                    questa scelta in qualunque momento dal footer.
+                  </p>
+                </div>
+                {consentId ? <ConsentIdBadge value={consentId} /> : null}
               </div>
 
               <div className="space-y-4">
@@ -272,6 +286,56 @@ export function CookieBanner() {
         </div>
       </div>
     </div>
+  )
+}
+
+function ConsentIdBadge({ value }: { value: string }) {
+  const [copied, setCopied] = React.useState(false)
+  const short = value.slice(0, 8)
+  const seed = parseInt(value.slice(0, 8), 16) || 0
+  const hue = seed % 360
+  const initials = short.slice(0, 2).toUpperCase()
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    } catch {
+      // ignored
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      title={`ID consenso: ${value} — clicca per copiare`}
+      aria-label={`ID consenso ${short}, clicca per copiare`}
+      className="group flex shrink-0 items-center gap-2 rounded-full border border-border bg-muted/50 py-1 pl-1 pr-2.5 text-xs transition-colors hover:bg-muted"
+    >
+      <span
+        aria-hidden
+        className="inline-flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-semibold text-white"
+        style={{ backgroundColor: `hsl(${hue} 65% 45%)` }}
+      >
+        {initials}
+      </span>
+      <span className="hidden flex-col items-start leading-tight sm:flex">
+        <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+          ID consenso
+        </span>
+        <span className="font-mono tabular-nums text-foreground">{short}</span>
+      </span>
+      <span className="font-mono tabular-nums text-foreground sm:hidden">
+        {short}
+      </span>
+      {copied ? (
+        <Check className="h-3 w-3 text-emerald-600" />
+      ) : (
+        <Copy className="h-3 w-3 text-muted-foreground transition-colors group-hover:text-foreground" />
+      )}
+    </button>
   )
 }
 

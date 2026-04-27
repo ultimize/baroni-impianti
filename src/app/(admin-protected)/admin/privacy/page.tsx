@@ -3,27 +3,10 @@ import { Download, ShieldCheck } from "lucide-react"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { PageHeader } from "@/components/admin/shared/PageHeader"
 import { EmptyState } from "@/components/admin/shared/EmptyState"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { formatDateTime } from "@/lib/admin/utils/format"
+import { ConsentLogTable } from "@/components/admin/privacy/ConsentLogTable"
 
 export const dynamic = "force-dynamic"
-
-const ACTION_LABELS: Record<string, string> = {
-  accept_all: "Accetta tutti",
-  reject_all: "Rifiuta",
-  custom: "Personalizzato",
-  revoke: "Revoca",
-  update: "Aggiornamento",
-}
 
 export default async function AdminPrivacyPage() {
   const admin = createAdminClient()
@@ -69,68 +52,9 @@ export default async function AdminPrivacyPage() {
             className="m-4"
           />
         ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Consent ID</TableHead>
-                <TableHead>Azione</TableHead>
-                <TableHead>Analytics</TableHead>
-                <TableHead>Marketing</TableHead>
-                <TableHead>Versione policy</TableHead>
-                <TableHead>Data</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell className="font-mono text-xs">
-                    {row.consent_id.slice(0, 8)}…
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">
-                      {ACTION_LABELS[row.action] ?? row.action}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <ConsentDot value={row.analytics} />
-                  </TableCell>
-                  <TableCell>
-                    <ConsentDot value={row.marketing} />
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    v{row.policy_version}
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {formatDateTime(row.created_at)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <ConsentLogTable rows={rows} />
         )}
       </div>
     </div>
-  )
-}
-
-function ConsentDot({ value }: { value: boolean }) {
-  return (
-    <span
-      className={
-        value
-          ? "inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700"
-          : "inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
-      }
-    >
-      <span
-        aria-hidden
-        className={
-          value
-            ? "inline-block h-2 w-2 rounded-full bg-emerald-500"
-            : "inline-block h-2 w-2 rounded-full bg-muted-foreground/40"
-        }
-      />
-      {value ? "Sì" : "No"}
-    </span>
   )
 }
