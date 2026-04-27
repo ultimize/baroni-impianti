@@ -242,6 +242,14 @@ export default function PrivacyPolicyPage() {
                 </tr>
                 <tr>
                   <td>
+                    <strong>Microsoft Clarity</strong>
+                  </td>
+                  <td>Heatmap e session replay anonimizzati per UX</td>
+                  <td>Analitici (consenso)</td>
+                  <td>USA / UE (SCC)</td>
+                </tr>
+                <tr>
+                  <td>
                     <strong>Meta Platforms Ireland Ltd. — Pixel</strong>
                   </td>
                   <td>Misurazione campagne Facebook/Instagram</td>

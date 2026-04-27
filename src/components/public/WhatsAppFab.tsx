@@ -23,7 +23,7 @@ export function WhatsAppFab() {
         }
       `}} />
       <a
-        href="https://wa.me/3901851676704"
+        href="https://wa.me/3901851676704?text=Salve,%20vorrei%20avere%20maggiori%20informazioni%20sui%20vostri%20servizi."
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contatta Baroni Impianti su WhatsApp"

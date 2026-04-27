@@ -152,6 +152,14 @@ export default function CookiePolicyPage() {
                   <td>24 ore</td>
                   <td>Google LLC (USA)</td>
                 </tr>
+                <tr>
+                  <td>
+                    <code>_clck, _clsk</code>
+                  </td>
+                  <td>Microsoft Clarity per heatmap/session replay</td>
+                  <td>1 anno</td>
+                  <td>Microsoft</td>
+                </tr>
               </tbody>
             </table>
           </div>
