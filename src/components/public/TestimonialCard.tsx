@@ -28,60 +28,65 @@ export function TestimonialCard({
   return (
     <article
       className={cn(
-        "flex h-full flex-col rounded-2xl border border-border/60 bg-card p-6",
+        "flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:border-brand/30",
         placeholder && "opacity-80",
         className,
       )}
     >
       {youtubeId ? (
-        <div className="mb-5 aspect-video overflow-hidden rounded-xl bg-muted">
+        <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-[1.5rem] bg-slate-900 shadow-inner">
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1`}
             title={authorName ?? "Video testimonianza"}
             loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="h-full w-full"
+            className="absolute top-0 left-0 h-full w-full border-0"
           />
         </div>
       ) : null}
 
-      <Quote
-        className="h-8 w-8 text-primary/30"
-        aria-hidden
-        strokeWidth={1.5}
-      />
+      <div className="flex flex-1 flex-col px-5 pb-5">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex gap-1" aria-label={`${rating} stelle`}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className={cn(
+                  "h-5 w-5",
+                  i < rating
+                    ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+                    : "text-slate-200",
+                )}
+              />
+            ))}
+          </div>
+          <Quote className="h-8 w-8 text-slate-100" aria-hidden strokeWidth={1.5} />
+        </div>
 
-      <div className="mt-3 flex gap-0.5" aria-label={`${rating} stelle`}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star
-            key={i}
-            className={cn(
-              "h-4 w-4",
-              i < rating
-                ? "fill-amber-400 text-amber-400"
-                : "text-muted-foreground/30",
-            )}
-          />
-        ))}
-      </div>
+        <blockquote className="mt-2 flex-1 text-base leading-relaxed text-slate-700 italic">
+          {placeholder ? (
+            <span className="text-slate-400">
+              {placeholderLabel ?? "Presto qui — testimonianza di un cliente."}
+            </span>
+          ) : (
+            `"${quote}"`
+          )}
+        </blockquote>
 
-      <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
-        {placeholder ? (
-          <span className="italic text-muted-foreground">
-            {placeholderLabel ?? "Presto qui — testimonianza di un cliente."}
-          </span>
-        ) : (
-          quote
-        )}
-      </blockquote>
-
-      <div className="mt-6 border-t border-border/60 pt-4">
-        <p className="text-sm font-semibold text-foreground">
-          {authorName ?? "Cliente"}
-        </p>
-        {authorRole ? (
-          <p className="text-xs text-muted-foreground">{authorRole}</p>
-        ) : null}
+        <div className="mt-8 flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500 font-bold text-lg">
+            {(authorName ?? "C")[0].toUpperCase()}
+          </div>
+          <div>
+            <p className="text-base font-bold text-slate-900">
+              {authorName ?? "Cliente"}
+            </p>
+            {authorRole ? (
+              <p className="text-sm font-medium text-brand">{authorRole}</p>
+            ) : null}
+          </div>
+        </div>
       </div>
     </article>
   )
