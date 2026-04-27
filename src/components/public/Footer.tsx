@@ -275,11 +275,11 @@ export async function Footer() {
           <p className="text-sm uppercase tracking-[0.15em] text-slate-400 mb-6 font-semibold text-center leading-relaxed">
             Spese coofinanziate con le risorse PRLiguria FESR 2021-2027
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 bg-white rounded-2xl p-6 sm:px-10 shadow-xl shadow-brand-500/5">
-            <Image src="/img/bandi/eu.png" alt="Logo EU" width={200} height={100} className="h-16 sm:h-20 w-auto object-contain mix-blend-multiply" />
-            <Image src="/img/bandi/repubblica.png" alt="Logo Repubblica" width={200} height={100} className="h-16 sm:h-20 w-auto object-contain mix-blend-multiply" />
-            <Image src="/img/bandi/liguria.png" alt="Logo Liguria" width={200} height={100} className="h-16 sm:h-20 w-auto object-contain mix-blend-multiply" />
-            <Image src="/img/bandi/coesione.png" alt="Logo Coesione" width={200} height={100} className="h-16 sm:h-20 w-auto object-contain mix-blend-multiply" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 items-center justify-items-center gap-6 sm:gap-10 bg-white rounded-2xl p-6 sm:px-10 shadow-xl shadow-brand-500/5 w-full max-w-4xl">
+            <Image src="/img/bandi/eu.png" alt="Logo Unione Europea" width={200} height={100} unoptimized className="h-12 sm:h-16 lg:h-20 w-auto object-contain mix-blend-multiply" />
+            <Image src="/img/bandi/repubblica.png" alt="Logo Repubblica Italiana" width={200} height={100} unoptimized className="h-12 sm:h-16 lg:h-20 w-auto object-contain mix-blend-multiply" />
+            <Image src="/img/bandi/liguria.png" alt="Logo Regione Liguria" width={200} height={100} unoptimized className="h-12 sm:h-16 lg:h-20 w-auto object-contain mix-blend-multiply" />
+            <Image src="/img/bandi/coesione.png" alt="Logo Coesione Italia" width={200} height={100} unoptimized className="h-12 sm:h-16 lg:h-20 w-auto object-contain mix-blend-multiply" />
           </div>
         </div>
       </Container>
