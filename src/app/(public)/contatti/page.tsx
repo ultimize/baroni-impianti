@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ContactForm } from "@/components/public/ContactForm"
+import { MapEmbed } from "@/components/public/MapEmbed"
 import {
   getSiteSettings,
   settingAddress,
@@ -223,16 +224,7 @@ export default async function ContattiPage() {
 
             {/* Map Frame */}
             <div className="w-full h-[400px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200/50 border border-slate-200 relative bg-slate-100 flex items-center justify-center">
-              <iframe 
-                src={MAPS_EMBED_URL} 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 w-full h-full"
-              ></iframe>
+              <MapEmbed src={MAPS_EMBED_URL} title="Sede Baroni Impianti" />
             </div>
 
           </div>

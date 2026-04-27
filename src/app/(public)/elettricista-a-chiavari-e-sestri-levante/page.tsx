@@ -6,6 +6,7 @@ import { Container } from "@/components/public/Container"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
 import { ServiceCard } from "@/components/public/ServiceCard"
+import { MapEmbed } from "@/components/public/MapEmbed"
 import { getPublishedServices } from "@/lib/queries/site-content"
 
 export const revalidate = 3600
@@ -273,15 +274,10 @@ export default async function ServiziPage() {
 
         <div className="mx-auto max-w-5xl mt-16 px-4 relative z-10">
           <div className="relative w-full aspect-square sm:aspect-video lg:aspect-[2.5/1] bg-slate-900 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
-            <iframe
+            <MapEmbed
               src="https://maps.google.com/maps?q=Baroni+Impianti+Srl+Castiglione+Chiavarese&t=&z=13&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
+              title="Zone di intervento Baroni Impianti"
               allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0"
             />
             {/* Overlay gradient to blend borders */}
             <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] shadow-[inset_0_0_50px_rgba(2,6,23,0.8)] border border-white/5" />
