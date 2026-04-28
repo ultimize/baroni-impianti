@@ -53,13 +53,13 @@ const CATEGORY_HEADERS: Record<string, CategoryHeader> = {
     description:
       "Codici di tracciamento per analytics e marketing. Tutti facoltativi, lascia vuoto per disabilitare.",
     warning:
-      "Le modifiche entrano in vigore al prossimo deploy o cache invalidation (circa 1 minuto). Per forzare l'aggiornamento immediato, fai redeploy dalla dashboard Vercel.",
+      "Le modifiche sono attive immediatamente: al salvataggio la cache delle pagine pubbliche viene invalidata e le pagine vengono rigenerate al primo accesso successivo.",
   },
   seo: {
     title: "Verifica SEO",
     description: "Codici di verifica per i motori di ricerca.",
     warning:
-      "Le modifiche entrano in vigore al prossimo deploy o cache invalidation (circa 1 minuto). Per forzare l'aggiornamento immediato, fai redeploy dalla dashboard Vercel.",
+      "Le modifiche sono attive immediatamente: al salvataggio la cache delle pagine pubbliche viene invalidata e le pagine vengono rigenerate al primo accesso successivo.",
   },
 }
 
