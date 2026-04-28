@@ -231,11 +231,11 @@ export function CookieBanner() {
                   </Link>
                 </nav>
                 <a
-                  href="https://adevolutionagency.it"
+                  href="https://www.adevolution.eu/"
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="flex items-center gap-1.5 text-[10px] text-slate-400 hover:text-slate-600 transition-colors"
-                  aria-label="Sito realizzato da ADEvolution Agency (apre in nuova scheda)"
+                  aria-label="Sito realizzato da ADEvolution (apre in nuova scheda)"
                 >
                   <span>Powered by</span>
                   <AdevolutionLogo className="h-3 w-auto" aria-hidden="true" />
@@ -319,11 +319,11 @@ export function CookieBanner() {
                   </Link>
                 </nav>
                 <a
-                  href="https://adevolutionagency.it"
+                  href="https://www.adevolution.eu/"
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="flex items-center gap-1.5 text-[10px] text-slate-400 hover:text-slate-600 transition-colors"
-                  aria-label="Sito realizzato da ADEvolution Agency (apre in nuova scheda)"
+                  aria-label="Sito realizzato da ADEvolution (apre in nuova scheda)"
                 >
                   <span>Powered by</span>
                   <AdevolutionLogo className="h-3 w-auto" aria-hidden="true" />
