@@ -1,16 +1,17 @@
-"use client"
+"use server"
 
-import { createClient } from "@/lib/supabase/client"
+import { revalidatePath } from "next/cache"
+import { createClient } from "@/lib/supabase/server"
 import type { Json } from "@/types/database"
 
-export type SettingUpdate = {
+type SettingUpdate = {
   key: string
   value: Json | null
 }
 
 export async function batchUpdateSettings(updates: SettingUpdate[]) {
   if (updates.length === 0) return
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const results = await Promise.all(
     updates.map((u) =>
@@ -22,5 +23,8 @@ export async function batchUpdateSettings(updates: SettingUpdate[]) {
   )
 
   const firstError = results.find((r) => r.error)?.error
-  if (firstError) throw firstError
+  if (firstError) throw new Error(firstError.message)
+
+  revalidatePath("/", "layout")
+  revalidatePath("/admin/settings")
 }

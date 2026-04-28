@@ -3,33 +3,44 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Toaster } from "@/components/ui/sonner"
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/constants"
+import { getSettingValue } from "@/lib/queries/site-content"
 import "./globals.css"
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
-  },
-  description: SITE_DESCRIPTION,
-  applicationName: SITE_NAME,
-  authors: [{ name: SITE_NAME }],
-  openGraph: {
-    type: "website",
-    locale: "it_IT",
-    siteName: SITE_NAME,
-    title: SITE_NAME,
+export async function generateMetadata(): Promise<Metadata> {
+  const [googleVerification, bingVerification] = await Promise.all([
+    getSettingValue<string>("seo_google_site_verification"),
+    getSettingValue<string>("seo_bing_site_verification"),
+  ])
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: SITE_NAME,
+      template: `%s | ${SITE_NAME}`,
+    },
     description: SITE_DESCRIPTION,
-    url: SITE_URL,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE_NAME,
-    description: SITE_DESCRIPTION,
-  },
-  verification: {
-    google: "afL3O2Ec-vki_DYz1kMPeohNc-m0t83Y0JpGeqPKGoE",
-  },
+    applicationName: SITE_NAME,
+    authors: [{ name: SITE_NAME }],
+    openGraph: {
+      type: "website",
+      locale: "it_IT",
+      siteName: SITE_NAME,
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      url: SITE_URL,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
+    },
+    verification: {
+      google: googleVerification || undefined,
+      other: {
+        ...(bingVerification ? { "msvalidate.01": bingVerification } : {}),
+      },
+    },
+  }
 }
 
 export const viewport: Viewport = {

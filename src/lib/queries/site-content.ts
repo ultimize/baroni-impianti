@@ -34,6 +34,20 @@ export async function getSiteSettings(client?: Supa): Promise<SettingsMap> {
   return map
 }
 
+export async function getSettingValue<T = string>(
+  key: string,
+  client?: Supa,
+): Promise<T | null> {
+  const supabase = client ?? (await defaultClient())
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", key)
+    .maybeSingle()
+  if (error || !data) return null
+  return (data.value as unknown as T) ?? null
+}
+
 export function settingString(
   settings: SettingsMap,
   key: string,

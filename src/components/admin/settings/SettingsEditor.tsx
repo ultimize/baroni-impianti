@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Loader2, Save, RotateCcw } from "lucide-react"
+import { Loader2, Save, RotateCcw, AlertTriangle } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { batchUpdateSettings, type SettingUpdate } from "@/lib/admin/mutations/settings"
+import { batchUpdateSettings } from "@/lib/admin/mutations/settings"
 import type { Json } from "@/types/database"
 
 type Setting = {
@@ -23,17 +23,95 @@ type Setting = {
   updated_at: string
 }
 
+type SettingUpdate = {
+  key: string
+  value: Json | null
+}
+
 type Props = { settings: Setting[] }
 
-const CATEGORY_ORDER = ["general", "contact", "social", "seo", "integrations", "legal"] as const
+const CATEGORY_ORDER = ["general", "contact", "social", "seo", "tracking", "integrations", "legal"] as const
 const CATEGORY_LABELS: Record<string, string> = {
   general: "Generale",
   contact: "Contatti",
   social: "Social",
   seo: "SEO",
+  tracking: "Tracking & Analytics",
   integrations: "Integrazioni",
   legal: "Legale",
 }
+
+type CategoryHeader = {
+  title: string
+  description: string
+  warning?: string
+}
+
+const CATEGORY_HEADERS: Record<string, CategoryHeader> = {
+  tracking: {
+    title: "Tracking & Analytics",
+    description:
+      "Codici di tracciamento per analytics e marketing. Tutti facoltativi, lascia vuoto per disabilitare.",
+    warning:
+      "Le modifiche entrano in vigore al prossimo deploy o cache invalidation (circa 1 minuto). Per forzare l'aggiornamento immediato, fai redeploy dalla dashboard Vercel.",
+  },
+  seo: {
+    title: "Verifica SEO",
+    description: "Codici di verifica per i motori di ricerca.",
+    warning:
+      "Le modifiche entrano in vigore al prossimo deploy o cache invalidation (circa 1 minuto). Per forzare l'aggiornamento immediato, fai redeploy dalla dashboard Vercel.",
+  },
+}
+
+type FieldConfig = {
+  label: string
+  placeholder: string
+  helper: string
+}
+
+const FIELD_CONFIG: Record<string, FieldConfig> = {
+  tracking_gtm_id: {
+    label: "Google Tag Manager ID",
+    placeholder: "GTM-XXXXXXX",
+    helper: "Container ID di GTM. Lascia vuoto se non usi GTM.",
+  },
+  tracking_ga4_id: {
+    label: "Google Analytics 4 ID",
+    placeholder: "G-XXXXXXXXXX",
+    helper: "Misurazione GA4. Se usi GTM puoi gestire GA4 da lì.",
+  },
+  tracking_clarity_id: {
+    label: "Microsoft Clarity ID",
+    placeholder: "abc123xyz",
+    helper: "Tag ID di Clarity per heatmap e session replay anonimi.",
+  },
+  tracking_meta_pixel_id: {
+    label: "Meta Pixel ID",
+    placeholder: "1234567890123456",
+    helper: "Pixel Facebook/Instagram per misurazione campagne.",
+  },
+  seo_google_site_verification: {
+    label: "Google Search Console",
+    placeholder: "afL3O2Ec-vki_...",
+    helper: "Solo il valore content del meta tag fornito da Google Search Console.",
+  },
+  seo_bing_site_verification: {
+    label: "Bing Webmaster Tools",
+    placeholder: "...",
+    helper: "Codice verifica Bing. Opzionale.",
+  },
+}
+
+const TRACKING_KEY_ORDER = [
+  "tracking_gtm_id",
+  "tracking_ga4_id",
+  "tracking_clarity_id",
+  "tracking_meta_pixel_id",
+]
+const SEO_VERIFICATION_KEY_ORDER = [
+  "seo_google_site_verification",
+  "seo_bing_site_verification",
+]
 
 function detectKind(value: Json | null): "string" | "number" | "boolean" | "array" | "object" | "null" {
   if (value === null || value === undefined) return "null"
@@ -75,6 +153,20 @@ export function SettingsEditor({ settings }: Props) {
       const arr = map.get(cat) ?? []
       arr.push(s)
       map.set(cat, arr)
+    }
+    const orderForCategory = (cat: string): string[] | null => {
+      if (cat === "tracking") return TRACKING_KEY_ORDER
+      if (cat === "seo") return SEO_VERIFICATION_KEY_ORDER
+      return null
+    }
+    for (const [cat, rows] of map) {
+      const order = orderForCategory(cat)
+      if (!order) continue
+      const indexOf = (k: string) => {
+        const i = order.indexOf(k)
+        return i === -1 ? order.length : i
+      }
+      rows.sort((a, b) => indexOf(a.key) - indexOf(b.key))
     }
     return map
   }, [settings])
@@ -124,20 +216,35 @@ export function SettingsEditor({ settings }: Props) {
             </TabsTrigger>
           ))}
         </TabsList>
-        {categories.map((c) => (
-          <TabsContent key={c} value={c}>
-            <div className="space-y-5 rounded-lg border bg-card p-5">
-              {(grouped.get(c) ?? []).map((s) => (
-                <SettingRow
-                  key={s.key}
-                  setting={s}
-                  value={values[s.key] ?? null}
-                  onChange={(v) => setKey(s.key, v)}
-                />
-              ))}
-            </div>
-          </TabsContent>
-        ))}
+        {categories.map((c) => {
+          const header = CATEGORY_HEADERS[c]
+          return (
+            <TabsContent key={c} value={c}>
+              <div className="space-y-5 rounded-lg border bg-card p-5">
+                {header ? (
+                  <div className="space-y-1 border-b pb-4">
+                    <h3 className="text-base font-semibold">{header.title}</h3>
+                    <p className="text-sm text-muted-foreground">{header.description}</p>
+                  </div>
+                ) : null}
+                {(grouped.get(c) ?? []).map((s) => (
+                  <SettingRow
+                    key={s.key}
+                    setting={s}
+                    value={values[s.key] ?? null}
+                    onChange={(v) => setKey(s.key, v)}
+                  />
+                ))}
+                {header?.warning ? (
+                  <div className="flex items-start gap-2 rounded-md border border-yellow-300 bg-yellow-50 p-3 text-xs text-yellow-900 dark:border-yellow-900/60 dark:bg-yellow-950/40 dark:text-yellow-200">
+                    <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                    <span>{header.warning}</span>
+                  </div>
+                ) : null}
+              </div>
+            </TabsContent>
+          )
+        })}
       </Tabs>
 
       <div className="sticky bottom-0 -mx-4 flex items-center justify-between gap-2 border-t bg-background/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -168,6 +275,25 @@ function SettingRow({
   value: Json | null
   onChange: (v: Json | null) => void
 }) {
+  const fieldConfig = FIELD_CONFIG[setting.key]
+  if (fieldConfig) {
+    const str = typeof value === "string" ? value : ""
+    const isConfigured = str.trim().length > 0
+    return (
+      <FieldShell
+        label={fieldConfig.label}
+        description={fieldConfig.helper}
+        statusBadge={isConfigured ? "configured" : "unconfigured"}
+      >
+        <Input
+          value={str}
+          placeholder={fieldConfig.placeholder}
+          onChange={(e) => onChange(e.target.value || null)}
+        />
+      </FieldShell>
+    )
+  }
+
   const kind = detectKind(setting.value ?? value)
   const label = labelFromKey(setting.key)
 
@@ -291,19 +417,39 @@ function FieldShell({
   label,
   description,
   children,
+  statusBadge,
 }: {
   label: string
   description: string | null
   children: React.ReactNode
+  statusBadge?: "configured" | "unconfigured"
 }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between gap-2">
-        <Label className="text-sm font-medium">{label}</Label>
+        <div className="flex items-center gap-2">
+          <Label className="text-sm font-medium">{label}</Label>
+          {statusBadge ? <StatusBadge status={statusBadge} /> : null}
+        </div>
       </div>
       {children}
       {description ? <p className="text-xs text-muted-foreground">{description}</p> : null}
     </div>
+  )
+}
+
+function StatusBadge({ status }: { status: "configured" | "unconfigured" }) {
+  if (status === "configured") {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
+        <span aria-hidden>●</span> Configurato
+      </span>
+    )
+  }
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-muted-foreground/20 bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+      <span aria-hidden>○</span> Non configurato
+    </span>
   )
 }
 
