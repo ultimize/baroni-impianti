@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Check, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
+import { AdevolutionLogo } from "@/components/public/AdevolutionLogo"
 import { cn } from "@/lib/utils"
 
 const COOKIE_NAME = "baroni_consent"
@@ -169,7 +170,7 @@ export function CookieBanner() {
           {step === "compact" ? (
             <div className="space-y-4">
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0 flex-1">
                   <h2
                     id="cookie-banner-title"
                     className="font-heading text-lg font-semibold tracking-tight"
@@ -210,25 +211,41 @@ export function CookieBanner() {
                   Personalizza
                 </button>
               </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                <Link
-                  href="/cookie-policy"
-                  className="hover:text-foreground hover:underline"
+              <div className="mt-4 pt-3 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <nav
+                  className="flex items-center gap-3 text-[11px] text-slate-500"
+                  aria-label="Documenti legali"
                 >
-                  Cookie Policy
-                </Link>
-                <Link
-                  href="/privacy-policy"
-                  className="hover:text-foreground hover:underline"
+                  <Link
+                    href="/cookie-policy"
+                    className="hover:text-slate-700 transition-colors"
+                  >
+                    Cookie Policy
+                  </Link>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
+                  <Link
+                    href="/privacy-policy"
+                    className="hover:text-slate-700 transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </nav>
+                <a
+                  href="https://adevolutionagency.it"
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="flex items-center gap-1.5 text-[10px] text-slate-400 hover:text-slate-600 transition-colors"
+                  aria-label="Sito realizzato da ADEvolution Agency (apre in nuova scheda)"
                 >
-                  Privacy Policy
-                </Link>
+                  <span>Powered by</span>
+                  <AdevolutionLogo className="h-3 w-auto" aria-hidden="true" />
+                </a>
               </div>
             </div>
           ) : (
             <div className="space-y-5">
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0 flex-1">
                   <h2
                     id="cookie-banner-title"
                     className="font-heading text-lg font-semibold tracking-tight"
@@ -280,6 +297,37 @@ export function CookieBanner() {
                 >
                   Salva preferenze
                 </Button>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <nav
+                  className="flex items-center gap-3 text-[11px] text-slate-500"
+                  aria-label="Documenti legali"
+                >
+                  <Link
+                    href="/cookie-policy"
+                    className="hover:text-slate-700 transition-colors"
+                  >
+                    Cookie Policy
+                  </Link>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
+                  <Link
+                    href="/privacy-policy"
+                    className="hover:text-slate-700 transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </nav>
+                <a
+                  href="https://adevolutionagency.it"
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="flex items-center gap-1.5 text-[10px] text-slate-400 hover:text-slate-600 transition-colors"
+                  aria-label="Sito realizzato da ADEvolution Agency (apre in nuova scheda)"
+                >
+                  <span>Powered by</span>
+                  <AdevolutionLogo className="h-3 w-auto" aria-hidden="true" />
+                </a>
               </div>
             </div>
           )}
