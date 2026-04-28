@@ -170,7 +170,7 @@ export default async function ServiziPage() {
                   Gli impianti elettrici intelligenti offrono flessibilità e praticità d'uso. Offriamo soluzioni personalizzate per l'automazione domestica, che ti permetteranno di controllare luci, riscaldamento, tapparelle e molto altro, anche da remoto.
                 </p>
                 <Button asChild className="w-fit bg-transparent border-white/20 text-white hover:bg-white/10 hover:text-white" variant="outline">
-                  <Link href="/2024/01/30/realizzazione-di-impianti-digitali-integrati/">
+                  <Link href="/realizzazione-di-impianti-digitali-integrati">
                     Approfondisci <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>

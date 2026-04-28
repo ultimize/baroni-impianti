@@ -22,7 +22,7 @@ const NAV_LINKS = [
     label: "Servizi",
     subItems: [
       { href: "/progettazione-impianti-rete-cablata-a-sestri-levante", label: "Impianti Cablati e wireless" },
-      { href: "/2024/01/30/realizzazione-di-impianti-digitali-integrati/", label: "Impianti Digitali Integrati" },
+      { href: "/realizzazione-di-impianti-digitali-integrati", label: "Impianti Digitali Integrati" },
       { href: "/progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante", label: "Impianti di Sicurezza" },
       { href: "/protezione-dalle-scariche-atmosferiche-installazione-spd", label: "Installazione SPD" },
       { href: "/zero-pensieri", label: 'Assistenza "ZERO PENSIERI"' },
