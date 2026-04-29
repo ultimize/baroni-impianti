@@ -1,18 +1,43 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import { ShieldAlert, Zap, CloudLightning, Home, Server, TriangleAlert, Activity } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
+import { renderJsonLd, serviceSchema } from "@/lib/seo/json-ld"
 
 export const revalidate = 3600
 
+const SERVICE_TITLE =
+  "Protezione dalle scariche atmosferiche, installazione SPD Sestri Levante"
+const SERVICE_DESCRIPTION =
+  "Proteggi i tuoi elettrodomestici e dispositivi elettronici dai fulmini con un impianto SPD e scaricatori di sovratensione a regola d'arte."
+const SERVICE_SLUG =
+  "protezione-dalle-scariche-atmosferiche-installazione-spd"
+
 export const metadata: Metadata = {
-  title: "Protezione dalle scariche atmosferiche, installazione SPD Sestri Levante",
-  description: "Proteggi i tuoi elettrodomestici e dispositivi elettronici dai fulmini con un impianto SPD e scaricatori di sovratensione a regola d'arte.",
+  title: SERVICE_TITLE,
+  description: SERVICE_DESCRIPTION,
 }
 
 export default function SPDPage() {
   return (
     <>
+      <Script
+        id="service-spd-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: renderJsonLd(
+            serviceSchema({
+              title: SERVICE_TITLE,
+              description: SERVICE_DESCRIPTION,
+              slug: SERVICE_SLUG,
+              category: "Protezione da sovratensioni e scariche atmosferiche",
+            }),
+          ),
+        }}
+      />
       {/* Custom Hero SPD */}
       <section className="relative overflow-hidden lg:min-h-[60vh] flex items-center pt-28 pb-20 lg:pt-36 lg:pb-24 bg-slate-950 border-b border-slate-800">
         {/* Background Effects */}
@@ -27,6 +52,16 @@ export default function SPDPage() {
 
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Servizi", url: "/elettricista-a-chiavari-e-sestri-levante" },
+                { name: "Installazione SPD", url: `/${SERVICE_SLUG}` },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-spd-jsonld"
+              className="mb-6"
+            />
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-md text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm animate-pulse">
               <CloudLightning className="w-4 h-4" /> Rischio Fulmini
             </span>

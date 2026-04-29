@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ArrowRight, Star, MapPin, Zap, Network, Video, Speaker, Shield, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/public/Container"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
 import { ServiceCard } from "@/components/public/ServiceCard"
@@ -53,6 +54,15 @@ export default async function ServiziPage() {
 
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Servizi", url: "/elettricista-a-chiavari-e-sestri-levante" },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-servizi-jsonld"
+              className="mb-6"
+            />
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
               <Zap className="w-4 h-4 text-amber-400" /> L'eccellenza al tuo fianco
             </span>

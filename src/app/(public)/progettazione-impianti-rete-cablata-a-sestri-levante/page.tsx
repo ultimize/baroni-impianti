@@ -1,19 +1,42 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import { ShieldAlert, Zap, Network, Server, ArrowRight, Activity, WifiOff } from "lucide-react"
 import { Container } from "@/components/public/Container"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
+import { renderJsonLd, serviceSchema } from "@/lib/seo/json-ld"
 
 export const revalidate = 3600
 
+const SERVICE_TITLE = "Progettazione Impianti Rete Cablata a Sestri Levante"
+const SERVICE_DESCRIPTION =
+  "Risolvi i problemi del Wi-Fi con un impianto di rete cablata studiato per massimizzare velocità, sicurezza e stabilità della tua connessione."
+const SERVICE_SLUG = "progettazione-impianti-rete-cablata-a-sestri-levante"
+
 export const metadata: Metadata = {
-  title: "Progettazione Impianti Rete Cablata a Sestri Levante — Baroni Impianti",
-  description: "Risolvi i problemi del Wi-Fi con un impianto di rete cablata studiato per massimizzare velocità, sicurezza e stabilità della tua connessione.",
+  title: `${SERVICE_TITLE} — Baroni Impianti`,
+  description: SERVICE_DESCRIPTION,
 }
 
 export default function ReteCablataPage() {
   return (
     <>
+      <Script
+        id="service-cablati-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: renderJsonLd(
+            serviceSchema({
+              title: SERVICE_TITLE,
+              description: SERVICE_DESCRIPTION,
+              slug: SERVICE_SLUG,
+              category: "Reti dati e cablaggio strutturato",
+            }),
+          ),
+        }}
+      />
       {/* Custom Hero Rete Cablata */}
       <section className="relative overflow-hidden lg:min-h-[60vh] flex items-center pt-28 pb-20 lg:pt-36 lg:pb-24 bg-slate-950 border-b border-slate-800">
         {/* Background Effects */}
@@ -28,6 +51,16 @@ export default function ReteCablataPage() {
 
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Servizi", url: "/elettricista-a-chiavari-e-sestri-levante" },
+                { name: "Impianti Cablati", url: `/${SERVICE_SLUG}` },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-cablati-jsonld"
+              className="mb-6"
+            />
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md text-blue-200 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
               <Network className="w-4 h-4 text-blue-400" /> Massime Prestazioni
             </span>

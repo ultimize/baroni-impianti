@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import { Container } from "@/components/public/Container"
 import { PageHero } from "@/components/public/PageHero"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { FeatureCard } from "@/components/public/FeatureCard"
 import { CertificationCard } from "@/components/public/CertificationCard"
@@ -53,7 +54,15 @@ export default async function CertificazioniPage() {
         title="Certificazioni e abilitazioni"
         lead="Operiamo secondo le più importanti certificazioni del settore elettrico. Ogni impianto è documentato e tracciabile."
         tone="brand"
-      />
+      >
+        <BreadcrumbNav
+          items={[
+            { name: "Home", url: "/" },
+            { name: "Certificazioni", url: "/certificazioni" },
+          ]}
+          scriptId="breadcrumb-certificazioni-jsonld"
+        />
+      </PageHero>
 
       <SectionWrapper variant="white">
         <div className="mx-auto max-w-3xl text-center">

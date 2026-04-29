@@ -1,18 +1,43 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import { Shield, Lock, Eye, Bell, ShieldCheck, Zap, Crosshair } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
+import { renderJsonLd, serviceSchema } from "@/lib/seo/json-ld"
 
 export const revalidate = 3600
 
+const SERVICE_TITLE =
+  "Progettazione e realizzazione impianti di sicurezza Sestri Levante"
+const SERVICE_DESCRIPTION =
+  "Proteggi la tua famiglia e la tua azienda con i nostri impianti di sicurezza. Antifurto, videosorveglianza e controllo accessi a Sestri Levante e nel Tigullio."
+const SERVICE_SLUG =
+  "progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante"
+
 export const metadata: Metadata = {
-  title: "Progettazione e realizzazione impianti di sicurezza Sestri Levante",
-  description: "Proteggi la tua famiglia e la tua azienda con i nostri impianti di sicurezza. Antifurto, videosorveglianza e controllo accessi a Sestri Levante e nel Tigullio.",
+  title: SERVICE_TITLE,
+  description: SERVICE_DESCRIPTION,
 }
 
 export default function SicurezzaPage() {
   return (
     <>
+      <Script
+        id="service-sicurezza-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: renderJsonLd(
+            serviceSchema({
+              title: SERVICE_TITLE,
+              description: SERVICE_DESCRIPTION,
+              slug: SERVICE_SLUG,
+              category: "Impianti di sicurezza, antifurto e videosorveglianza",
+            }),
+          ),
+        }}
+      />
       {/* Custom Hero Sicurezza */}
       <section className="relative overflow-hidden lg:min-h-[60vh] flex items-center pt-28 pb-20 lg:pt-36 lg:pb-24 bg-slate-950 border-b border-slate-800">
         {/* Background Effects */}
@@ -27,6 +52,16 @@ export default function SicurezzaPage() {
 
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Servizi", url: "/elettricista-a-chiavari-e-sestri-levante" },
+                { name: "Impianti di Sicurezza", url: `/${SERVICE_SLUG}` },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-sicurezza-jsonld"
+              className="mb-6"
+            />
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 backdrop-blur-md text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
               <ShieldCheck className="w-4 h-4" /> Protezione Assoluta
             </span>

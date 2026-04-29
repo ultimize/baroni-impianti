@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ContactForm } from "@/components/public/ContactForm"
 import { MapEmbed } from "@/components/public/MapEmbed"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import {
   getSiteSettings,
   settingAddress,
@@ -64,6 +65,15 @@ export default async function ContattiPage() {
         </div>
 
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <BreadcrumbNav
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Contatti", url: "/contatti" },
+            ]}
+            tone="light"
+            scriptId="breadcrumb-contatti-jsonld"
+            className="mb-6"
+          />
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
             <MessageSquare className="w-4 h-4 text-brand-400" /> Parla con noi
           </div>

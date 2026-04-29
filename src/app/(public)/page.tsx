@@ -89,7 +89,10 @@ const CERTIFICATES = [
 
 export default async function HomePage() {
   const supabase = await createClient()
-  const posts = await getRecentPosts(supabase, 3)
+  const [posts, orgSchema] = await Promise.all([
+    getRecentPosts(supabase, 3),
+    organizationSchema(),
+  ])
 
   return (
     <>
@@ -98,7 +101,7 @@ export default async function HomePage() {
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: renderJsonLd([organizationSchema(), websiteSchema()]),
+          __html: renderJsonLd([orgSchema, websiteSchema()]),
         }}
       />
 

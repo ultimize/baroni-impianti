@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { TestimonialCard } from "@/components/public/TestimonialCard"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { getPublishedTestimonials } from "@/lib/queries/site-content"
 
 export const revalidate = 3600
@@ -30,6 +31,15 @@ export default async function TestimonianzePage() {
         </div>
 
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <BreadcrumbNav
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Testimonianze", url: "/testimonianze" },
+            ]}
+            tone="light"
+            scriptId="breadcrumb-testimonianze-jsonld"
+            className="mb-6"
+          />
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
             <Quote className="w-4 h-4 text-brand-400" /> Le parole dei clienti
           </div>

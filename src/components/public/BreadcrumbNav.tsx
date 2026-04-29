@@ -10,35 +10,64 @@ type Props = {
   items: Item[]
   className?: string
   scriptId?: string
+  tone?: "default" | "light"
 }
 
-export function BreadcrumbNav({ items, className, scriptId = "breadcrumb-jsonld" }: Props) {
+export function BreadcrumbNav({
+  items,
+  className,
+  scriptId = "breadcrumb-jsonld",
+  tone = "default",
+}: Props) {
   if (items.length === 0) return null
+  const isLight = tone === "light"
   return (
     <>
       <nav
         aria-label="Breadcrumb"
-        className={cn("text-sm text-muted-foreground", className)}
+        className={cn(
+          "text-sm",
+          isLight ? "text-slate-300" : "text-muted-foreground",
+          className,
+        )}
       >
         <ol className="flex flex-wrap items-center gap-1.5">
           {items.map((item, i) => {
             const isLast = i === items.length - 1
             return (
-              <li key={`${i}-${item.url}`} className="flex items-center gap-1.5">
+              <li
+                key={`${i}-${item.url}`}
+                className={cn(
+                  "items-center gap-1.5",
+                  isLast ? "flex" : "hidden sm:flex",
+                )}
+              >
                 {i > 0 ? (
                   <ChevronRight
-                    className="h-3.5 w-3.5 text-muted-foreground/60"
+                    className={cn(
+                      "hidden h-3.5 w-3.5 sm:inline-block",
+                      isLight ? "text-slate-500" : "text-muted-foreground/60",
+                    )}
                     aria-hidden
                   />
                 ) : null}
                 {isLast ? (
-                  <span aria-current="page" className="line-clamp-1 text-foreground">
+                  <span
+                    aria-current="page"
+                    className={cn(
+                      "line-clamp-1",
+                      isLight ? "text-white" : "text-foreground",
+                    )}
+                  >
                     {item.name}
                   </span>
                 ) : (
                   <Link
                     href={item.url}
-                    className="transition-colors hover:text-primary"
+                    className={cn(
+                      "transition-colors",
+                      isLight ? "hover:text-white" : "hover:text-primary",
+                    )}
                   >
                     {item.name}
                   </Link>

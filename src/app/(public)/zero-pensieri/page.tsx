@@ -21,6 +21,7 @@ import type { LucideIcon } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { FeatureCard } from "@/components/public/FeatureCard"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import {
   Accordion,
   AccordionItem,
@@ -185,6 +186,15 @@ export default function ZeroPensieriPage() {
 
         <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Zero Pensieri", url: "/zero-pensieri" },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-zero-pensieri-jsonld"
+              className="mb-6"
+            />
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-8 shadow-sm">
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" /> Formula Esclusiva Baroni Impianti
             </div>

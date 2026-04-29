@@ -3,6 +3,7 @@ import { Image as ImageIcon } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
 import { GalleryLightbox, type GalleryLightboxItem } from "@/components/public/GalleryLightbox"
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { createPublicClient } from "@/lib/supabase/public-client"
 
 export const revalidate = 3600
@@ -63,6 +64,15 @@ export default async function GalleriaPage() {
         </div>
 
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <BreadcrumbNav
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Galleria", url: "/galleria" },
+            ]}
+            tone="light"
+            scriptId="breadcrumb-galleria-jsonld"
+            className="mb-6"
+          />
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
             <ImageIcon className="w-4 h-4 text-brand-400" /> Il Nostro Portfolio
           </div>

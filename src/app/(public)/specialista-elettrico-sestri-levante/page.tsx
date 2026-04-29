@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Check, AlertTriangle, Lightbulb, Zap, Shield, ArrowRight, ThumbsUp, ThumbsDown, Award } from "lucide-react"
 import { Container } from "@/components/public/Container"
 
+import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
 import { CertificationCard } from "@/components/public/CertificationCard"
@@ -74,6 +75,15 @@ export default async function ChiSiamoPage() {
 
         <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="flex flex-col items-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Chi siamo", url: "/specialista-elettrico-sestri-levante" },
+              ]}
+              tone="light"
+              scriptId="breadcrumb-chi-siamo-jsonld"
+              className="mb-6"
+            />
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
               <Shield className="w-4 h-4 text-amber-400" /> Il nostro manifesto
             </span>
