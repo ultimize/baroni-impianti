@@ -1,5 +1,10 @@
 import type { Metadata } from "next"
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants"
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  BLOG_BASE_PATH,
+} from "@/lib/constants"
 
 export type ArticleMetaInput = {
   title: string
@@ -129,7 +134,12 @@ export function buildBlogListMetadata(pageNumber: number): Metadata {
     title: `${base}${suffix}`,
     description:
       "Guide pratiche, normative, approfondimenti e consigli sull'impiantistica elettrica a Sestri Levante e nel Tigullio.",
-    alternates: { canonical: pageNumber > 1 ? `/blog/page/${pageNumber}` : "/blog" },
+    alternates: {
+      canonical:
+        pageNumber > 1
+          ? `${BLOG_BASE_PATH}/page/${pageNumber}`
+          : BLOG_BASE_PATH,
+    },
   }
 }
 

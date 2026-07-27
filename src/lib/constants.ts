@@ -4,6 +4,12 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Baroni Impianti"
 
+/**
+ * Path pubblico della sezione blog.
+ * Usare sempre questa costante: la sezione NON sta su /blog.
+ */
+export const BLOG_BASE_PATH = "/blog-per-elettricisti"
+
 export const SITE_DESCRIPTION =
   "Elettricista impiantista a Sestri Levante. Impianti elettrici civili e industriali, domotica, sicurezza, manutenzioni. Servizio Zero Pensieri."
 

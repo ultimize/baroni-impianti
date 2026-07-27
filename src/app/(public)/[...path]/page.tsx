@@ -17,14 +17,14 @@ import {
 } from "@/lib/queries/posts"
 import { getPageBySlug, getAllPublishedPages } from "@/lib/queries/pages"
 import { sanitizeArticleHtml } from "@/lib/content/sanitize"
-import { buildPostUrl } from "@/lib/content/url-builder"
+import { buildPostUrl, buildCategoryUrl } from "@/lib/content/url-builder"
 import { getUrlDateParts } from "@/lib/content/format-date"
 import {
   buildArticleMetadata,
   buildPageMetadata,
 } from "@/lib/seo/metadata"
 import { articleSchema, renderJsonLd } from "@/lib/seo/json-ld"
-import { SITE_URL } from "@/lib/constants"
+import { SITE_URL, BLOG_BASE_PATH } from "@/lib/constants"
 
 export const revalidate = 3600
 export const dynamicParams = true
@@ -120,12 +120,12 @@ export default async function CatchAllPage({
     const primaryCategory = post.categories[0]
     const breadcrumbs = [
       { name: "Home", url: "/" },
-      { name: "Blog", url: "/blog" },
+      { name: "Blog", url: BLOG_BASE_PATH },
       ...(primaryCategory
         ? [
             {
               name: primaryCategory.name,
-              url: `/blog/categoria/${primaryCategory.slug}`,
+              url: buildCategoryUrl(primaryCategory.slug),
             },
           ]
         : []),

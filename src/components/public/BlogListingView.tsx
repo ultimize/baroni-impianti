@@ -14,6 +14,7 @@ import {
   buildCategoryUrl,
   buildTagUrl,
 } from "@/lib/content/url-builder"
+import { BLOG_BASE_PATH } from "@/lib/constants"
 
 type BaseProps = {
   page: number
@@ -85,18 +86,18 @@ export async function BlogListingView(props: Props) {
     props.kind === "category"
       ? [
           { name: "Home", url: "/" },
-          { name: "Blog", url: "/blog" },
+          { name: "Blog", url: BLOG_BASE_PATH },
           { name: props.categoryName, url: buildCategoryUrl(props.categorySlug) },
         ]
       : props.kind === "tag"
       ? [
           { name: "Home", url: "/" },
-          { name: "Blog", url: "/blog" },
+          { name: "Blog", url: BLOG_BASE_PATH },
           { name: `#${props.tagName}`, url: buildTagUrl(props.tagSlug) },
         ]
       : [
           { name: "Home", url: "/" },
-          { name: "Blog", url: "/blog" },
+          { name: "Blog", url: BLOG_BASE_PATH },
         ]
 
   return (
@@ -153,7 +154,7 @@ export async function BlogListingView(props: Props) {
                 Nessun articolo pubblicato in questa sezione.
               </p>
               <Link
-                href="/blog"
+                href={BLOG_BASE_PATH}
                 className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
               >
                 Torna al blog

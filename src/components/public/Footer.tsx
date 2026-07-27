@@ -95,7 +95,7 @@ export async function Footer() {
                 alt="Baroni Impianti" 
                 width={48} 
                 height={48} 
-                className="h-12 w-auto brightness-200 contrast-125" 
+                className="h-12 w-auto brightness-0 invert" 
               />
               <span className="text-xl font-semibold tracking-tight text-white">
                 Baroni Impianti

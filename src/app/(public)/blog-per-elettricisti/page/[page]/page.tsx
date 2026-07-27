@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation"
 import { BlogListingView } from "@/components/public/BlogListingView"
 import { buildBlogListMetadata } from "@/lib/seo/metadata"
 import { createPublicClient } from "@/lib/supabase/public-client"
+import { BLOG_BASE_PATH } from "@/lib/constants"
 
 export const revalidate = 3600
 
@@ -45,7 +46,7 @@ export default async function BlogPaginatedPage({
   const { page } = await params
   const n = parseInt(page, 10)
   if (!Number.isFinite(n) || n < 1) notFound()
-  if (n === 1) redirect("/blog")
+  if (n === 1) redirect(BLOG_BASE_PATH)
 
   return <BlogListingView kind="all" page={n} />
 }
