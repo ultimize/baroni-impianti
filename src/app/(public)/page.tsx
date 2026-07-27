@@ -54,26 +54,29 @@ const SERVICES = [
   },
 ]
 
+// Titoli verificati sulle immagini reali in public/img/certificati (2026-07-27).
+// Le stesse certificazioni sono a database (tabella `certifications`) con le
+// immagini su Supabase Storage: se si aggiorna una delle due fonti, allineare l'altra.
 const CERTIFICATES = [
   {
     image: "/img/certificati/cert-1.jpg",
-    title: "Networking Base",
-    provider: "Altatensione / Netify",
+    title: "Installatore Certificato ZCS Azzurro",
+    provider: "Zucchetti Centro Sistemi",
   },
   {
     image: "/img/certificati/cert-2.jpg",
-    title: "Autorimesse e ricarica veicoli elettrici",
+    title: "Autorimesse, box e ricarica veicoli elettrici",
     provider: "Il Professionista Elettrico",
   },
   {
     image: "/img/certificati/cert-3.jpg",
-    title: "Elettrosistemista™",
-    provider: "Corso di Elettrosistemista",
+    title: "System Integrator: DALI2",
+    provider: "OHMEGA Progettazioni",
   },
   {
     image: "/img/certificati/cert-4.jpg",
-    title: "System Integrator: DALI2",
-    provider: "Ohmega Progettazioni",
+    title: "Networking Base",
+    provider: "Netify Academy / Altatensione",
   },
   {
     image: "/img/certificati/cert-5.jpg",
@@ -82,8 +85,8 @@ const CERTIFICATES = [
   },
   {
     image: "/img/certificati/cert-6.jpg",
-    title: "Certificazione Aggiuntiva",
-    provider: "Baroni Impianti",
+    title: "Elettrosistemista™",
+    provider: "Metodo Reti IP / Altatensione",
   },
 ]
 
