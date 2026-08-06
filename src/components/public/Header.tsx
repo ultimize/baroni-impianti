@@ -29,6 +29,7 @@ const NAV_LINKS = [
     ]
   },
   { href: "/galleria", label: "Galleria" },
+  { href: "/testimonianze", label: "Testimonianze" },
   { href: "/blog-per-elettricisti", label: "Blog" },
   { href: "/contatti", label: "Contatti" },
 ]
