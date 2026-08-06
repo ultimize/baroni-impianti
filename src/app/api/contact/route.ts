@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { z } from "zod"
 
+import { sendLeadToGoHighLevel } from "@/lib/crm/gohighlevel"
 import { sendContactNotification } from "@/lib/email/resend"
 import { createAdminClient } from "@/lib/supabase/admin"
 
@@ -126,6 +127,21 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error("[contact] email notification threw", error)
+  }
+
+  try {
+    await sendLeadToGoHighLevel({
+      id: insertedId,
+      name: data.full_name,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+      serviceInterest: data.service_interest,
+      sourcePage: data.source_page,
+    })
+  } catch (error) {
+    console.error("[contact] gohighlevel sync threw", error)
   }
 
   return NextResponse.json({ ok: true }, { status: 201 })
