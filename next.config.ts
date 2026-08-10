@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       { source: '/servizi/impianti-sicurezza', destination: '/progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante', permanent: true },
       { source: '/servizi/protezione-spd', destination: '/protezione-dalle-scariche-atmosferiche-installazione-spd', permanent: true },
       { source: '/blog', destination: '/blog-per-elettricisti', permanent: true },
+      // Alias comuni del feed RSS: una sola sorgente di verita' su /feed.xml
+      { source: '/rss.xml', destination: '/feed.xml', permanent: true },
+      { source: '/feed', destination: '/feed.xml', permanent: true },
       { source: '/2024/01/30/realizzazione-di-impianti-digitali-integrati', destination: '/realizzazione-di-impianti-digitali-integrati', permanent: true },
     ]
   },

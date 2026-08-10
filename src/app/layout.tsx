@@ -20,6 +20,14 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: SITE_DESCRIPTION,
     applicationName: SITE_NAME,
+    // Rende il feed RSS auto-rilevabile: <link rel="alternate" type="application/rss+xml">
+    alternates: {
+      types: {
+        "application/rss+xml": [
+          { url: `${SITE_URL}/feed.xml`, title: `${SITE_NAME} — Blog` },
+        ],
+      },
+    },
     authors: [{ name: SITE_NAME }],
     openGraph: {
       type: "website",
