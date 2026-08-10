@@ -35,9 +35,40 @@ function toRfc822(value: string): string {
   return new Date(value).toUTCString()
 }
 
+/** L'enclosure deve dichiarare il tipo reale: le immagini del blog sono quasi tutte WebP. */
+function imageMimeType(url: string): string {
+  const extension = url.split("?")[0]?.split(".").pop()?.toLowerCase()
+  switch (extension) {
+    case "webp":
+      return "image/webp"
+    case "png":
+      return "image/png"
+    case "gif":
+      return "image/gif"
+    case "avif":
+      return "image/avif"
+    case "svg":
+      return "image/svg+xml"
+    default:
+      return "image/jpeg"
+  }
+}
+
 export async function GET(): Promise<Response> {
   const supabase = createPublicClient()
   const posts = await getRecentPosts(supabase, FEED_ITEMS)
+
+  // `excerpt` e' vuoto su tutti gli articoli: la descrizione utile e' la meta
+  // description SEO. getRecentPosts non la seleziona, la prendiamo a parte e la
+  // uniamo per slug invece di duplicare la query con le join di categorie.
+  const { data: descriptions } = await supabase
+    .from("posts")
+    .select("slug, seo_description")
+    .in("slug", posts.map((post) => post.slug))
+
+  const seoDescriptionBySlug = new Map(
+    (descriptions ?? []).map((row) => [row.slug, row.seo_description]),
+  )
 
   const lastBuildDate = posts[0]?.published_at
     ? toRfc822(posts[0].published_at)
@@ -46,7 +77,8 @@ export async function GET(): Promise<Response> {
   const items = posts
     .map((post) => {
       const url = `${SITE_URL}${buildPostUrl(post.published_at, post.slug)}`
-      const description = post.excerpt?.trim()
+      const description =
+        post.excerpt?.trim() || seoDescriptionBySlug.get(post.slug)?.trim() || null
       const image = post.featured_image_url
 
       return [
@@ -61,7 +93,7 @@ export async function GET(): Promise<Response> {
           (category) => `      <category>${cdata(category.name)}</category>`,
         ),
         image
-          ? `      <enclosure url="${escapeXml(image)}" type="image/jpeg" />`
+          ? `      <enclosure url="${escapeXml(image)}" type="${imageMimeType(image)}" />`
           : null,
         "    </item>",
       ]
