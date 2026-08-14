@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label"
 import { FormField } from "@/components/admin/shared/FormField"
 import { ConfirmDialog } from "@/components/admin/shared/ConfirmDialog"
 import { MediaPicker } from "@/components/admin/media/MediaPicker"
+import { notifyFormErrors } from "@/lib/admin/utils/form-errors"
 
 type Props = {
   mode: "create" | "edit"
@@ -64,7 +65,7 @@ export function GalleryForm({ mode, galleryItemId, defaultValues }: Props) {
     } finally {
       setSubmitting(false)
     }
-  })
+  }, notifyFormErrors)
 
   const handleDelete = async () => {
     if (!galleryItemId) return

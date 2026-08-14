@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { FormField } from "@/components/admin/shared/FormField"
 import { SlugInput } from "@/components/admin/shared/SlugInput"
 import { MediaPicker } from "@/components/admin/media/MediaPicker"
+import { notifyFormErrors } from "@/lib/admin/utils/form-errors"
 
 type Props = {
   authorId: string
@@ -46,7 +47,7 @@ export function AuthorForm({ authorId, defaultValues }: Props) {
     } finally {
       setSubmitting(false)
     }
-  })
+  }, notifyFormErrors)
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">

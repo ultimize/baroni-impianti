@@ -1,4 +1,4 @@
-import { formatInTimeZone } from "date-fns-tz"
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz"
 import { it } from "date-fns/locale"
 
 const TZ = "Europe/Rome"
@@ -40,10 +40,11 @@ export function toLocalDatetimeInput(iso: string | null | undefined): string {
 
 export function fromLocalDatetimeInput(value: string | null | undefined): string | null {
   if (!value) return null
-  // The string is interpreted as Europe/Rome local; convert to UTC ISO.
-  // We can build it as a Date assuming local browser TZ — acceptable since
-  // CMS users operate in Italy. For deterministic behavior, accept browser TZ.
-  const date = new Date(value)
+  // Simmetrico a toLocalDatetimeInput: quello mostra l'orario in Europe/Rome,
+  // quindi anche qui la stringa va interpretata in Europe/Rome, NON nel fuso
+  // del browser. Con `new Date(value)` un redattore con il computer su un fuso
+  // diverso spostava la data a ogni salvataggio.
+  const date = fromZonedTime(value, TZ)
   if (Number.isNaN(date.getTime())) return null
   return date.toISOString()
 }

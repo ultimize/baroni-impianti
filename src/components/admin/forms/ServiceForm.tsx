@@ -30,6 +30,7 @@ import { SlugInput } from "@/components/admin/shared/SlugInput"
 import { ConfirmDialog } from "@/components/admin/shared/ConfirmDialog"
 import { MediaPicker } from "@/components/admin/media/MediaPicker"
 import { RichTextEditor } from "@/components/admin/editor/RichTextEditor"
+import { notifyFormErrors } from "@/lib/admin/utils/form-errors"
 
 const ICON_OPTIONS = [
   "Zap",
@@ -93,7 +94,7 @@ export function ServiceForm({ mode, serviceId, defaultValues }: Props) {
     } finally {
       setSubmitting(false)
     }
-  })
+  }, notifyFormErrors)
 
   const handleDelete = async () => {
     if (!serviceId) return

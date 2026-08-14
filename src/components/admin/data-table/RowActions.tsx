@@ -52,6 +52,7 @@ export function RowActions({
 }: Props) {
   const router = useRouter()
   const [pending, setPending] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const handleDuplicate = async () => {
     if (!onDuplicate) return
@@ -116,21 +117,28 @@ export function RowActions({
         {onDelete ? (
           <>
             <DropdownMenuSeparator />
-            <ConfirmDialog
-              trigger={
-                <DropdownMenuItem variant="destructive" onClick={(e) => e.preventDefault()}>
-                  <Trash2 className="mr-2 h-3.5 w-3.5" />
-                  Elimina
-                </DropdownMenuItem>
-              }
-              title={deleteTitle}
-              description={deleteDescription}
-              confirmLabel="Elimina"
-              onConfirm={handleDelete}
-            />
+            <DropdownMenuItem variant="destructive" onClick={() => setConfirmOpen(true)}>
+              <Trash2 className="mr-2 h-3.5 w-3.5" />
+              Elimina
+            </DropdownMenuItem>
           </>
         ) : null}
       </DropdownMenuContent>
+
+      {/*
+        Il dialog di conferma sta FUORI dal menu: se fosse dentro, alla chiusura
+        del menu verrebbe smontato e il popup sparirebbe appena cliccato.
+      */}
+      {onDelete ? (
+        <ConfirmDialog
+          open={confirmOpen}
+          onOpenChange={setConfirmOpen}
+          title={deleteTitle}
+          description={deleteDescription}
+          confirmLabel="Elimina"
+          onConfirm={handleDelete}
+        />
+      ) : null}
     </DropdownMenu>
   )
 }

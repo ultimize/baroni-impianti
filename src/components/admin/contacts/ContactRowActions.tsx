@@ -27,6 +27,7 @@ import type { ContactStatus } from "@/lib/admin/utils/status"
 export function ContactRowActions({ id }: { id: string }) {
   const router = useRouter()
   const [pending, setPending] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const setStatus = async (status: ContactStatus) => {
     setPending(true)
@@ -78,19 +79,21 @@ export function ContactRowActions({ id }: { id: string }) {
           Sposta in spam
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <ConfirmDialog
-          trigger={
-            <DropdownMenuItem variant="destructive" onClick={(e) => e.preventDefault()}>
-              <Trash2 className="mr-2 h-3.5 w-3.5" />
-              Elimina
-            </DropdownMenuItem>
-          }
-          title="Eliminare il contatto?"
-          description="Il messaggio verrà rimosso definitivamente."
-          confirmLabel="Elimina"
-          onConfirm={handleDelete}
-        />
+        <DropdownMenuItem variant="destructive" onClick={() => setConfirmOpen(true)}>
+          <Trash2 className="mr-2 h-3.5 w-3.5" />
+          Elimina
+        </DropdownMenuItem>
       </DropdownMenuContent>
+
+      {/* Fuori dal menu: dentro verrebbe smontato alla chiusura del menu. */}
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Eliminare il contatto?"
+        description="Il messaggio verrà rimosso definitivamente."
+        confirmLabel="Elimina"
+        onConfirm={handleDelete}
+      />
     </DropdownMenu>
   )
 }

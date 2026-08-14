@@ -15,7 +15,15 @@ import {
 import { Loader2 } from "lucide-react"
 
 type ConfirmDialogProps = {
-  trigger: React.ReactNode
+  /**
+   * Elemento che apre il dialog. Da NON usare quando il dialog vive dentro un
+   * menu a tendina: alla chiusura del menu il trigger viene smontato e il
+   * dialog sparisce. In quel caso usare la modalità controllata (`open` +
+   * `onOpenChange`) e montare il dialog fuori dal menu.
+   */
+  trigger?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
   title: string
   description?: string
   confirmLabel?: string
@@ -26,6 +34,8 @@ type ConfirmDialogProps = {
 
 export function ConfirmDialog({
   trigger,
+  open: controlledOpen,
+  onOpenChange,
   title,
   description,
   confirmLabel = "Conferma",
@@ -33,8 +43,16 @@ export function ConfirmDialog({
   variant = "destructive",
   onConfirm,
 }: ConfirmDialogProps) {
-  const [open, setOpen] = useState(false)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const [pending, setPending] = useState(false)
+
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : uncontrolledOpen
+
+  const setOpen = (next: boolean) => {
+    if (!isControlled) setUncontrolledOpen(next)
+    onOpenChange?.(next)
+  }
 
   const handleConfirm = async () => {
     try {
@@ -48,7 +66,7 @@ export function ConfirmDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger render={<span>{trigger}</span>} />
+      {trigger ? <AlertDialogTrigger render={<span>{trigger}</span>} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>

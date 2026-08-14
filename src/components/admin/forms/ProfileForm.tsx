@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormField } from "@/components/admin/shared/FormField"
 import { MediaPicker } from "@/components/admin/media/MediaPicker"
+import { notifyFormErrors } from "@/lib/admin/utils/form-errors"
 
 type Props = {
   userId: string
@@ -41,7 +42,7 @@ export function ProfileForm({ userId, email, defaultValues }: Props) {
     } finally {
       setSubmitting(false)
     }
-  })
+  }, notifyFormErrors)
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">

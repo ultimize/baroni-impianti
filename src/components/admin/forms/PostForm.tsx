@@ -38,6 +38,7 @@ import { Label } from "@/components/ui/label"
 import { FormField } from "@/components/admin/shared/FormField"
 import { SlugInput } from "@/components/admin/shared/SlugInput"
 import { ConfirmDialog } from "@/components/admin/shared/ConfirmDialog"
+import { createInvalidHandler } from "@/lib/admin/utils/form-errors"
 import { CategoryPicker } from "./CategoryPicker"
 import { TagPicker } from "./TagPicker"
 import { RichTextEditor } from "@/components/admin/editor/RichTextEditor"
@@ -107,6 +108,14 @@ export function PostForm({ mode, postId, defaultValues, authors, categories, tag
 
   const readingTime = watch("reading_time_minutes") ?? 0
 
+  const SEO_FIELDS = ["seo_title", "seo_description", "og_image_url", "canonical_url", "noindex"]
+
+  // Riapre il pannello SEO quando e' li' dentro che sta il campo non valido:
+  // era il caso piu' insidioso, l'utente non vedeva proprio l'errore.
+  const onInvalid = createInvalidHandler((fields) => {
+    if (fields.some((field) => SEO_FIELDS.includes(field))) setSeoOpen(true)
+  })
+
   const onSubmit = handleSubmit(async (data) => {
     setSubmitting(true)
     try {
@@ -125,7 +134,7 @@ export function PostForm({ mode, postId, defaultValues, authors, categories, tag
     } finally {
       setSubmitting(false)
     }
-  })
+  }, onInvalid)
 
   const handleSaveDraft = async () => {
     setValue("status", "draft", { shouldDirty: true })

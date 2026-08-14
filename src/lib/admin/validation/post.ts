@@ -17,8 +17,11 @@ export const postFormSchema = z
     status: z.enum(["draft", "scheduled", "published", "archived"]),
     published_at: z.string().optional().nullable(),
     reading_time_minutes: z.number().int().nonnegative().optional().nullable(),
-    seo_title: z.string().max(70, "Massimo 70 caratteri").optional().nullable(),
-    seo_description: z.string().max(170, "Massimo 170 caratteri").optional().nullable(),
+    // 70 e 170 sono le lunghezze *consigliate* per Google, non limiti tecnici:
+    // bloccare il salvataggio su quelle soglie rendeva inmodificabili gli
+    // articoli importati da WordPress. Il contatore nel form resta advisory.
+    seo_title: z.string().max(200, "Massimo 200 caratteri").optional().nullable(),
+    seo_description: z.string().max(320, "Massimo 320 caratteri").optional().nullable(),
     og_image_url: z.string().url("URL non valido").optional().nullable().or(z.literal("")),
     canonical_url: z.string().url("URL non valido").optional().nullable().or(z.literal("")),
     noindex: z.boolean(),
