@@ -61,7 +61,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased overflow-x-hidden max-w-[100vw]`}>
+    <html lang="it" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased overflow-x-hidden max-w-[100vw]`}>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden max-w-[100vw]">
         <div className="flex-1 flex flex-col w-full max-w-[100vw] overflow-x-hidden relative">
           {children}
