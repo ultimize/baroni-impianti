@@ -75,7 +75,7 @@ export function MediaPicker({
           }
         />
         <DialogContent
-          className="sm:max-w-4xl"
+          className="flex max-h-[90vh] flex-col sm:max-w-4xl"
           showCloseButton={false}
           onClick={(e) => e.stopPropagation()}
         >
@@ -83,7 +83,7 @@ export function MediaPicker({
             <DialogTitle>Media library</DialogTitle>
           </DialogHeader>
 
-          <Tabs value={bucket} onValueChange={(v) => setBucket(v as StorageBucketId)}>
+          <Tabs className="min-h-0 flex-1 overflow-y-auto" value={bucket} onValueChange={(v) => setBucket(v as StorageBucketId)}>
             <TabsList variant="line">
               {STORAGE_BUCKETS.map((b) => (
                 <TabsTrigger key={b.id} value={b.id}>
