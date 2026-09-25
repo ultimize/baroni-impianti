@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
   const now = new Date()
 
-  const [posts, services, pages, categories, tags] = await Promise.all([
+  const [posts, services, pages, categories] = await Promise.all([
     supabase
       .from("posts")
       .select("slug, published_at, updated_at")
@@ -26,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .eq("is_published", true)
       .eq("noindex", false),
     supabase.from("categories").select("slug, updated_at"),
-    supabase.from("tags").select("slug, updated_at"),
   ])
 
   const staticEntries: MetadataRoute.Sitemap = [
@@ -72,12 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  const tagEntries: MetadataRoute.Sitemap = (tags.data ?? []).map((t) => ({
-    url: `${SITE_URL}/blog-per-elettricisti/tag/${t.slug}`,
-    lastModified: new Date(t.updated_at),
-    changeFrequency: "weekly",
-    priority: 0.4,
-  }))
+  // ponytail: tag esclusi, sono noindex (vedi buildTagMetadata)
 
   return [
     ...staticEntries,
@@ -85,6 +79,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...serviceEntries,
     ...pageEntries,
     ...categoryEntries,
-    ...tagEntries,
   ]
 }

@@ -89,6 +89,8 @@ export function buildTagMetadata(tag: {
   return {
     title,
     description,
+    // Pagine tag fuori dall'indice (crawl budget), ma i link agli articoli restano seguiti
+    robots: { index: false, follow: true },
     openGraph: {
       title,
       description,
