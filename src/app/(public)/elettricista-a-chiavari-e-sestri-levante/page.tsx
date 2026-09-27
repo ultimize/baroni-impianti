@@ -13,7 +13,7 @@ import { getPublishedServices } from "@/lib/queries/site-content"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Elettricista a Chiavari e Sestri Levante — Baroni Impianti",
+  title: { absolute: "Elettricista a Chiavari e Sestri Levante — Baroni Impianti" },
   description: "Dall'installazione di nuovi impianti alla riparazione. Scopri i nostri servizi di elettricista specializzato a Chiavari e Sestri Levante.",
 }
 

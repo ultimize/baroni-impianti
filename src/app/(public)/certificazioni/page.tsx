@@ -21,7 +21,7 @@ import { getPublishedCertifications } from "@/lib/queries/site-content"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Certificazioni — Baroni Impianti | Installazioni a norma",
+  title: { absolute: "Certificazioni — Baroni Impianti | Installazioni a norma" },
   description:
     "Baroni Impianti opera secondo le più importanti certificazioni del settore: DM 37/2008, KNX Partner, conformità CEI 64-8.",
 }

@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Chi siamo — Baroni Impianti | Specialista Elettrico Sestri Levante",
+  title: "Chi siamo: elettricista a Sestri Levante",
   description: "Baroni Impianti: la tua guida per impianti a regola d'arte. Dal 2000 offriamo soluzioni per dormire sonni tranquilli con la formula Zero Pensieri.",
 }
 

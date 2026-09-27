@@ -9,7 +9,7 @@ import { createPublicClient } from "@/lib/supabase/public-client"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Galleria Lavori — Baroni Impianti",
+  title: { absolute: "Galleria Lavori — Baroni Impianti" },
   description: "Scopri alcuni dei nostri lavori eseguiti a Sestri Levante e in tutto il Tigullio: impianti civili, industriali, domotica e sicurezza.",
 }
 

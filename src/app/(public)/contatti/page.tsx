@@ -23,7 +23,7 @@ import {
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Contatti — Baroni Impianti | Sopralluogo gratuito a Sestri Levante",
+  title: "Contatti: sopralluogo gratuito a Sestri Levante",
   description:
     "Contatta Baroni Impianti per un sopralluogo gratuito. Tigullio, provincia di Genova e La Spezia. Risposta entro 24 ore.",
 }

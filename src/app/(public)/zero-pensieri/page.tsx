@@ -34,8 +34,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title:
-    "Zero Pensieri — Manutenzione elettrica programmata | Baroni Impianti",
+  title: "Zero Pensieri: manutenzione programmata",
   description:
     "Zero Pensieri è la formula esclusiva di Baroni Impianti: contratto di manutenzione programmata con assistenza 7/7, garanzia a vita sui dispositivi e interventi urgenti illimitati.",
 }

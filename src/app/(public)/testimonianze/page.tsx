@@ -10,7 +10,7 @@ import { getPublishedTestimonials } from "@/lib/queries/site-content"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Testimonianze — I nostri clienti raccontano | Baroni Impianti",
+  title: { absolute: "Testimonianze — I nostri clienti raccontano | Baroni Impianti" },
   description:
     "Storie reali di clienti Baroni Impianti nel Tigullio. Scopri le testimonianze video di chi ha scelto la nostra qualità.",
 }
