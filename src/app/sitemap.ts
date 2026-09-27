@@ -1,6 +1,16 @@
 import type { MetadataRoute } from "next"
 import { createClient } from "@/lib/supabase/server"
 import { SITE_URL } from "@/lib/constants"
+
+// Pagine servizio con una route dedicata in src/app/(public)/. La tabella services
+// contiene anche servizi senza pagina (404), quindi la sitemap usa questo elenco.
+// ponytail: da aggiornare a mano quando si aggiunge una pagina servizio
+const SERVICE_ROUTES = [
+  "progettazione-impianti-rete-cablata-a-sestri-levante",
+  "progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante",
+  "protezione-dalle-scariche-atmosferiche-installazione-spd",
+  "realizzazione-di-impianti-digitali-integrati",
+]
 import { buildPostUrl } from "@/lib/content/url-builder"
 
 export const revalidate = 3600
@@ -9,17 +19,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
   const now = new Date()
 
-  const [posts, services, pages, categories] = await Promise.all([
+  const [posts, pages, categories] = await Promise.all([
     supabase
       .from("posts")
       .select("slug, published_at, updated_at")
       .eq("status", "published")
       .eq("noindex", false)
       .lte("published_at", now.toISOString()),
-    supabase
-      .from("services")
-      .select("slug, updated_at")
-      .eq("is_published", true),
     supabase
       .from("pages")
       .select("slug, updated_at")
@@ -41,7 +47,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const postEntries: MetadataRoute.Sitemap = (posts.data ?? [])
     .filter((p): p is { slug: string; published_at: string; updated_at: string } =>
-      !!p.published_at,
+      // articoli diventati pagine servizio: il vecchio URL fa redirect (next.config.ts)
+      !!p.published_at && !SERVICE_ROUTES.includes(p.slug),
     )
     .map((p) => ({
       url: `${SITE_URL}${buildPostUrl(p.published_at, p.slug)}`,
@@ -50,9 +57,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-  const serviceEntries: MetadataRoute.Sitemap = (services.data ?? []).map((s) => ({
-    url: `${SITE_URL}/${s.slug}`,
-    lastModified: new Date(s.updated_at),
+  const serviceEntries: MetadataRoute.Sitemap = SERVICE_ROUTES.map((slug) => ({
+    url: `${SITE_URL}/${slug}`,
+    lastModified: now,
     changeFrequency: "monthly",
     priority: 0.8,
   }))
