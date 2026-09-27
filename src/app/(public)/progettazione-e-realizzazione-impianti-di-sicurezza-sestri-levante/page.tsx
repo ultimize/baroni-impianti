@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import { Shield, Lock, Eye, Bell, ShieldCheck, Zap, Crosshair } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
@@ -16,17 +15,16 @@ const SERVICE_SLUG =
   "progettazione-e-realizzazione-impianti-di-sicurezza-sestri-levante"
 
 export const metadata: Metadata = {
-  title: SERVICE_TITLE,
+  title: "Impianti di sicurezza a Sestri Levante",
   description: SERVICE_DESCRIPTION,
 }
 
 export default function SicurezzaPage() {
   return (
     <>
-      <Script
+      <script
         id="service-sicurezza-jsonld"
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: renderJsonLd(
             serviceSchema({

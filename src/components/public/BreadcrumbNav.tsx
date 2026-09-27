@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Script from "next/script"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { breadcrumbSchema, renderJsonLd } from "@/lib/seo/json-ld"
@@ -77,10 +76,9 @@ export function BreadcrumbNav({
           })}
         </ol>
       </nav>
-      <Script
+      <script
         id={scriptId}
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: renderJsonLd(breadcrumbSchema(items)),
         }}

@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import { ShieldAlert, Zap, Network, Server, ArrowRight, Activity, WifiOff } from "lucide-react"
 import { Container } from "@/components/public/Container"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
@@ -15,17 +14,16 @@ const SERVICE_DESCRIPTION =
 const SERVICE_SLUG = "progettazione-impianti-rete-cablata-a-sestri-levante"
 
 export const metadata: Metadata = {
-  title: `${SERVICE_TITLE} — Baroni Impianti`,
+  title: "Impianti di rete cablata a Sestri Levante",
   description: SERVICE_DESCRIPTION,
 }
 
 export default function ReteCablataPage() {
   return (
     <>
-      <Script
+      <script
         id="service-cablati-jsonld"
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: renderJsonLd(
             serviceSchema({

@@ -22,6 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
     applicationName: SITE_NAME,
     // Rende il feed RSS auto-rilevabile: <link rel="alternate" type="application/rss+xml">
     alternates: {
+      // Canonical self-referencing di default; le pagine possono sovrascriverlo
+      canonical: "./",
       types: {
         "application/rss+xml": [
           { url: `${SITE_URL}/feed.xml`, title: `${SITE_NAME} — Blog` },

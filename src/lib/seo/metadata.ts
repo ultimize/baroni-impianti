@@ -21,16 +21,34 @@ export type ArticleMetaInput = {
   author?: { name: string } | null
 }
 
-export function buildArticleMetadata(post: ArticleMetaInput): Metadata {
+// Canonical manuale solo se punta a un altro dominio: quelli sullo stesso dominio
+// sono vecchi URL WordPress (?p=123, date diverse) che finiscono in redirect o 404.
+function articleCanonical(post: ArticleMetaInput, selfPath: string): string {
+  const manual = post.canonical_url?.trim()
+  if (manual) {
+    try {
+      const host = new URL(manual).hostname.replace(/^www\./, "")
+      if (host !== new URL(SITE_URL).hostname.replace(/^www\./, "")) return manual
+    } catch {}
+  }
+  return selfPath
+}
+
+// Se il title contiene già il nome del sito, evita il suffisso del template ("| Baroni Impianti" due volte)
+function brandTitle(title: string): Metadata["title"] {
+  return title.includes(SITE_NAME) ? { absolute: title } : title
+}
+
+export function buildArticleMetadata(post: ArticleMetaInput, selfPath: string): Metadata {
   const title = post.seo_title || post.title
   const description = post.seo_description || post.excerpt || SITE_DESCRIPTION
   const ogImage = post.og_image_url || post.featured_image_url
 
   return {
-    title,
+    title: brandTitle(title),
     description,
     alternates: {
-      canonical: post.canonical_url || post.wp_original_url || undefined,
+      canonical: articleCanonical(post, selfPath),
     },
     robots: post.noindex
       ? { index: false, follow: true }
@@ -67,7 +85,7 @@ export function buildCategoryMetadata(category: {
     category.description ||
     `Articoli della categoria ${category.name}.`
   return {
-    title,
+    title: brandTitle(title),
     description,
     openGraph: {
       title,
@@ -75,6 +93,8 @@ export function buildCategoryMetadata(category: {
       type: "website",
       siteName: SITE_NAME,
       locale: "it_IT",
+      // openGraph qui sovrascrive quello ereditato: rimettiamo l'immagine di default
+      images: ["/opengraph-image.jpg"],
     },
   }
 }
@@ -111,7 +131,7 @@ export function buildPageMetadata(page: {
   const title = page.seo_title || page.title
   const description = page.seo_description || SITE_DESCRIPTION
   return {
-    title,
+    title: brandTitle(title),
     description,
     robots: page.noindex
       ? { index: false, follow: true }
@@ -130,7 +150,7 @@ export function buildPageMetadata(page: {
 }
 
 export function buildBlogListMetadata(pageNumber: number): Metadata {
-  const base = "Blog"
+  const base = "Blog: guide sugli impianti elettrici in Liguria"
   const suffix = pageNumber > 1 ? ` — Pagina ${pageNumber}` : ""
   return {
     title: `${base}${suffix}`,

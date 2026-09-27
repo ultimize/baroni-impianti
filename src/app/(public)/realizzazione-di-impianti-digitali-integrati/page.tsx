@@ -2,17 +2,33 @@ import type { Metadata } from "next"
 import { Cpu, Smartphone, Settings, Zap, Home, Lightbulb, Clock, CheckCircle2 } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
+import { renderJsonLd, serviceSchema } from "@/lib/seo/json-ld"
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Realizzazione di Impianti Digitali Integrati | Baroni Impianti",
+  title: { absolute: "Realizzazione di Impianti Digitali Integrati | Baroni Impianti" },
   description: "Semplifica la tua vita con gli impianti digitali integrati (Domotica). Trasformiamo la tua casa in un ambiente tecnologicamente avanzato e facile da usare.",
 }
 
 export default function ImpiantiDigitaliPage() {
   return (
     <>
+      <script
+        id="service-digitali-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: renderJsonLd(
+            serviceSchema({
+              title: "Realizzazione di Impianti Digitali Integrati",
+              description:
+                "Impianti digitali integrati e domotica per la casa: controllo di luci, clima, tapparelle e sicurezza da un'unica interfaccia.",
+              slug: "realizzazione-di-impianti-digitali-integrati",
+              category: "Domotica e impianti digitali integrati",
+            }),
+          ),
+        }}
+      />
       {/* Custom Hero Impianti Digitali */}
       <section className="relative overflow-hidden lg:min-h-[60vh] flex items-center pt-28 pb-20 lg:pt-36 lg:pb-24 bg-slate-950 border-b border-slate-800">
         {/* Background Effects */}

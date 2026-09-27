@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import { ShieldAlert, Zap, CloudLightning, Home, Server, TriangleAlert, Activity } from "lucide-react"
 import { SectionWrapper } from "@/components/public/SectionWrapper"
 import { ClosingCta } from "@/components/public/ClosingCta"
@@ -16,17 +15,16 @@ const SERVICE_SLUG =
   "protezione-dalle-scariche-atmosferiche-installazione-spd"
 
 export const metadata: Metadata = {
-  title: SERVICE_TITLE,
+  title: "Protezione da fulmini e installazione SPD",
   description: SERVICE_DESCRIPTION,
 }
 
 export default function SPDPage() {
   return (
     <>
-      <Script
+      <script
         id="service-spd-jsonld"
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: renderJsonLd(
             serviceSchema({

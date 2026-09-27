@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import { notFound } from "next/navigation"
 import { Container } from "@/components/public/Container"
 import { ArticleHero } from "@/components/public/ArticleHero"
@@ -88,7 +87,7 @@ export async function generateMetadata({
     const [year, month, day, slug] = path
     const post = await getPostByDateAndSlug(supabase, year, month, day, slug)
     if (!post) return { title: "Articolo non trovato" }
-    return buildArticleMetadata(post)
+    return buildArticleMetadata(post, buildPostUrl(post.published_at, post.slug))
   }
 
   if (isStaticPagePath(path)) {
@@ -134,10 +133,9 @@ export default async function CatchAllPage({
 
     return (
       <>
-        <Script
+        <script
           id="article-jsonld"
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: renderJsonLd(
               articleSchema(

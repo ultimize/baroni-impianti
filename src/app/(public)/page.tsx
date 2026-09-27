@@ -1,6 +1,6 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
-import Script from "next/script"
 import {
   ArrowRight,
   Award,
@@ -26,6 +26,12 @@ import { getRecentPosts } from "@/lib/queries/posts"
 import { organizationSchema, websiteSchema, renderJsonLd } from "@/lib/seo/json-ld"
 
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: { absolute: "Elettricista a Sestri Levante e Chiavari | Baroni Impianti" },
+  description:
+    "Elettricista impiantista a Sestri Levante, Chiavari e Tigullio: impianti civili e industriali, domotica KNX, fotovoltaico, sicurezza e manutenzione. Sopralluogo gratuito.",
+}
 
 const SERVICES = [
   {
@@ -99,10 +105,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <Script
+      <script
         id="home-jsonld"
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: renderJsonLd([orgSchema, websiteSchema()]),
         }}
