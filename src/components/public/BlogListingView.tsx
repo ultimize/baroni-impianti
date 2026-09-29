@@ -5,7 +5,7 @@ import { PostsGrid } from "@/components/public/PostsGrid"
 import { Pagination } from "@/components/public/Pagination"
 import { BreadcrumbNav } from "@/components/public/BreadcrumbNav"
 import { BookOpen } from "lucide-react"
-import { createClient } from "@/lib/supabase/server"
+import { createPublicClient } from "@/lib/supabase/public-client"
 import { getPostsPaginated } from "@/lib/queries/posts"
 import { getCategoriesWithCounts } from "@/lib/queries/categories"
 import { getPopularTags } from "@/lib/queries/tags"
@@ -40,7 +40,7 @@ type Props =
 const PAGE_SIZE = 12
 
 export async function BlogListingView(props: Props) {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const queryArgs: Parameters<typeof getPostsPaginated>[1] = {
     page: props.page,

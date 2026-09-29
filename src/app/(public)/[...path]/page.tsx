@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, permanentRedirect, redirect } from "next/navigation"
 import { Container } from "@/components/public/Container"
 import { ArticleHero } from "@/components/public/ArticleHero"
 import { ArticleContent } from "@/components/public/ArticleContent"
@@ -7,7 +7,6 @@ import { TagsList } from "@/components/public/TagsList"
 import { AuthorBox } from "@/components/public/AuthorBox"
 import { NewsletterCTA } from "@/components/public/NewsletterCTA"
 import { RelatedPosts } from "@/components/public/RelatedPosts"
-import { createClient } from "@/lib/supabase/server"
 import { createPublicClient } from "@/lib/supabase/public-client"
 import {
   getPostByDateAndSlug,
@@ -29,6 +28,31 @@ export const revalidate = 3600
 export const dynamicParams = true
 
 type Params = { path: string[] }
+
+/**
+ * I redirect da database (URL legacy di WordPress) prima venivano cercati nel
+ * proxy su OGNI pagina vista: una query Supabase per richiesta, anche con la
+ * tabella vuota. Ora si cercano solo qui, cioe' solo quando l'URL non
+ * corrisponde a niente e staremmo per rispondere 404.
+ */
+async function redirectOrNotFound(
+  supabase: ReturnType<typeof createPublicClient>,
+  path: string[],
+): Promise<never> {
+  const pathname = `/${path.join("/")}`
+  const { data } = await supabase
+    .from("redirects")
+    .select("new_path, status_code")
+    .eq("old_path", pathname)
+    .eq("is_active", true)
+    .maybeSingle()
+
+  if (data?.new_path) {
+    if (data.status_code === 302 || data.status_code === 307) redirect(data.new_path)
+    permanentRedirect(data.new_path)
+  }
+  notFound()
+}
 
 const RESERVED_STATIC_PATHS = new Set([
   "blog",
@@ -81,7 +105,7 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { path } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   if (isArticlePath(path)) {
     const [year, month, day, slug] = path
@@ -105,12 +129,12 @@ export default async function CatchAllPage({
   params: Promise<Params>
 }) {
   const { path } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   if (isArticlePath(path)) {
     const [year, month, day, slug] = path
     const post = await getPostByDateAndSlug(supabase, year, month, day, slug)
-    if (!post) notFound()
+    if (!post) return redirectOrNotFound(supabase, path)
 
     const related = await getRelatedPosts(supabase, post.id, 3)
     const sanitized = post.content ? sanitizeArticleHtml(post.content) : ""
@@ -190,7 +214,7 @@ export default async function CatchAllPage({
 
   if (isStaticPagePath(path)) {
     const page = await getPageBySlug(supabase, path[0])
-    if (!page) notFound()
+    if (!page) return redirectOrNotFound(supabase, path)
 
     const sanitized = page.content ? sanitizeArticleHtml(page.content) : ""
     const breadcrumbs = [
@@ -212,5 +236,5 @@ export default async function CatchAllPage({
     )
   }
 
-  notFound()
+  return redirectOrNotFound(supabase, path)
 }

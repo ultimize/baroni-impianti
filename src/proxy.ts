@@ -55,33 +55,16 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Dynamic DB redirects only on public routes (legacy WP slug preservation).
-  if (!isAdminRoute) {
-    const { data: redirect } = await supabase
-      .from("redirects")
-      .select("new_path, status_code")
-      .eq("old_path", pathname)
-      .eq("is_active", true)
-      .maybeSingle()
-
-    if (redirect?.new_path) {
-      const url = request.nextUrl.clone()
-      url.pathname = redirect.new_path
-      const status =
-        redirect.status_code === 302 ||
-        redirect.status_code === 307 ||
-        redirect.status_code === 308
-          ? redirect.status_code
-          : 301
-      return NextResponse.redirect(url, status)
-    }
-  }
-
   return response
 }
 
+/**
+ * Il proxy serve solo all'area admin: sessione Supabase e protezione delle
+ * route. Prima girava su TUTTE le pagine pubbliche e per ogni visita faceva
+ * una verifica di sessione piu' una query sulla tabella redirects: CPU pagata
+ * su ogni pagina vista, bot compresi. I redirect legacy ora sono gestiti nel
+ * catch-all `(public)/[...path]`, solo quando un URL starebbe per dare 404.
+ */
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|auth/|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)",
-  ],
+  matcher: ["/admin/:path*"],
 }

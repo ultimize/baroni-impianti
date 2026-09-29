@@ -21,7 +21,7 @@ import {
   Play,
 } from "lucide-react"
 import { PostsGrid } from "@/components/public/PostsGrid"
-import { createClient } from "@/lib/supabase/server"
+import { createPublicClient } from "@/lib/supabase/public-client"
 import { getRecentPosts } from "@/lib/queries/posts"
 import { organizationSchema, websiteSchema, renderJsonLd } from "@/lib/seo/json-ld"
 
@@ -97,7 +97,7 @@ const CERTIFICATES = [
 ]
 
 export default async function HomePage() {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const [posts, orgSchema] = await Promise.all([
     getRecentPosts(supabase, 3),
     organizationSchema(),

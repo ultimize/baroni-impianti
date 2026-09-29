@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { BlogListingView } from "@/components/public/BlogListingView"
 import { buildCategoryMetadata } from "@/lib/seo/metadata"
-import { createClient } from "@/lib/supabase/server"
 import { createPublicClient } from "@/lib/supabase/public-client"
 import { getCategoryBySlug, getAllCategories } from "@/lib/queries/categories"
 
@@ -22,7 +21,7 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const category = await getCategoryBySlug(supabase, slug)
   if (!category) return { title: "Categoria non trovata" }
   return buildCategoryMetadata(category)
@@ -34,7 +33,7 @@ export default async function CategoryPage({
   params: Promise<Params>
 }) {
   const { slug } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const category = await getCategoryBySlug(supabase, slug)
   if (!category) notFound()
 
